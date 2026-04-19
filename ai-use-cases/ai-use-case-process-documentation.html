@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Use Case — Process Documentation</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px; color: #1a1a1a; background: #f5f5f5; padding: 32px;
+}
+.page { max-width: 860px; margin: 0 auto; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+.header { background: #1a365d; color: white; padding: 28px 36px 22px; }
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.header .sub { font-size: 13px; color: #a0b4cc; margin-top: 5px; }
+.context { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 20px 36px; }
+.context h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #64748b; margin-bottom: 10px; }
+.context p { font-size: 13px; color: #334155; line-height: 1.6; }
+.body { padding: 28px 36px; }
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+.card { border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; }
+.card-header { padding: 14px 18px; font-size: 13px; font-weight: 700; }
+.card-header.assistant { background: #dbeafe; color: #1e40af; }
+.card-header.agent { background: #dcfce7; color: #166534; }
+.card-header .label { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.6px; opacity: 0.7; display: block; margin-bottom: 2px; }
+.card-body { padding: 16px 18px; }
+.step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+.step:last-child { margin-bottom: 0; }
+.step-num { width: 20px; height: 20px; border-radius: 50%; font-size: 10px;
+  font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px; }
+.assistant .step-num { background: #dbeafe; color: #1e40af; }
+.agent .step-num { background: #dcfce7; color: #166534; }
+.step-text { font-size: 12px; line-height: 1.5; color: #374151; }
+.step-text strong { font-weight: 600; color: #111; }
+.step-text .who { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 1px 5px; border-radius: 3px; margin-left: 4px;
+  vertical-align: middle; }
+.you { background: #fef9c3; color: #854d0e; }
+.ai { background: #f0fdf4; color: #166534; }
+.divider { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+.outcomes { margin-bottom: 32px; }
+.outcomes h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #1a365d; border-bottom: 2px solid #1a365d;
+  padding-bottom: 4px; margin-bottom: 16px; }
+.outcome-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.outcome-card { background: #f8fafc; border-radius: 6px; padding: 14px 16px;
+  border-left: 3px solid #3b82f6; }
+.outcome-card .metric { font-size: 22px; font-weight: 700; color: #1a365d; }
+.outcome-card .desc { font-size: 11px; color: #64748b; margin-top: 3px; line-height: 1.4; }
+.takeaway { background: #1a365d; color: white; border-radius: 6px; padding: 18px 22px; }
+.takeaway h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #a0b4cc; margin-bottom: 10px; }
+.takeaway p { font-size: 13px; line-height: 1.6; color: #e2e8f0; }
+.takeaway strong { color: white; }
+.footer { background: #f8fafc; border-top: 1px solid #e2e8f0;
+  padding: 12px 36px; font-size: 11px; color: #94a3b8; }
+@media print { body { background: white; padding: 0; }
+  .page { box-shadow: none; border-radius: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>AI Use Case: AI-Assisted Process Documentation</h1>
+    <div class="sub">Marketing Operations &nbsp;·&nbsp; Knowledge Management &nbsp;·&nbsp; Any team, any process</div>
+  </div>
+
+  <div class="context">
+    <h2>The Business Problem</h2>
+    <p>Most team processes only exist in someone's head. You can't automate, delegate, or build AI agents around work that isn't documented. Process documentation is universally acknowledged as important and universally deprioritized — because it feels like a project on top of the real job. The result: institutional knowledge stays trapped, onboarding takes longer, and automation never gets off the ground.</p>
+  </div>
+
+  <div class="body">
+
+    <div class="comparison">
+
+      <div class="card assistant">
+        <div class="card-header assistant">
+          <span class="label">Version 1</span>
+          AI Assistant (e.g. Microsoft Copilot)
+        </div>
+        <div class="card-body assistant">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Decide to document a process — block time for it <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Open Copilot and <strong>prompt it to interview you</strong> about the process <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">Copilot <strong>asks clarifying questions</strong> — you answer each one <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">Copilot <strong>drafts the process document</strong> from your answers <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-text"><strong>Review, edit, format, and save</strong> the document manually <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-text"><strong>Repeat from step 1</strong> for the next process — nothing carries over <span class="who you">You</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card agent">
+        <div class="card-header agent">
+          <span class="label">Version 2</span>
+          AI Agent (e.g. Claude Code, GitHub Copilot Agent)
+        </div>
+        <div class="card-body agent">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Name the process you want documented <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Agent <strong>conducts a structured interview</strong> — asks about triggers, failure states, decision points, and handoffs <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">Agent <strong>validates coverage</strong> — flags gaps, asks follow-ups until the process is complete <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">Answer follow-up questions — contribute knowledge, not formatting <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-text">Agent <strong>formats to standard template and files automatically</strong> to the correct location <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-text"><strong>Review and approve</strong> — the document is already structured and saved <span class="who you">You</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="outcomes">
+      <h2>Why This Matters</h2>
+      <div class="outcome-grid">
+        <div class="outcome-card">
+          <div class="metric">Hours → 20 min</div>
+          <div class="desc">Time to produce a structured, filed process document — with Tier 2</div>
+        </div>
+        <div class="outcome-card">
+          <div class="metric">0 extra steps</div>
+          <div class="desc">No template setup, manual filing, or gap-checking required when the agent handles execution</div>
+        </div>
+        <div class="outcome-card">
+          <div class="metric">Prerequisite</div>
+          <div class="desc">Every automation, delegation, and AI agent downstream requires documented processes to exist first</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h2>The Executive Takeaway</h2>
+      <p>The difference between an AI <strong>assistant</strong> and an AI <strong>agent</strong> for process documentation is who manages the conversation. An assistant gives you a faster pen — you still have to block the time, ask the right questions, and file the output. An agent conducts the interview, validates what it heard, formats to standard, and files automatically. The human contribution is <strong>knowledge</strong> — not overhead. And this use case is upstream of everything else: you can't automate or build agents around work that isn't written down first.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Marketing Operations · GreatAmerica Financial Services · April 2026 · Internal use
+  </div>
+
+</div>
+</body>
+</html>

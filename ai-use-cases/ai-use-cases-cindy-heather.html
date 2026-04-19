@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Use Cases — Prospecting, A/B Testing, Lead Generation</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px; color: #1a1a1a; background: #f5f5f5; padding: 32px;
+}
+.page {
+  max-width: 860px; margin: 0 auto 48px; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden;
+  page-break-after: always;
+}
+.page:last-child { margin-bottom: 0; page-break-after: auto; }
+.cover {
+  max-width: 860px; margin: 0 auto 48px; background: #1a365d; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; padding: 60px 48px;
+  page-break-after: always;
+}
+.cover h1 { font-size: 28px; font-weight: 700; color: white; letter-spacing: -0.5px; margin-bottom: 12px; }
+.cover .sub { font-size: 15px; color: #a0b4cc; margin-bottom: 40px; }
+.cover .toc { list-style: none; }
+.cover .toc li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #e2e8f0; display: flex; align-items: center; gap: 12px; }
+.cover .toc li:last-child { border-bottom: none; }
+.cover .toc .num { width: 24px; height: 24px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+.cover .toc .title { font-weight: 600; color: white; }
+.cover .toc .desc { font-size: 12px; color: #a0b4cc; }
+.cover .meta { margin-top: 40px; font-size: 12px; color: #a0b4cc; }
+.header { background: #1a365d; color: white; padding: 28px 36px 22px; }
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.header .sub { font-size: 13px; color: #a0b4cc; margin-top: 5px; }
+.context { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 20px 36px; }
+.context h2 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 10px; }
+.context p { font-size: 13px; color: #334155; line-height: 1.6; }
+.body { padding: 28px 36px; }
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+.card { border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; }
+.card-header { padding: 14px 18px; font-size: 13px; font-weight: 700; }
+.card-header.assistant { background: #dbeafe; color: #1e40af; }
+.card-header.agent { background: #dcfce7; color: #166534; }
+.card-header .label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; opacity: 0.7; display: block; margin-bottom: 2px; }
+.card-body { padding: 16px 18px; }
+.step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+.step:last-child { margin-bottom: 0; }
+.step-num { width: 20px; height: 20px; border-radius: 50%; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.assistant .step-num { background: #dbeafe; color: #1e40af; }
+.agent .step-num { background: #dcfce7; color: #166534; }
+.step-text { font-size: 12px; line-height: 1.5; color: #374151; }
+.step-text strong { font-weight: 600; color: #111; }
+.step-text .who { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 1px 5px; border-radius: 3px; margin-left: 4px; vertical-align: middle; }
+.you { background: #fef9c3; color: #854d0e; }
+.ai { background: #f0fdf4; color: #166534; }
+.outcomes { margin-bottom: 32px; }
+.outcomes h2 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 4px; margin-bottom: 16px; }
+.outcome-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.outcome-card { background: #f8fafc; border-radius: 6px; padding: 14px 16px; border-left: 3px solid #3b82f6; }
+.outcome-card .metric { font-size: 22px; font-weight: 700; color: #1a365d; }
+.outcome-card .desc { font-size: 11px; color: #64748b; margin-top: 3px; line-height: 1.4; }
+.takeaway { background: #1a365d; color: white; border-radius: 6px; padding: 18px 22px; }
+.takeaway h2 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #a0b4cc; margin-bottom: 10px; }
+.takeaway p { font-size: 13px; line-height: 1.6; color: #e2e8f0; }
+.takeaway strong { color: white; }
+.footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 36px; font-size: 11px; color: #94a3b8; }
+@media print {
+  body { background: white; padding: 0; }
+  .page, .cover { box-shadow: none; border-radius: 0; margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <h1>AI Use Cases — Growth &amp; Demand Generation</h1>
+  <div class="sub">GreatAmerica Financial Services &nbsp;·&nbsp; Internal AI Workshop &nbsp;·&nbsp; April 22, 2026</div>
+  <ul class="toc">
+    <li>
+      <div class="num">1</div>
+      <div>
+        <div class="title">Prospecting New Customers</div>
+        <div class="desc">ICP scoring, dealer discovery, and outreach — from 6 hours to 20 minutes</div>
+      </div>
+    </li>
+    <li>
+      <div class="num">2</div>
+      <div>
+        <div class="title">A/B Testing of Website Content</div>
+        <div class="desc">Continuous optimization across three buyer audiences — without developer tickets</div>
+      </div>
+    </li>
+    <li>
+      <div class="num">3</div>
+      <div>
+        <div class="title">Lead Generation &amp; Qualification</div>
+        <div class="desc">Real-time scoring, enrichment, and routing — at any volume, consistently</div>
+      </div>
+    </li>
+  </ul>
+  <div class="meta">Each use case shows two tiers: what Microsoft Copilot can do today (Version 1) vs. what an AI agent unlocks (Version 2). Prepared in response to Cindy Bradley and Heather Friedman, April 17, 2026.</div>
+</div>
+
+<!-- USE CASE 1: PROSPECTING -->
+<div class="page">
+  <div class="header">
+    <h1>AI Use Case: Prospecting New Customers</h1>
+    <div class="sub">Marketing Operations &nbsp;·&nbsp; Dealer &amp; Vendor Network Growth &nbsp;·&nbsp; B2B Equipment Financing</div>
+  </div>
+  <div class="context">
+    <h2>The Business Problem</h2>
+    <p>GreatAmerica's growth depends on identifying and onboarding new equipment dealers and vendors — but prospecting is manual, inconsistent, and slow. Sales reps spend hours cross-referencing equipment verticals, dealer lists, and firmographic data to build target lists that are often stale by the time outreach begins. There is no systematic way to prioritize which prospects fit the dealer profile best, so high-potential accounts get the same attention as poor-fit ones.</p>
+  </div>
+  <div class="body">
+    <div class="comparison">
+      <div class="card assistant">
+        <div class="card-header assistant">
+          <span class="label">Version 1</span>
+          AI Assistant (e.g. Microsoft Copilot)
+        </div>
+        <div class="card-body assistant">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Define your target dealer profile</strong> — vertical, geography, company size, revenue range — and paste examples of top-performing dealers <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Copilot <strong>synthesizes your input into a written ICP document</strong> — firmographic, vertical, and behavioral traits of best-fit dealers <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Export a raw prospect list</strong> from ZoomInfo, LinkedIn Sales Navigator, or industry association directories using manual filters <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Upload CSV to Copilot in Excel — Copilot <strong>scores and tiers each prospect</strong> against your ICP with plain-English rationale <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Copilot <strong>drafts a 3-touch outreach sequence</strong> personalized by equipment vertical for Tier 1 prospects <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Manually import into HubSpot</strong>, create sequences, assign to reps, and set enrollment triggers <span class="who you">You</span></div></div>
+        </div>
+      </div>
+      <div class="card agent">
+        <div class="card-header agent">
+          <span class="label">Version 2</span>
+          AI Agent (e.g. Claude Code, GitHub Copilot Agent)
+        </div>
+        <div class="card-body agent">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Set ICP criteria once</strong> — verticals, geography, revenue range, exclusion list. Periodic updates only. <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Agent <strong>queries ZoomInfo, LinkedIn, and industry databases on a schedule</strong> — pulls net-new prospects, deduplicates against HubSpot and Salesforce, flags active deals <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Agent <strong>scores each prospect against a pre-trained ICP model</strong> using firmographics, enrichment data, and GreatAmerica's historical win/loss data from Salesforce <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Agent <strong>compiles a one-page account brief for every Tier 1 prospect</strong> — company overview, equipment focus, financing competitors, suggested entry point <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Agent <strong>writes vertical-specific outreach, creates HubSpot records, and enrolls contacts in the correct sequence</strong> — assigned to the right rep, account brief attached as a note <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Review the prioritized rep queue</strong> and approve to send — agent logs outcomes back to Salesforce and refines scoring over time <span class="who you">You</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="outcomes">
+      <h2>Why This Matters</h2>
+      <div class="outcome-grid">
+        <div class="outcome-card"><div class="metric">6 hrs → 20 min</div><div class="desc">List build, ICP scoring, and sequence setup collapses from a half-day task to a quick rep review</div></div>
+        <div class="outcome-card"><div class="metric">2–3x ICP fit rate</div><div class="desc">Systematic scoring against historical win data surfaces better-fit dealers than rep intuition alone</div></div>
+        <div class="outcome-card"><div class="metric">3x pipeline coverage</div><div class="desc">Reps shift from list-building to relationship-building — agent handles discovery, enrichment, and setup</div></div>
+      </div>
+    </div>
+    <div class="takeaway">
+      <h2>The Executive Takeaway</h2>
+      <p>With Copilot today, reps work faster but still own every step — the bottleneck is human capacity. With an agent, the bottleneck moves to rep judgment and relationship quality, which is where skilled salespeople actually create value. For GreatAmerica, where <strong>dealer network expansion is a direct growth lever</strong>, this is one of the highest-ROI applications of agentic AI because the inputs — ICP criteria, historical wins, territory assignments — already exist in your systems.</p>
+    </div>
+  </div>
+  <div class="footer">Marketing Operations · GreatAmerica Financial Services · April 2026 · Internal use</div>
+</div>
+
+<!-- USE CASE 2: A/B TESTING -->
+<div class="page">
+  <div class="header">
+    <h1>AI Use Case: A/B Testing of Website Content</h1>
+    <div class="sub">Marketing Operations &nbsp;·&nbsp; Website Optimization &nbsp;·&nbsp; Three buyer audiences, one website</div>
+  </div>
+  <div class="context">
+    <h2>The Business Problem</h2>
+    <p>GreatAmerica serves three distinct audiences — equipment dealers, vendors, and end-user businesses — on a single website, making it difficult to know which messaging resonates with whom. Today, A/B testing is slow, resource-intensive, and often skipped entirely because it requires developer time, copywriting, and data analysis. High-traffic pages sit with unvalidated messaging for months, leaving conversion improvements on the table.</p>
+  </div>
+  <div class="body">
+    <div class="comparison">
+      <div class="card assistant">
+        <div class="card-header assistant">
+          <span class="label">Version 1</span>
+          AI Assistant (e.g. Microsoft Copilot)
+        </div>
+        <div class="card-body assistant">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Choose a page and define the hypothesis</strong> — which audience, what the current conversion rate is, what you want to test <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Paste current headline and CTA into Copilot — Copilot <strong>generates 4–6 audience-specific copy variants</strong> in seconds <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Select 2–3 variants and manually configure the A/B test</strong> in HubSpot CMS — set traffic split, duration, and conversion goal <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Pull GA4 results after the test window</strong> and paste raw numbers into Copilot <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Copilot <strong>identifies the winning variant, flags confidence level, and proposes the next hypothesis</strong> based on the data <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Update the live page manually</strong> in HubSpot CMS with the winning variant and record the result <span class="who you">You</span></div></div>
+        </div>
+      </div>
+      <div class="card agent">
+        <div class="card-header agent">
+          <span class="label">Version 2</span>
+          AI Agent (e.g. Claude Code, GitHub Copilot Agent)
+        </div>
+        <div class="card-body agent">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Define the objective in plain language</strong> — "Run a CTA A/B test on the vendor landing page. Goal is form submissions. Run for 3 weeks." <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Agent <strong>reads the live page via HubSpot API, pulls 90 days of GA4 data, and generates a full test plan</strong> — 5 variants ranked by predicted impact, traffic split, significance threshold <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Agent <strong>deploys variants directly into HubSpot CMS via API</strong> — no developer ticket, no manual UI work <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Agent <strong>monitors GA4 daily, surfaces early signals, and flags underperformers</strong> — you receive a weekly plain-language summary <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Agent <strong>declares a winner, writes a one-page result summary, logs to a test registry, and generates the next 3 hypotheses</strong> ranked by estimated impact <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Review and approve</strong> — agent updates the production page and archives the test. Human approval is the gate for all permanent changes. <span class="who you">You</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="outcomes">
+      <h2>Why This Matters</h2>
+      <div class="outcome-grid">
+        <div class="outcome-card"><div class="metric">6 weeks → 1 week</div><div class="desc">Full test cycle time — enabling 4–5x more tests per quarter on the same team bandwidth</div></div>
+        <div class="outcome-card"><div class="metric">1–2 → 8–12 variants</div><div class="desc">Per test — AI removes the copywriting bottleneck, enabling true multivariate testing across all three audience segments</div></div>
+        <div class="outcome-card"><div class="metric">0 developer hours</div><div class="desc">Per test — HubSpot CMS API deployment means marketing runs the full test lifecycle without a single developer ticket</div></div>
+      </div>
+    </div>
+    <div class="takeaway">
+      <h2>The Executive Takeaway</h2>
+      <p>A/B testing is one of the highest-ROI activities in digital marketing, but most B2B companies run fewer than 10 tests per year because the operational overhead is prohibitive. With three distinct buyer audiences on a single website, the compounding value of faster, more frequent testing is significant. The shift from AI assistant to AI agent doesn't just save time — it changes what is possible, moving from <strong>occasional testing to a continuous optimization engine</strong> that runs in the background while the team focuses on strategy.</p>
+    </div>
+  </div>
+  <div class="footer">Marketing Operations · GreatAmerica Financial Services · April 2026 · Internal use</div>
+</div>
+
+<!-- USE CASE 3: LEAD GENERATION -->
+<div class="page">
+  <div class="header">
+    <h1>AI Use Case: Lead Generation &amp; Qualification</h1>
+    <div class="sub">Marketing Operations &nbsp;·&nbsp; Pipeline Quality &nbsp;·&nbsp; Real-time scoring, enrichment, and routing</div>
+  </div>
+  <div class="context">
+    <h2>The Business Problem</h2>
+    <p>GreatAmerica's marketing team receives leads from multiple sources — website forms, dealer referrals, trade shows, and inbound campaigns — but qualification is manual, inconsistent, and slow. A small MOps-led team cannot efficiently score every inbound lead against ICP criteria before it reaches a sales rep, resulting in wasted rep time on poor-fit leads and delayed follow-up on high-value ones.</p>
+  </div>
+  <div class="body">
+    <div class="comparison">
+      <div class="card assistant">
+        <div class="card-header assistant">
+          <span class="label">Version 1</span>
+          AI Assistant (e.g. Microsoft Copilot)
+        </div>
+        <div class="card-body assistant">
+          <div class="step"><div class="step-num">1</div><div class="step-text">List your ICP scoring criteria — verticals, company sizes, financing thresholds — and Copilot <strong>drafts a structured scoring rubric with weighted fields</strong> <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Paste your HubSpot form fields into Copilot — it <strong>flags qualification gaps and drafts a revised form field recommendation</strong> <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Brief Copilot on 2–3 key ICP segments — it <strong>drafts a 3-email nurture sequence per segment</strong> tailored to where each is in the buying cycle <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Export a 90-day lead source report from HubSpot</strong> and share it — Copilot summarizes top performers and flags where to shift spend <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Describe your routing rules — Copilot <strong>drafts a HubSpot workflow decision-tree outline</strong> for lead assignment by vertical and source <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Implement the workflow manually in HubSpot</strong> and monitor MQL-to-SQL conversion rates <span class="who you">You</span></div></div>
+        </div>
+      </div>
+      <div class="card agent">
+        <div class="card-header agent">
+          <span class="label">Version 2</span>
+          AI Agent (e.g. Claude Code, GitHub Copilot Agent)
+        </div>
+        <div class="card-body agent">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Set ICP criteria and scoring thresholds once</strong> — company size, vertical, financing need. Agent applies them to every submission from that point forward. <span class="who you">You</span></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Agent <strong>automatically enriches every new lead via ZoomInfo API</strong> — company size, industry, revenue, tech stack — and writes enriched data back to HubSpot. Zero manual lookups. <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Agent <strong>runs the full ICP score and assigns a grade (A/B/C/D)</strong> — weighted by vertical, company size, form intent signals, and financing history. Updates dynamically as the contact engages. <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Agent <strong>routes each qualified lead to the correct rep in HubSpot and Salesforce</strong> — by source, vertical, and geography. Dealer-referred leads automatically associate the partner record. <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Agent <strong>enrolls Grade A and B leads in the correct segment-specific sequence</strong> within minutes of routing — dealer leads get a different track than direct web leads <span class="who ai">AI</span></div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Review the weekly agent report</strong> — conversion rates by source, grade distribution, routing accuracy, and proposed scoring model updates for your approval <span class="who you">You</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="outcomes">
+      <h2>Why This Matters</h2>
+      <div class="outcome-grid">
+        <div class="outcome-card"><div class="metric">Hours → 2 min</div><div class="desc">Lead scoring, enrichment, and routing — at any volume, from submission to assigned rep</div></div>
+        <div class="outcome-card"><div class="metric">2x MQL-to-SQL rate</div><div class="desc">Consistent ICP scoring vs. rep intuition — conservative target: 20% to 35–40% conversion within two quarters</div></div>
+        <div class="outcome-card"><div class="metric">0 manual enrichment</div><div class="desc">Every net-new lead enriched automatically at point of capture via ZoomInfo API — reps have full context before first contact</div></div>
+      </div>
+    </div>
+    <div class="takeaway">
+      <h2>The Executive Takeaway</h2>
+      <p>For a small marketing team, lead qualification is a bottleneck that doesn't scale — every new campaign or partner channel adds volume the same headcount has to absorb manually. An AI agent removes that constraint entirely: leads are scored, enriched, and routed in real time, at any volume, with <strong>consistent ICP logic applied every time</strong>. The business impact is not just efficiency — it is pipeline quality. Sales reps spend time on leads worth pursuing, and the feedback loop between marketing and sales becomes data-driven rather than anecdotal.</p>
+    </div>
+  </div>
+  <div class="footer">Marketing Operations · GreatAmerica Financial Services · April 2026 · Internal use</div>
+</div>
+
+</body>
+</html>

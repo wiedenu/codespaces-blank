@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Use Case — Interactive Prototyping</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px; color: #1a1a1a; background: #f5f5f5; padding: 32px;
+}
+.page { max-width: 860px; margin: 0 auto; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+.header { background: #1a365d; color: white; padding: 28px 36px 22px; }
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.header .sub { font-size: 13px; color: #a0b4cc; margin-top: 5px; }
+.context { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 20px 36px; }
+.context h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #64748b; margin-bottom: 10px; }
+.context p { font-size: 13px; color: #334155; line-height: 1.6; }
+.body { padding: 28px 36px; }
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+.card { border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; }
+.card-header { padding: 14px 18px; font-size: 13px; font-weight: 700; }
+.card-header.assistant { background: #dbeafe; color: #1e40af; }
+.card-header.agent { background: #dcfce7; color: #166534; }
+.card-header .label { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.6px; opacity: 0.7; display: block; margin-bottom: 2px; }
+.card-body { padding: 16px 18px; }
+.step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+.step:last-child { margin-bottom: 0; }
+.step-num { width: 20px; height: 20px; border-radius: 50%; font-size: 10px;
+  font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px; }
+.assistant .step-num { background: #dbeafe; color: #1e40af; }
+.agent .step-num { background: #dcfce7; color: #166534; }
+.step-text { font-size: 12px; line-height: 1.5; color: #374151; }
+.step-text strong { font-weight: 600; color: #111; }
+.step-text .who { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 1px 5px; border-radius: 3px; margin-left: 4px;
+  vertical-align: middle; }
+.you { background: #fef9c3; color: #854d0e; }
+.ai { background: #f0fdf4; color: #166534; }
+.note { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px;
+  padding: 14px 16px; margin-bottom: 32px; font-size: 12px; color: #78350f; line-height: 1.6; }
+.note strong { font-weight: 600; }
+.divider { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+.outcomes { margin-bottom: 32px; }
+.outcomes h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #1a365d; border-bottom: 2px solid #1a365d;
+  padding-bottom: 4px; margin-bottom: 16px; }
+.outcome-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.outcome-card { background: #f8fafc; border-radius: 6px; padding: 14px 16px;
+  border-left: 3px solid #3b82f6; }
+.outcome-card .metric { font-size: 22px; font-weight: 700; color: #1a365d; }
+.outcome-card .desc { font-size: 11px; color: #64748b; margin-top: 3px; line-height: 1.4; }
+.takeaway { background: #1a365d; color: white; border-radius: 6px; padding: 18px 22px; }
+.takeaway h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #a0b4cc; margin-bottom: 10px; }
+.takeaway p { font-size: 13px; line-height: 1.6; color: #e2e8f0; }
+.takeaway strong { color: white; }
+.footer { background: #f8fafc; border-top: 1px solid #e2e8f0;
+  padding: 12px 36px; font-size: 11px; color: #94a3b8; }
+@media print { body { background: white; padding: 0; }
+  .page { box-shadow: none; border-radius: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>AI Use Case: Interactive Prototyping &amp; Mock-up Generation</h1>
+    <div class="sub">Marketing Operations &nbsp;·&nbsp; Web &amp; UX &nbsp;·&nbsp; Stakeholder decisions in hours, not weeks</div>
+  </div>
+
+  <div class="context">
+    <h2>The Business Problem</h2>
+    <p>When a stakeholder needs to visualize a change — a new navigation structure, a landing page layout, a UI option — the current path is: write a brief, wait for a designer, go through revision rounds, and present something weeks later. For low-to-mid complexity decisions, this bottleneck means options don't get properly evaluated before commitments are made. By the time a prototype is ready, the window for real input has often closed.</p>
+  </div>
+
+  <div class="body">
+
+    <div class="comparison">
+
+      <div class="card assistant">
+        <div class="card-header assistant">
+          <span class="label">Version 1</span>
+          AI Assistant (e.g. Microsoft Copilot)
+        </div>
+        <div class="card-body assistant">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Describe the change needed</strong> in plain language to Copilot <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Copilot <strong>generates a written concept</strong> or rough wireframe description <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Interpret the description</strong> into a sketch or rough visual yourself <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text"><strong>Share the concept</strong> with stakeholders — in words or as a rough sketch <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-text"><strong>Go back and forth in words</strong> to refine — no one is reacting to anything real yet <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-text"><strong>Hand off to designer</strong> for the actual mock-up — weeks into the process <span class="who you">You</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card agent">
+        <div class="card-header agent">
+          <span class="label">Version 2</span>
+          AI Agent (e.g. Claude Code, GitHub Copilot Agent)
+        </div>
+        <div class="card-body agent">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Describe the goal in plain language: <strong>"Show me two navigation options — labeled buttons vs. dropdown"</strong> <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Agent <strong>generates a fully functional interactive HTML prototype</strong> — multiple variants, toggles, clickable states <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Share the link directly</strong> with stakeholders — no designer or developer required for the review round <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">Stakeholders <strong>react to something real</strong> — click through options, compare variants side by side <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-text">Agent <strong>incorporates feedback and produces a revised prototype</strong> in minutes <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-text"><strong>Approved direction goes to design/dev</strong> with a clear, validated spec — no guesswork <span class="who you">You</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <strong>The critical enabler — documented brand and design standards:</strong> This use case delivers the most value when brand standards, UI patterns, and design system guidelines are documented and available to the AI. If the AI knows GreatAmerica's colors, typography, and component patterns, the prototype already looks right on the first pass. Documented design standards aren't just a design team project — they're AI-readiness infrastructure.
+    </div>
+
+    <div class="outcomes">
+      <h2>Why This Matters</h2>
+      <div class="outcome-grid">
+        <div class="outcome-card">
+          <div class="metric">Weeks → Hours</div>
+          <div class="desc">Time from plain-language brief to a stakeholder-ready interactive prototype</div>
+        </div>
+        <div class="outcome-card">
+          <div class="metric">2+ variants</div>
+          <div class="desc">Options reviewable in a single prototype — stakeholders compare and decide instead of imagining</div>
+        </div>
+        <div class="outcome-card">
+          <div class="metric">0 designer hours</div>
+          <div class="desc">Required for the initial stakeholder review round — designers engage on decisions, not first drafts</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h2>The Executive Takeaway</h2>
+      <p>Speed of iteration is a competitive advantage. This use case compresses the feedback loop on design decisions from weeks to hours — not by removing designers from the process, but by <strong>moving them to the right part of it</strong>. Designers spend their time on decisions that require design expertise, not producing first drafts that get changed in the first review. Stakeholders give feedback on something real instead of approving a description of something that hasn't been built yet. Better decisions, faster — with less rework downstream.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Marketing Operations · GreatAmerica Financial Services · April 2026 · Internal use
+  </div>
+
+</div>
+</body>
+</html>

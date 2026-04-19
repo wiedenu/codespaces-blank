@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Use Case — Living Role Onboarding Document</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px; color: #1a1a1a; background: #f5f5f5; padding: 32px;
+}
+.page { max-width: 860px; margin: 0 auto; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+.header { background: #1a365d; color: white; padding: 28px 36px 22px; }
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.header .sub { font-size: 13px; color: #a0b4cc; margin-top: 5px; }
+.context { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 20px 36px; }
+.context h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #64748b; margin-bottom: 10px; }
+.context p { font-size: 13px; color: #334155; line-height: 1.6; }
+.body { padding: 28px 36px; }
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+.card { border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; }
+.card-header { padding: 14px 18px; font-size: 13px; font-weight: 700; }
+.card-header.assistant { background: #dbeafe; color: #1e40af; }
+.card-header.agent { background: #dcfce7; color: #166534; }
+.card-header .label { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.6px; opacity: 0.7; display: block; margin-bottom: 2px; }
+.card-body { padding: 16px 18px; }
+.step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+.step:last-child { margin-bottom: 0; }
+.step-num { width: 20px; height: 20px; border-radius: 50%; font-size: 10px;
+  font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px; }
+.assistant .step-num { background: #dbeafe; color: #1e40af; }
+.agent .step-num { background: #dcfce7; color: #166534; }
+.step-text { font-size: 12px; line-height: 1.5; color: #374151; }
+.step-text strong { font-weight: 600; color: #111; }
+.step-text .who { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 1px 5px; border-radius: 3px; margin-left: 4px;
+  vertical-align: middle; }
+.you { background: #fef9c3; color: #854d0e; }
+.ai { background: #f0fdf4; color: #166534; }
+.divider { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+.outcomes { margin-bottom: 32px; }
+.outcomes h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #1a365d; border-bottom: 2px solid #1a365d;
+  padding-bottom: 4px; margin-bottom: 16px; }
+.outcome-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.outcome-card { background: #f8fafc; border-radius: 6px; padding: 14px 16px;
+  border-left: 3px solid #3b82f6; }
+.outcome-card .metric { font-size: 22px; font-weight: 700; color: #1a365d; }
+.outcome-card .desc { font-size: 11px; color: #64748b; margin-top: 3px; line-height: 1.4; }
+.takeaway { background: #1a365d; color: white; border-radius: 6px; padding: 18px 22px; }
+.takeaway h2 { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #a0b4cc; margin-bottom: 10px; }
+.takeaway p { font-size: 13px; line-height: 1.6; color: #e2e8f0; }
+.takeaway strong { color: white; }
+.footer { background: #f8fafc; border-top: 1px solid #e2e8f0;
+  padding: 12px 36px; font-size: 11px; color: #94a3b8; }
+@media print { body { background: white; padding: 0; }
+  .page { box-shadow: none; border-radius: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>AI Use Case: Living Role Onboarding Document</h1>
+    <div class="sub">Marketing Operations &nbsp;·&nbsp; Knowledge Retention &nbsp;·&nbsp; Institutional memory that updates itself</div>
+  </div>
+
+  <div class="context">
+    <h2>The Business Problem</h2>
+    <p>When someone leaves a role, most of what made them effective leaves with them — the workarounds, the vendor relationships, the undocumented gotchas. Onboarding a replacement means months of re-learning things that were already known. Writing a proper onboarding guide is always acknowledged as important and always deprioritized, because it feels like a project separate from the actual job. So it never gets done until someone walks out the door.</p>
+  </div>
+
+  <div class="body">
+
+    <div class="comparison">
+
+      <div class="card assistant">
+        <div class="card-header assistant">
+          <span class="label">Version 1</span>
+          AI Assistant (e.g. Microsoft Copilot)
+        </div>
+        <div class="card-body assistant">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">At week's end, <strong>paste your notes or a summary</strong> into Copilot <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Ask Copilot to <strong>extract what a new person needs to know</strong> — contacts, decisions, gotchas <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">Copilot <strong>produces a structured summary</strong> from what you pasted <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text"><strong>Organize, format, and save</strong> the summary to the right place <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-text"><strong>Repeat weekly</strong> — manually initiated, nothing carries over between sessions <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-text"><strong>Consolidate and reorganize</strong> the accumulated summaries periodically <span class="who you">You</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card agent">
+        <div class="card-header agent">
+          <span class="label">Version 2</span>
+          AI Agent (e.g. Claude Code, GitHub Copilot Agent)
+        </div>
+        <div class="card-body agent">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Agent <strong>reads work logs, meeting notes, and task history</strong> automatically — daily or weekly <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Agent <strong>identifies process knowledge, key relationships, and gotchas</strong> worth preserving <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">Agent <strong>appends captures to the living document</strong> — organized by system, relationship, and process type <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">On Fridays, agent <strong>synthesizes the week's captures</strong> into the main guide <span class="who ai">AI</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-text"><strong>Review the weekly synthesis</strong> — flag anything to remove or expand <span class="who you">You</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-text">New hire reads a document <strong>built from real work</strong> — not a job description — and gets up to speed in days <span class="who you">You</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="outcomes">
+      <h2>Why This Matters</h2>
+      <div class="outcome-grid">
+        <div class="outcome-card">
+          <div class="metric">0 hrs/week</div>
+          <div class="desc">Documentation time added to the role holder's workload — the document builds itself</div>
+        </div>
+        <div class="outcome-card">
+          <div class="metric">Days not months</div>
+          <div class="desc">Time for a new hire to get up to speed with a living onboarding document vs. tribal knowledge transfer</div>
+        </div>
+        <div class="outcome-card">
+          <div class="metric">Always current</div>
+          <div class="desc">Reflects how the role actually works today — not how it worked when someone last found time to write it down</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h2>The Executive Takeaway</h2>
+      <p>Every organization loses knowledge when people leave. The standard solution — write an onboarding guide before you go — produces a document built in a departure rush, not from daily reality. An AI agent turns documentation into a <strong>byproduct of work already being done</strong>. The role holder doesn't add to their workload; the agent captures what's happening anyway. What a new hire inherits isn't a job description — it's a living record of how the role actually operates, updated every week until the day they start.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Marketing Operations · GreatAmerica Financial Services · April 2026 · Internal use
+  </div>
+
+</div>
+</body>
+</html>
