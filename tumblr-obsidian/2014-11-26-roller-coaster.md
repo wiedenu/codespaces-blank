@@ -1,10 +1,3 @@
----
-title: "Roller Coaster"
-date: 2014-11-26
-source: tumblr
-tumblr_id: "103659798441"
----
-
 # Roller Coaster
 When I’m having a bad day, I can’t function. All my energy, what I have of it, is spent going through the motions. When I think about those bad days, that’s why I would prefer to stay in bed under the blanket; why spend energy pretending to be okay when I can save my energy and be safe in bed?
 

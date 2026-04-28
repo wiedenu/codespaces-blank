@@ -1,10 +1,3 @@
----
-title: "Authentic"
-date: 2014-12-03
-source: tumblr
-tumblr_id: "104247898306"
----
-
 # Authentic
 **What is the most authentic version of myself?**
 

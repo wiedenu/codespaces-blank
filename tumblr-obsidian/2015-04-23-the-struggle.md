@@ -1,10 +1,3 @@
----
-title: "The Struggle."
-date: 2015-04-23
-source: tumblr
-tumblr_id: "117174747784"
----
-
 # The Struggle.
 **A long time ago, in a relationship far, far away…**
 

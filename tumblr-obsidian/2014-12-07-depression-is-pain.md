@@ -1,10 +1,3 @@
----
-title: "Depression is pain."
-date: 2014-12-07
-source: tumblr
-tumblr_id: "104561633966"
----
-
 # Depression is pain.
 **As I travel this journey,** ~~I’ve discovered, no,~~ I’ve been learning more about myself and how to listen to my mind and my body. Where I previously would lash out and cause others pain when I thought I was angry, I now know that when I am angry, I am usually in pain myself.
 

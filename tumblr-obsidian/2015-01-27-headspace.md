@@ -1,10 +1,3 @@
----
-title: "Headspace"
-date: 2015-01-27
-source: tumblr
-tumblr_id: "109319316171"
----
-
 # Headspace
 **My journey this week includes a focus on trying to be more mindful.**
 

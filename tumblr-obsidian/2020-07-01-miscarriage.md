@@ -1,10 +1,3 @@
----
-title: "Miscarriage"
-date: 2020-07-01
-source: tumblr
-tumblr_id: "622493660160901120"
----
-
 # Miscarriage
 There’s a lot to get down. But I don’t know where to start or what to write. So, I’m just going to keep writing.
 

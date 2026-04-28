@@ -1,10 +1,3 @@
----
-title: "Judging Others"
-date: 2015-05-22
-source: tumblr
-tumblr_id: "119598241361"
----
-
 # Judging Others
 > “Judge not, that ye be not judged.” - Matthew 7:1  
 > 

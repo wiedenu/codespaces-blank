@@ -1,10 +1,3 @@
----
-title: "Something hard to say..."
-date: 2014-11-26
-source: tumblr
-tumblr_id: "103652159886"
----
-
 # Something hard to say...
 …but needs to be said.
 

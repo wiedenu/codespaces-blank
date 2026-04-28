@@ -1,10 +1,3 @@
----
-title: "A Deep Dark Hole"
-date: 2015-01-23
-source: tumblr
-tumblr_id: "108916153601"
----
-
 # A Deep Dark Hole
 **How am I supposed to get out of this?**
 

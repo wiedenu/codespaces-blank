@@ -1,10 +1,3 @@
----
-title: "Devastating"
-date: 2015-01-27
-source: tumblr
-tumblr_id: "109301170276"
----
-
 # Devastating
 On my commute last night, a guest on the podcast I was listening to made a comment that stuck with me.
 

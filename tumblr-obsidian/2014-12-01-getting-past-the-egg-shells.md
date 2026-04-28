@@ -1,10 +1,3 @@
----
-title: "Getting past the egg shells"
-date: 2014-12-01
-source: tumblr
-tumblr_id: "104098996763"
----
-
 # Getting past the egg shells
 **One of the biggest obstacles I’m facing currently is the idea that those around me are “treating me with kids’ gloves” or tip-toe'ing through the egg shells.** It’s an incredible defeating thought. The thought that those closest to me are not treating me the way they used to, or the way I think they should be treating me.
 

@@ -1,10 +1,3 @@
----
-title: "Being Tired"
-date: 2015-05-05
-source: tumblr
-tumblr_id: "118205305851"
----
-
 # Being Tired
 **What do you do when you’re so tired** that you just want to curl up in the fetal position and go to sleep?
 

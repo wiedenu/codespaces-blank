@@ -1,10 +1,3 @@
----
-title: "Down, then Up"
-date: 2014-12-02
-source: tumblr
-tumblr_id: "104175075341"
----
-
 # Down, then Up
 **The spouse was down a bit last night.** While they were out, I got some flowers and started decorating the house for Christmas. Things seemed to improve quite a bit when they got home and saw all that I had done; that I was taking care of them.
 

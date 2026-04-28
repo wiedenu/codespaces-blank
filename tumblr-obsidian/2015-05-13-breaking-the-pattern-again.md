@@ -1,10 +1,3 @@
----
-title: "Breaking the pattern, again."
-date: 2015-05-13
-source: tumblr
-tumblr_id: "118887745056"
----
-
 # Breaking the pattern, again.
 **Had another appointment with the therapist this week.** Needed to cover a bad day from last week with her. Once we finally dug through the overall issues and happenings, we talked again about the idea of breaking the pattern, specifically how I react after arguments.
 

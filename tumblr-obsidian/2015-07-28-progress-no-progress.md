@@ -1,10 +1,3 @@
----
-title: "Progress No Progress"
-date: 2015-07-28
-source: tumblr
-tumblr_id: "125259332756"
----
-
 # Progress No Progress
 It’s hard to see through the fog sometimes.
 

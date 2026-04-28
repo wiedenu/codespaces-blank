@@ -1,10 +1,3 @@
----
-title: "Headspace, Day 3"
-date: 2015-02-10
-source: tumblr
-tumblr_id: "110681589711"
----
-
 # Headspace, Day 3
 **Took some time today to revisit the _Headspace app*._**
 

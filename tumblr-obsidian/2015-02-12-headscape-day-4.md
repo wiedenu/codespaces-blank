@@ -1,10 +1,3 @@
----
-title: "Headscape, Day 4"
-date: 2015-02-12
-source: tumblr
-tumblr_id: "110812933171"
----
-
 # Headscape, Day 4
 **Used _Headscape_ a little differently yesterday.** Instead of meditating over my lunch hour like I’ve done lately, I sat quietly in our guest bedroom and meditated before going to bed.
 

@@ -1,10 +1,3 @@
----
-title: "Growing through the toughness"
-date: 2018-10-08
-source: tumblr
-tumblr_id: "178843290731"
----
-
 # Growing through the toughness
 **I didn’t have a title for the better part of an entire week,** as this was more just collecting my thoughts, letting them evolve over time, and reflecting even more on those thoughts and these writings. I thought about the theme of my past week, about my musings below, and I felt that the idea of “growing through the toughness” embodied my experiences.
 

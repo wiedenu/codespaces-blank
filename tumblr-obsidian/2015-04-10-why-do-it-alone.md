@@ -1,10 +1,3 @@
----
-title: "Why do it alone?"
-date: 2015-04-10
-source: tumblr
-tumblr_id: "116033524471"
----
-
 # Why do it alone?
 > Why do I write for myself?   
 > 

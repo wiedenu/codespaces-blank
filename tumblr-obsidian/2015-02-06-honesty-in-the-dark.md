@@ -1,10 +1,3 @@
----
-title: "Honesty in the Dark"
-date: 2015-02-06
-source: tumblr
-tumblr_id: "110280693111"
----
-
 # Honesty in the Dark
 **I don’t know where to start.**  
 

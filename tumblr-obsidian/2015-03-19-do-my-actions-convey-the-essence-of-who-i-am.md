@@ -1,10 +1,3 @@
----
-title: "Do my actions convey the essence of who I am?"
-date: 2015-03-19
-source: tumblr
-tumblr_id: "114077237461"
----
-
 # Do my actions convey the essence of who I am?
 I heard this question listening to a podcast several weeks ago. I made a note of this so I could revisit the question at a later point, and only now do I feel like I can at least pose a coherent answer, if not a good one.
 

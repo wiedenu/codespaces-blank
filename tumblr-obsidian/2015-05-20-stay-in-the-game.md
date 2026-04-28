@@ -1,10 +1,3 @@
----
-title: "Stay in the game"
-date: 2015-05-20
-source: tumblr
-tumblr_id: "119417487366"
----
-
 # Stay in the game
 > “Do whatever it takes to keep yourself in the game here. Your actions should move you forward.”
 

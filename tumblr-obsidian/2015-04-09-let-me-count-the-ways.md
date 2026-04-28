@@ -1,10 +1,3 @@
----
-title: "Let me count the ways"
-date: 2015-04-09
-source: tumblr
-tumblr_id: "115967160996"
----
-
 # Let me count the ways
 **A few weekends ago,** I went to my hometown and fell in love. Mind you, I’m married. I love my spouse, but that’s not who I fell in love with.
 

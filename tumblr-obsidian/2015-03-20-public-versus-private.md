@@ -1,10 +1,3 @@
----
-title: "Public versus Private"
-date: 2015-03-20
-source: tumblr
-tumblr_id: "114143100071"
----
-
 # Public versus Private
 **I’ve always journaled.**
 

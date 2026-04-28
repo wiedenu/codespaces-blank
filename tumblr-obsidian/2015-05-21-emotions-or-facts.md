@@ -1,10 +1,3 @@
----
-title: "Emotions or Facts"
-date: 2015-05-21
-source: tumblr
-tumblr_id: "119536731831"
----
-
 # Emotions or Facts
 **It’s a damn shame reality gets in the way of our dreams.**
 

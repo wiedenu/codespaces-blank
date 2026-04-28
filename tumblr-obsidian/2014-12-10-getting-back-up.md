@@ -1,10 +1,3 @@
----
-title: "Getting Back Up"
-date: 2014-12-10
-source: tumblr
-tumblr_id: "104844373491"
----
-
 # Getting Back Up
 > “Do not judge me by my successes. Judge me by how many times I fell down and got back up again.” - Nelson Mandela
 

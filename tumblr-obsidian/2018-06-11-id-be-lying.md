@@ -1,10 +1,3 @@
----
-title: "I’d be lying..."
-date: 2018-06-11
-source: tumblr
-tumblr_id: "174806279661"
----
-
 # I’d be lying...
 ## **Having a really hard time today.**
 

@@ -1,10 +1,3 @@
----
-title: "Exercise Addiction?"
-date: 2015-02-06
-source: tumblr
-tumblr_id: "110286808941"
----
-
 # Exercise Addiction?
 * * *
 

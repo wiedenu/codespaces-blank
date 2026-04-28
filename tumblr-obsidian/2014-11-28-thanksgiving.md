@@ -1,10 +1,3 @@
----
-title: "Thanksgiving"
-date: 2014-11-28
-source: tumblr
-tumblr_id: "103858374576"
----
-
 # Thanksgiving
 I know I should be happy.
 

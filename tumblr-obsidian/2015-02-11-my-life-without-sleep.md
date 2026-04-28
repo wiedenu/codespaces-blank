@@ -1,10 +1,3 @@
----
-title: "My life without sleep"
-date: 2015-02-11
-source: tumblr
-tumblr_id: "110729697861"
----
-
 # My life without sleep
 **Welcome to Suckville. Population: 1. Me.**
 

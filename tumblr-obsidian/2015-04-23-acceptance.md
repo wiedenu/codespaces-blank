@@ -1,10 +1,3 @@
----
-title: "Acceptance"
-date: 2015-04-23
-source: tumblr
-tumblr_id: "117197854948"
----
-
 # Acceptance
 **Extremely tired today.**
 

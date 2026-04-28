@@ -1,10 +1,3 @@
----
-title: "That was interesting"
-date: 2014-12-01
-source: tumblr
-tumblr_id: "104095643181"
----
-
 # That was interesting
 **I was getting ready to write about an awesome Thanksgiving holiday****.** But then something else happened.
 

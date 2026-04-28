@@ -1,10 +1,3 @@
----
-title: "Breaking the pattern"
-date: 2015-04-28
-source: tumblr
-tumblr_id: "117606391081"
----
-
 # Breaking the pattern
 **Just finished an appointment with my therapist.** We talked about the fact that for the past month my weekends have, let’s just say, less than stellar. 
 

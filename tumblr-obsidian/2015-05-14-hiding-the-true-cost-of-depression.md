@@ -1,10 +1,3 @@
----
-title: "Hiding the true cost of depression"
-date: 2015-05-14
-source: tumblr
-tumblr_id: "118976561346"
----
-
 # Hiding the true cost of depression
 > **Health care is so expensive and opaque that I think a lot people have a feeling that, “Maybe I’m depressed, maybe I have anxiety, but I’m probably fine.” They don’t want to potentially spend thousands of dollars seeing a doctor, so they wait until it’s absolutely necessary.**
 > 

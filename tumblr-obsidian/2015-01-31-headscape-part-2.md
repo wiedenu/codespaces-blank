@@ -1,10 +1,3 @@
----
-title: "Headscape, Part 2"
-date: 2015-01-31
-source: tumblr
-tumblr_id: "109728668801"
----
-
 # Headscape, Part 2
 _“Meditation is not about controlling thoughts, but more about letting them be.”_
 

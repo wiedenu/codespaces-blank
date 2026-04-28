@@ -1,10 +1,3 @@
----
-title: "Write it down"
-date: 2015-01-26
-source: tumblr
-tumblr_id: "109234434146"
----
-
 # Write it down
 > Whether it’s a card to someone else, or a note to yourself about what you’re grateful for, you can just write something down.
 

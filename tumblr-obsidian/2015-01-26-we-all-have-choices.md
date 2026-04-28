@@ -1,10 +1,3 @@
----
-title: "We all have choices"
-date: 2015-01-26
-source: tumblr
-tumblr_id: "109234120001"
----
-
 # We all have choices
 > “Gratitude is a choice. We can choose to be grateful even when our emotions are steeped in hurt and resentment, or we would prefer our current life circumstances to be different.” [_\- Robert A. Emmons_](http://www.vox.com/2014/11/27/7295851/gratitude-health-benefits)
 

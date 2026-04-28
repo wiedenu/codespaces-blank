@@ -1,10 +1,3 @@
----
-title: "Notes on Authenticity"
-date: 2014-12-03
-source: tumblr
-tumblr_id: "104249984936"
----
-
 # Notes on Authenticity
 > Authenticity is correlated with many aspects of psychological well-being, including vitality, self-esteem, and coping skills. Acting in accordance with one’s core self—a trait called self-determination—is ranked by some experts as one of three basic psychological needs, along with competence and a sense of relatedness.
 

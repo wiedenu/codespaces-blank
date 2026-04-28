@@ -1,10 +1,3 @@
----
-title: "Write to Learn"
-date: 2018-10-25
-source: tumblr
-tumblr_id: "179436551136"
----
-
 # Write to Learn
 Tonight, I’m writing to learn.   
 

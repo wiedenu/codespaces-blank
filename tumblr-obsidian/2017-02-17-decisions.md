@@ -1,10 +1,3 @@
----
-title: "Decisions"
-date: 2017-02-17
-source: tumblr
-tumblr_id: "157344801261"
----
-
 # Decisions
 Without getting into too many specifics (in order to keep things a little more private), I’ve made the preliminary decision to run for a state office in 2018. 
 

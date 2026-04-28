@@ -1,10 +1,3 @@
----
-title: "Romantic Love as a Mystery"
-date: 2015-02-25
-source: tumblr
-tumblr_id: "112058837966"
----
-
 # Romantic Love as a Mystery
 “We need a grounded theory of love like never before. And now we have one.” - Dr. Sue Johnson
 
