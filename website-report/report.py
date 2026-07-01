@@ -9,9 +9,7 @@ Usage:
   python report.py --start 2026-01-01 --end 2026-01-31  # adds custom range
 
 Required env vars:
-  GOOGLE_CLIENT_ID
-  GOOGLE_CLIENT_SECRET
-  GOOGLE_REFRESH_TOKEN
+  GOOGLE_SERVICE_ACCOUNT_JSON  # full service-account key JSON, as a string
   HUBSPOT_API_TOKEN
 """
 
@@ -140,19 +138,10 @@ STANDARD_RANGES = [
 # ---------------------------------------------------------------------------
 
 def google_credentials():
-    from google.oauth2.credentials import Credentials
-    from google.auth.transport.requests import Request
+    from google.oauth2.service_account import Credentials
 
-    creds = Credentials(
-        token=None,
-        refresh_token=os.environ["GOOGLE_REFRESH_TOKEN"],
-        token_uri="https://oauth2.googleapis.com/token",
-        client_id=os.environ["GOOGLE_CLIENT_ID"],
-        client_secret=os.environ["GOOGLE_CLIENT_SECRET"],
-        scopes=GOOGLE_SCOPES,
-    )
-    creds.refresh(Request())
-    return creds
+    info = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
+    return Credentials.from_service_account_info(info, scopes=GOOGLE_SCOPES)
 
 
 # ---------------------------------------------------------------------------
