@@ -1,0 +1,382 @@
+<title>Office Politics Learnings — The Prework</title>
+<style>
+  :root {
+    --bg: #FBFAF7;
+    --surface: #FFFFFF;
+    --ink: #1C1E24;
+    --muted: #5B606C;
+    --faint: #8A8F9A;
+    --line: #E7E3D9;
+    --brass: #A9761F;
+    --brass-soft: #F3E9D6;
+    --teal: #1F7A6E;
+    --teal-soft: #DCEEEA;
+    --shadow: 0 1px 2px rgba(28,30,36,.05), 0 8px 24px rgba(28,30,36,.06);
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, "Cascadia Code", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181D;
+      --surface: #1E2128;
+      --ink: #ECEAE3;
+      --muted: #A2A8B4;
+      --faint: #767C88;
+      --line: #2C2F37;
+      --brass: #D6A44A;
+      --brass-soft: #2A2318;
+      --teal: #55B9AB;
+      --teal-soft: #16241F;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF7; --surface: #FFFFFF; --ink: #1C1E24; --muted: #5B606C;
+    --faint: #8A8F9A; --line: #E7E3D9; --brass: #A9761F; --brass-soft: #F3E9D6;
+    --teal: #1F7A6E; --teal-soft: #DCEEEA;
+    --shadow: 0 1px 2px rgba(28,30,36,.05), 0 8px 24px rgba(28,30,36,.06);
+  }
+  :root[data-theme="dark"] {
+    --bg: #16181D; --surface: #1E2128; --ink: #ECEAE3; --muted: #A2A8B4;
+    --faint: #767C88; --line: #2C2F37; --brass: #D6A44A; --brass-soft: #2A2318;
+    --teal: #55B9AB; --teal-soft: #16241F;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 72px 24px 96px;
+  }
+
+  /* ---- Header ---- */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -.01em;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+  h1 em { color: var(--brass); font-style: italic; }
+  .lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .source {
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--faint);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+  .source b { color: var(--muted); font-weight: 600; }
+
+  /* ---- Section headers ---- */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 64px 0 8px;
+  }
+  .section-head .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -.01em;
+  }
+  .section-note {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 0 0 8px;
+    max-width: 62ch;
+  }
+  .grp-brass .tag { background: var(--brass-soft); color: var(--brass); }
+  .grp-teal .tag { background: var(--teal-soft); color: var(--teal); }
+
+  /* ---- Cards ---- */
+  .card {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px 28px;
+    margin-top: 20px;
+    box-shadow: var(--shadow);
+  }
+  .medallion {
+    width: 64px; height: 64px;
+    border-radius: 14px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .grp-brass .medallion { background: var(--brass-soft); }
+  .grp-teal .medallion { background: var(--teal-soft); }
+  .grp-brass .medallion svg { stroke: var(--brass); }
+  .grp-teal .medallion svg { stroke: var(--teal); }
+  .medallion svg { width: 32px; height: 32px; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+  .card h3 {
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 2px 0 10px;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+  }
+  .plain { margin: 0 0 14px; font-size: 15.5px; color: var(--ink); }
+  .plain + .plain { margin-top: -4px; }
+
+  .yours {
+    font-size: 14.5px;
+    color: var(--muted);
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    margin: 0 0 16px;
+  }
+  .yours .lbl {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .define {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 18px 0 0;
+    padding-left: 16px;
+    border-left: 2px solid var(--brass);
+  }
+  .define b { color: var(--ink); }
+
+  .takeaway {
+    margin-top: 56px;
+    background: var(--teal-soft);
+    border: 1px solid var(--teal);
+    border-radius: 16px;
+    padding: 28px 30px;
+  }
+  .takeaway .lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 10px;
+  }
+  .takeaway h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -.01em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .takeaway p { margin: 0 0 12px; font-size: 15.5px; color: var(--ink); }
+  .takeaway p:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--faint);
+  }
+  footer b { color: var(--muted); }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 48px 18px 72px; }
+    .card { grid-template-columns: 1fr; gap: 16px; padding: 22px; }
+    .medallion { width: 56px; height: 56px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card, .section-head, header { animation: rise .5s cubic-bezier(.2,.7,.3,1) both; }
+    .card:nth-child(2) { animation-delay: .04s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">The Prework · Office Politics Field Notes</p>
+    <h1>Work gets you in the room. The <em>prework</em> decides what happens there.</h1>
+    <p class="lede">Six learnings on winning decisions before the meeting — pulled from Sara McNamara's playbook and pressure-tested against this week's bottleneck.</p>
+    <p class="define"><b>The "prework"</b> is the private, one-on-one groundwork you do <em>before</em> a meeting — figuring out who really decides, then lining up their support in advance — so the decision is effectively made before anyone sits down.</p>
+    <div class="source">
+      <span><b>Source:</b> The Marketing Operations Strategist, Jun 25 2026</span>
+      <span><b>Cross-check:</b> Session learnings, Jul 6 2026</span>
+    </div>
+  </header>
+
+  <!-- ============ GROUP 1 ============ -->
+  <div class="grp grp-brass">
+    <div class="section-head">
+      <span class="tag">The Playbook</span>
+      <h2>What it gets right — and where you already live it</h2>
+    </div>
+    <p class="section-note">Sara's system, mapped onto your own week. Where you've already run the move, it's called out.</p>
+
+    <!-- L1 -->
+    <article class="card">
+      <div class="medallion" aria-hidden="true">
+        <!-- two chat bubbles: the 1:1 -->
+        <svg viewBox="0 0 32 32"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-4 4v-4H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M22 12h4a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v3l-3-3h-3"/></svg>
+      </div>
+      <div>
+        <h3>The real vote happens before the meeting</h3>
+        <p class="plain">You can be right and still lose. By the time everyone sits down, the decision is mostly made — in DMs, 1:1s, and five-minute hallway catch-ups. Stop polishing the deck and start counting the vote early.</p>
+        <div class="yours">
+          <span class="lbl">You already ran this</span>
+          On MKB-6765 you emailed Jana and Kerrie ahead of time to hold your seat, instead of waiting to react. That's textbook prework — the MKB-5694 miss, run in reverse.
+        </div>
+      </div>
+    </article>
+
+    <!-- L2 -->
+    <article class="card">
+      <div class="medallion" aria-hidden="true">
+        <!-- chess king with a warning notch -->
+        <svg viewBox="0 0 32 32"><path d="M16 3v5m-2.5-2.5h5"/><path d="M16 8c-3 3-6 4-6 8 0 2 2 3 6 3s6-1 6-3c0-4-3-5-6-8Z"/><path d="M9 23h14l-1.5 5h-11L9 23Z"/><circle cx="24" cy="6" r="2.4"/></svg>
+      </div>
+      <div>
+        <h3>Map the room by power — then by failure mode</h3>
+        <p class="plain">The org chart says who reports to whom, not who decides. Find the one real <b>Decider</b>, the <b>Shapers</b> whose opinion they quietly borrow, and the <b>Blocker</b> who can only say no. Then add the step Sara skips: ask <em>how each one fails.</em></p>
+        <div class="yours">
+          <span class="lbl">Your wrinkle</span>
+          Your Decider (Heather) is also your Blocker. She says yes, then blocks by going quiet — the scorecard was signed off and re-promised, then simply not sent. A Decider who goes silent after "yes" needs a different tactic than one who argues.
+        </div>
+      </div>
+    </article>
+
+    <!-- L3 -->
+    <article class="card">
+      <div class="medallion" aria-hidden="true">
+        <!-- key: currency -->
+        <svg viewBox="0 0 32 32"><circle cx="10" cy="10" r="6"/><path d="M14.2 14.2 26 26"/><path d="M22 22l3-3m-6 0 3-3"/></svg>
+      </div>
+      <div>
+        <h3>Sell to their currency, not your logic</h3>
+        <p class="plain">Nobody backs a proposal because it's correct. They back it because it moves something they care about — or protects them from something they fear. Same proposal, a different pitch for each person.</p>
+        <div class="yours">
+          <span class="lbl">You know the currency</span>
+          Heather's is reputation (why she won't drop the IRH handle) and a hatred of padded, vanity metrics (why FY27 targets were left off). Frame every ask as protecting <em>those</em> — not as "here's the right answer."
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- ============ GROUP 2 ============ -->
+  <div class="grp grp-teal">
+    <div class="section-head">
+      <span class="tag">Your Original Material</span>
+      <h2>Where the playbook goes blind — and you don't</h2>
+    </div>
+    <p class="section-note">Sara's system ends at the meeting. These three are the pain she skips — and they're already fully formed in your own notes. This is what's yours to write.</p>
+
+    <!-- L4 -->
+    <article class="card">
+      <div class="medallion" aria-hidden="true">
+        <!-- hourglass with a check -->
+        <svg viewBox="0 0 32 32"><path d="M8 4h16M8 28h16"/><path d="M8 4c0 6 8 8 8 8s8-2 8-8M8 28c0-6 8-8 8-8s8 2 8 8"/><path d="M13 24l2.5 2.5L20 21"/></svg>
+      </div>
+      <div>
+        <h3>Winning the vote isn't the finish line</h3>
+        <p class="plain">Sara's playbook ends at the meeting — "the vote already happened, the meeting is a formality." But in ops the more common pain is the decision that's <em>won</em> and still doesn't move, because it's parked on one person.</p>
+        <div class="yours">
+          <span class="lbl">Your proof</span>
+          The scorecard: signed off, shown to the team, re-promised the same day — and four hours later, nothing. The prework has no answer for the post-decision bottleneck. That gap is your sharpest angle.
+        </div>
+      </div>
+    </article>
+
+    <!-- L5 -->
+    <article class="card">
+      <div class="medallion" aria-hidden="true">
+        <!-- inbox trays with an out-arrow -->
+        <svg viewBox="0 0 32 32"><path d="M4 18l3-11h18l3 11"/><path d="M4 18v6a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-6h-8a4 4 0 0 1-8 0H4Z"/><path d="M16 3v7m-3-3 3 3 3-3"/></svg>
+      </div>
+      <div>
+        <h3>Overwhelm is a map of other people's inboxes</h3>
+        <p class="plain">The "I'm behind" feeling usually isn't workload. Inventory two columns — what's actually <b>yours to move</b> vs. what's <b>waiting on someone else</b> — and the dread collapses to a short list.</p>
+        <div class="yours">
+          <span class="lbl">Confirmed twice</span>
+          On 7/1 and 7/6 the Sunday-scaries "nothing's moving" feeling turned out to be external-dependency backup, not a real pile of work. You called it "a big one." It's your most original idea — and it's nowhere in Sara's piece.
+        </div>
+      </div>
+    </article>
+
+    <!-- L6 -->
+    <article class="card">
+      <div class="medallion" aria-hidden="true">
+        <!-- alarm clock: the forcing function -->
+        <svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="10"/><path d="M16 13v5l3.5 2"/><path d="M6 6 3 9m23-3 3 3M10 27l-2 3m14-3 2 3"/></svg>
+      </div>
+      <div>
+        <h3>Relationships get the yes; forcing functions get it done</h3>
+        <p class="plain">Prework is all relationship work — but relationships don't execute on their own. Even a same-day promise doesn't reliably fire. Pair every "yes" with a forcing function: a nudge pass, a "thoughts by Friday" one-liner, a dashboard flag.</p>
+        <div class="yours">
+          <span class="lbl">The recurring fix</span>
+          "Naming a pattern once doesn't fix it." You've diagnosed the Heather bottleneck repeatedly — the fix is a scheduled forcing function <em>each time</em>, not another diagnosis.
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="takeaway">
+    <p class="lbl">Your takeaway</p>
+    <h3>Get a resolution on blockers — don't let them sit</h3>
+    <p>Especially for operations work, the real cost isn't a "no" — it's the open-ended wait. Ops can't run on maybes. So stop waiting for a blocker to resolve itself and force it to one of three things: a yes, a no, or a date.</p>
+    <p>The move: sort every blocker into <b>mine to move</b> vs. <b>genuinely needs someone else</b>. Act on the first bucket today — no permission required. On the second, attach a forcing function: a dated <em>"proceeding unless you say otherwise."</em> A blocker with no resolution mechanism is just a wait with better branding.</p>
+  </div>
+
+  <footer>
+    <b>How to use this:</b> the brass group is Sara's playbook mapped to your week — reference it. The teal group is your writing material — lead a post or an Ops Table draft with <b>"Overwhelm is a map of other people's inboxes."</b>
+  </footer>
+</div>

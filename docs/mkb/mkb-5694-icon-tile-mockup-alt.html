@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MKB-5694 — List of What We Finance, Icon-Tile Mockup (Alt: Gold/Blue Reversed)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #F9F9F9;
+    color: #000;
+    padding: 48px 24px;
+  }
+  .wrap { max-width: 1140px; margin: 0 auto; }
+  .section-head { text-align: center; max-width: 760px; margin: 0 auto 40px; }
+  .section-head h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 40px;
+    line-height: 1.25em;
+    font-weight: 300;
+    text-transform: none;
+    color: #2A2A2A;
+    margin-bottom: 14px;
+  }
+  .section-head p {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    line-height: 1.5em;
+    font-weight: 300;
+    color: #2A2A2A;
+  }
+
+  .finance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 860px) {
+    .finance-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .finance-grid { grid-template-columns: 1fr; }
+  }
+
+  .finance-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.15); /* matches existing .box-shadow utility in production.css */
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .finance-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(190,130,0,0.18);
+  }
+
+  /* Reversed: gold header instead of blue, blue accent instead of gold */
+  .finance-card-header {
+    background: #F2A900;
+    padding: 18px 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .finance-card-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: rgba(0,60,113,0.14);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .finance-card-icon svg { width: 22px; height: 22px; stroke: #003C71; }
+  .finance-card-title { color: #2A2A2A; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3; }
+
+  .finance-card-accent { height: 5px; background: #004F92; }
+
+  .finance-card-body { padding: 18px 20px 20px; }
+  .finance-card-body ul { list-style: none; }
+  .finance-card-body li {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px; color: #333; line-height: 1.4;
+    padding: 6px 0; border-bottom: 1px solid #f3f4f6;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .finance-card-body li:last-child { border-bottom: none; }
+  .finance-card-body li::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: #3096D5; margin-top: 5px; flex-shrink: 0;
+  }
+
+  .finance-footnote {
+    text-align: center; margin-top: 36px; font-size: 14px; color: #333;
+  }
+  .finance-footnote a { color: #004F92; font-weight: 600; text-decoration: none; }
+  .finance-footnote a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="section-head">
+    <h1>What We Finance</h1>
+    <p>From office equipment to IT infrastructure, we provide flexible financing across the technologies your business depends on.</p>
+  </div>
+
+  <div class="finance-grid">
+
+    <div class="finance-card">
+      <div class="finance-card-header">
+        <div class="finance-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="9" width="16" height="7" rx="1"/>
+            <path d="M7 9V4h10v5"/>
+            <path d="M7 16v4h10v-4"/>
+            <circle cx="16" cy="12.5" r="0.8" fill="#003C71" stroke="none"/>
+          </svg>
+        </div>
+        <div class="finance-card-title">Office Equipment</div>
+      </div>
+      <div class="finance-card-accent"></div>
+      <div class="finance-card-body">
+        <ul>
+          <li>Printers, copiers, scanners</li>
+          <li>Mailing equipment</li>
+          <li>Paper shredders</li>
+          <li>Water coolers</li>
+          <li>Managed print services</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="finance-card">
+      <div class="finance-card-header">
+        <div class="finance-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="16" height="6" rx="1"/>
+            <rect x="4" y="11" width="16" height="6" rx="1"/>
+            <circle cx="7.5" cy="6" r="0.8" fill="#003C71" stroke="none"/>
+            <circle cx="7.5" cy="14" r="0.8" fill="#003C71" stroke="none"/>
+            <path d="M4 19h16"/>
+          </svg>
+        </div>
+        <div class="finance-card-title">IT Hardware &amp; Infrastructure</div>
+      </div>
+      <div class="finance-card-accent"></div>
+      <div class="finance-card-body">
+        <ul>
+          <li>PCs and laptops</li>
+          <li>Servers &amp; dedicated private-cloud servers</li>
+          <li>SANs &amp; backup devices</li>
+          <li>Network hardware (routers, switches, firewalls)</li>
+          <li>Wi-Fi, access points, wireless controllers</li>
+          <li>SD-WAN</li>
+          <li>IT infrastructure projects</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="finance-card">
+      <div class="finance-card-header">
+        <div class="finance-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2C10.5 20 4 13.5 4 6a2 2 0 0 1 1-2z"/>
+          </svg>
+        </div>
+        <div class="finance-card-title">Communications &amp; Collaboration</div>
+      </div>
+      <div class="finance-card-accent"></div>
+      <div class="finance-card-body">
+        <ul>
+          <li>VoIP, UC, telephony</li>
+          <li>IP phones</li>
+          <li>Conferencing &amp; video devices</li>
+          <li>Contact center solutions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="finance-card">
+      <div class="finance-card-header">
+        <div class="finance-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="13" rx="1.5"/>
+            <path d="M8 9l3 2.5L8 14"/>
+            <path d="M13 14h3"/>
+          </svg>
+        </div>
+        <div class="finance-card-title">Software &amp; Licensing</div>
+      </div>
+      <div class="finance-card-accent"></div>
+      <div class="finance-card-body">
+        <ul>
+          <li>Business software</li>
+          <li>Software licensing</li>
+          <li>Cloud software projects</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="finance-card">
+      <div class="finance-card-header">
+        <div class="finance-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="12" rx="1.5"/>
+            <path d="M8 20h8"/>
+            <path d="M12 16v4"/>
+          </svg>
+        </div>
+        <div class="finance-card-title">Audio-Visual &amp; Digital Experience</div>
+      </div>
+      <div class="finance-card-accent"></div>
+      <div class="finance-card-body">
+        <ul>
+          <li>Digital signage</li>
+          <li>Displays, projection, sound</li>
+          <li>Audio-visual systems</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="finance-card">
+      <div class="finance-card-header">
+        <div class="finance-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/>
+            <path d="M9.5 12l1.8 1.8L14.5 10"/>
+          </svg>
+        </div>
+        <div class="finance-card-title">Security &amp; Surveillance</div>
+      </div>
+      <div class="finance-card-accent"></div>
+      <div class="finance-card-body">
+        <ul>
+          <li>Physical security &amp; surveillance</li>
+          <li>Security equipment</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="finance-footnote">
+    Have a question about financing equipment or technology that is not listed? <a href="#">Contact us and let's chat.</a>
+  </div>
+
+</div>
+</body>
+</html>

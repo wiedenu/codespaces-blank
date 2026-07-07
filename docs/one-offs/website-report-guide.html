@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreatAmerica Website Performance Dashboard — Director's Guide</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px; color: #1a1a1a; background: #f5f5f5; padding: 24px;
+}
+.page { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+.header { background: #1a365d; color: white; padding: 20px 28px 16px; }
+.header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.header .meta { font-size: 12px; color: #a0b4cc; margin-top: 3px; }
+.body { padding: 24px 28px; }
+h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+  color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 4px; margin-bottom: 14px; margin-top: 28px; }
+h2:first-of-type { margin-top: 0; }
+p { font-size: 13px; line-height: 1.6; color: #333; margin-bottom: 10px; }
+.intro { font-size: 14px; line-height: 1.7; color: #333; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+
+/* Two-column layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 4px; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+/* Metric cards */
+.metric-card { background: #f8fafc; border-radius: 6px; padding: 14px 16px; border-left: 3px solid #cbd5e1; }
+.metric-card.blue { border-left-color: #2563eb; }
+.metric-card.green { border-left-color: #16a34a; }
+.metric-card.orange { border-left-color: #ea580c; }
+.metric-card.teal { border-left-color: #0891b2; }
+.metric-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px; }
+.metric-label { font-size: 13px; font-weight: 600; color: #1a365d; margin-bottom: 4px; }
+.metric-desc { font-size: 12px; color: #555; line-height: 1.5; }
+.metric-watch { font-size: 11px; color: #777; margin-top: 6px; font-style: italic; }
+
+/* Control descriptions */
+.control-row { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.control-row:last-child { border-bottom: none; }
+.control-label { font-weight: 600; font-size: 12px; color: #1a365d; min-width: 120px; flex-shrink: 0; }
+.control-desc { font-size: 12px; color: #444; line-height: 1.5; }
+
+/* Q&A section */
+.qa-item { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.qa-item:last-child { border-bottom: none; }
+.qa-q { font-size: 12px; font-weight: 600; color: #1a365d; margin-bottom: 3px; }
+.qa-a { font-size: 12px; color: #444; line-height: 1.5; }
+
+/* Callout */
+.callout { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+.callout p { margin: 0; font-size: 12px; color: #78350f; line-height: 1.6; }
+.callout strong { font-weight: 600; }
+
+/* Section tag */
+.section-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+.tag-gsc { background: #dbeafe; color: #1d4ed8; }
+.tag-ga4 { background: #dcfce7; color: #15803d; }
+.tag-hs { background: #ffedd5; color: #c2410c; }
+
+.footer { background: #f0fdf4; border-top: 1px solid #bbf7d0; padding: 12px 28px;
+  font-size: 12px; color: #166534; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>GreatAmerica Website Performance Dashboard</h1>
+    <div class="meta">Director's Guide &nbsp;·&nbsp; How to read and use the report</div>
+  </div>
+
+  <div class="body">
+
+    <p class="intro">This dashboard shows how GreatAmerica's websites — greatamerica.com, portfolioservicesgroup.com, and irhcapital.com — are performing across the full marketing funnel: from how often we appear in search results, to how many visitors engage with the site, to how many become new contacts in HubSpot. Data is pulled directly from Google Analytics 4, Google Search Console, and HubSpot.</p>
+
+    <h2>Controls — How to Navigate the Report</h2>
+    <div style="margin-bottom: 20px;">
+      <div class="control-row">
+        <div class="control-label">Date Range</div>
+        <div class="control-desc">Buttons at the top switch between Last 7 Days, 28 Days, 30 Days, 90 Days, and Last 12 Months. All metrics and charts update instantly. Start with <strong>Last 30 Days</strong> for a current snapshot, then switch to <strong>Last 12 Months</strong> for trend context.</div>
+      </div>
+      <div class="control-row">
+        <div class="control-label">Site Filter</div>
+        <div class="control-desc"><strong>All Sites</strong> shows aggregate performance across all three properties. Select <strong>GreatAmerica</strong>, <strong>PSG</strong>, or <strong>IRH Capital</strong> to isolate a single site. Useful when one site is driving a spike or dip in the combined view.</div>
+      </div>
+      <div class="control-row">
+        <div class="control-label">View Toggle</div>
+        <div class="control-desc"><strong>Flow</strong> (default) shows metrics as a left-to-right progression with charts. <strong>Funnel</strong> shows the same data as a visual funnel — useful for quickly spotting where volume drops off between stages.</div>
+      </div>
+    </div>
+
+    <h2>Reading the Funnel — What Each Metric Means</h2>
+
+    <p style="margin-bottom: 16px; font-size: 12px; color: #555;">The report is organized as a marketing funnel in two stages: Discovery (search visibility) and Engagement &amp; Conversion (site behavior and lead capture).</p>
+
+    <div class="two-col">
+      <div class="metric-card blue">
+        <div class="metric-name"><span class="section-tag tag-gsc">GSC</span> Impressions</div>
+        <div class="metric-label">How often we show up in search</div>
+        <div class="metric-desc">The number of times a GreatAmerica site appeared in a Google search result. Does not require a click — just appearing counts.</div>
+        <div class="metric-watch">Watch for: Sustained drops may signal a rankings issue or content gap.</div>
+      </div>
+      <div class="metric-card blue">
+        <div class="metric-name"><span class="section-tag tag-gsc">GSC</span> Organic Clicks</div>
+        <div class="metric-label">How many people clicked through</div>
+        <div class="metric-desc">The number of times someone clicked a search result and landed on our site. This is the organic traffic Google Search drives to us.</div>
+        <div class="metric-watch">Watch for: Clicks declining while impressions hold = lower CTR, titles/descriptions may need work.</div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top: 12px;">
+      <div class="metric-card blue">
+        <div class="metric-name"><span class="section-tag tag-gsc">GSC</span> Click-Through Rate</div>
+        <div class="metric-label">% of searchers who clicked us</div>
+        <div class="metric-desc">Clicks divided by impressions. A 2–3% CTR is typical for most B2B sites. Higher is better — it means our search listings are compelling.</div>
+        <div class="metric-watch">Watch for: CTR below 2% suggests our page titles and descriptions aren't winning clicks.</div>
+      </div>
+      <div class="metric-card blue">
+        <div class="metric-name"><span class="section-tag tag-gsc">GSC</span> Avg Position</div>
+        <div class="metric-label">Where we rank in search results</div>
+        <div class="metric-desc">Average ranking position across all queries we appeared for. Lower numbers are better — position 1 is the top result. Positions 1–10 are page one.</div>
+        <div class="metric-watch">Watch for: Position trending above 20 means most of our traffic comes from page 2+.</div>
+      </div>
+    </div>
+
+    <div style="height: 16px;"></div>
+
+    <div class="two-col">
+      <div class="metric-card green">
+        <div class="metric-name"><span class="section-tag tag-ga4">GA4</span> Sessions</div>
+        <div class="metric-label">Total visits to our sites</div>
+        <div class="metric-desc">Every visit to the site, from any source — organic search, direct, email, paid ads, referrals. This is the top-line traffic number.</div>
+        <div class="metric-watch">Watch for: Session counts significantly higher than organic clicks means non-search channels (email, direct) are driving volume.</div>
+      </div>
+      <div class="metric-card green">
+        <div class="metric-name"><span class="section-tag tag-ga4">GA4</span> Engaged Sessions</div>
+        <div class="metric-label">Visits with meaningful activity</div>
+        <div class="metric-desc">Sessions where a visitor stayed 10+ seconds, viewed 2+ pages, or completed a key action. The engagement rate (engaged ÷ sessions) reflects content relevance.</div>
+        <div class="metric-watch">Watch for: Engagement rate below 35% suggests traffic isn't finding what it needs.</div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top: 12px;">
+      <div class="metric-card orange">
+        <div class="metric-name"><span class="section-tag tag-hs">HubSpot</span> Form Submissions</div>
+        <div class="metric-label">Visitors who raised their hand</div>
+        <div class="metric-desc">Completed form submissions from tracked GreatAmerica forms — contact requests, content downloads, event registrations, giveaways, and more.</div>
+        <div class="metric-watch">Watch for: Low form submissions relative to sessions = visitors aren't converting; check CTAs and offer relevance.</div>
+      </div>
+      <div class="metric-card teal">
+        <div class="metric-name"><span class="section-tag tag-hs">HubSpot</span> New Contacts</div>
+        <div class="metric-label">Net-new people in our database</div>
+        <div class="metric-desc">New contacts created in HubSpot with a first-touch URL matching a GreatAmerica site. This is the bottom-line lead generation number from the web.</div>
+        <div class="metric-watch">Watch for: New contacts significantly lower than form submissions = re-submits from existing contacts (not necessarily bad).</div>
+      </div>
+    </div>
+
+    <h2>The Charts</h2>
+    <div style="margin-bottom: 20px;">
+      <div class="control-row">
+        <div class="control-label">Search Visibility</div>
+        <div class="metric-desc">Impressions (blue area) and Clicks (purple line) over time. Impressions on the left axis, Clicks on the right. Look for the gap between them — a widening gap means our ranking is holding but fewer people are clicking through.</div>
+      </div>
+      <div class="control-row">
+        <div class="control-label">Site Engagement</div>
+        <div class="metric-desc">Sessions (green), Engaged Sessions (teal), and Form Submissions (orange) over time. Sessions and engaged sessions should trend together. Spikes in form submissions often align with email sends or campaign launches.</div>
+      </div>
+      <div class="control-row">
+        <div class="control-label">Where Leads Came From</div>
+        <div class="metric-desc">A horizontal bar chart showing new contacts by original traffic source. Direct and Organic Search are typically the top two. Email Marketing reflects contacts driven by campaigns. Paid Search reflects Google Ads activity.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Note on the 90-day and 12-month views:</strong> At those ranges, the charts automatically roll up to weekly and monthly buckets to keep the visuals readable. The metric totals at the top always reflect the full period — only the chart granularity changes.</p>
+    </div>
+
+    <h2>Questions This Report Answers</h2>
+    <div style="margin-bottom: 20px;">
+      <div class="qa-item">
+        <div class="qa-q">Is our search visibility growing or declining?</div>
+        <div class="qa-a">Compare impressions and clicks across date ranges. Last 12 Months shows the year-over-year trend. Filter to GreatAmerica or IRH Capital to isolate a specific site.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">How many new leads did our websites generate this month?</div>
+        <div class="qa-a">Set the range to Last 30 Days. The New Contacts card is the answer. Switch between sites to see which property is contributing most.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Are people actually engaging when they visit, or bouncing?</div>
+        <div class="qa-a">The engagement rate (shown below Engaged Sessions) tells you. A rate above 40% is healthy. Below 35% warrants a look at page content and load times.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Which channel is driving the most leads?</div>
+        <div class="qa-a">The "Where Leads Came From" chart at the bottom shows new contacts by original source. Organic Search, Direct, Email, and Paid Search are the typical top contributors.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">How is PSG or IRH Capital performing compared to the main site?</div>
+        <div class="qa-a">Use the Site selector to switch between properties. All metrics and charts update to reflect only that site's data.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Did a specific campaign or email send drive site activity?</div>
+        <div class="qa-a">Set the range to cover the send window and look for spikes in the Site Engagement chart (form submissions in orange). Cross-reference with the lead sources chart for Email Marketing volume.</div>
+      </div>
+    </div>
+
+    <h2>What This Report Does Not Cover (Yet)</h2>
+    <div>
+      <div class="qa-item">
+        <div class="qa-q">Individual page or blog post performance</div>
+        <div class="qa-a">This report shows site-level aggregates. Page-level reporting (top posts, top landing pages, individual conversion rates) requires a separate view in GA4 or GSC directly.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Blog conversion tracking</div>
+        <div class="qa-a">Currently in progress (MKB-5428). Top blog posts do not yet have CTA conversion tracking configured. Once blog CTAs are in place, blog-driven conversions will appear in form submissions and new contacts.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Paid advertising performance</div>
+        <div class="qa-a">Google Ads and AdWerx are not yet connected to HubSpot. Paid Search contacts reflect UTM-tagged visits only, not full ad spend or ROAS data.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Pipeline and revenue influence</div>
+        <div class="qa-a">The report shows web-to-contact conversion. Connecting those contacts to open opportunities, pipeline stage, and closed revenue requires HubSpot lifecycle stage configuration and Salesforce alignment — a planned FY27 initiative.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Data sources: Google Analytics 4 &nbsp;·&nbsp; Google Search Console &nbsp;·&nbsp; HubSpot &nbsp;·&nbsp; Sites: greatamerica.com, portfolioservicesgroup.com, irhcapital.com
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page Value Assessment — Sales Rep &amp; Account Support Pages</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #11233f;
+  color: #1a1a1a;
+  overflow: hidden;
+}
+.deck { position: relative; width: 100vw; height: 100vh; }
+.slide {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  display: none; flex-direction: column;
+  background: white;
+  padding: 64px 80px;
+}
+.slide.active { display: flex; }
+.slide .eyebrow {
+  font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px;
+  color: #2563eb; margin-bottom: 12px;
+}
+.slide h1 { font-size: 38px; font-weight: 800; color: #1a365d; letter-spacing: -0.5px; margin-bottom: 8px; }
+.slide h2 { font-size: 28px; font-weight: 800; color: #1a365d; letter-spacing: -0.4px; margin-bottom: 24px; }
+.slide .sub { font-size: 16px; color: #555; margin-bottom: 28px; line-height: 1.5; }
+.slide .meta { font-size: 13px; color: #888; margin-top: auto; }
+
+.title-slide { justify-content: center; align-items: flex-start; background: #1a365d; color: white; }
+.title-slide h1 { color: white; font-size: 46px; }
+.title-slide .sub { color: #c3d3e8; font-size: 18px; }
+.title-slide .meta { color: #8fa8c8; }
+
+.kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+.kpi-card { border-radius: 8px; padding: 20px 22px; }
+.kpi-card.vendor { background: #fef2f2; border-left: 4px solid #dc2626; }
+.kpi-card.individual { background: #f0fdf4; border-left: 4px solid #16a34a; }
+.kpi-card.general { background: #f8fafc; border-left: 4px solid #64748b; }
+.kpi-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #555; margin-bottom: 10px; }
+.kpi-big { font-size: 32px; font-weight: 800; color: #1a365d; line-height: 1; margin-bottom: 8px; }
+.kpi-detail { font-size: 13px; color: #555; line-height: 1.6; }
+.kpi-detail b { color: #1a1a1a; }
+
+table.cmp { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+table.cmp th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; padding: 8px 12px; border-bottom: 2px solid #1a365d; }
+table.cmp td { font-size: 15px; padding: 10px 12px; border-bottom: 1px solid #eee; }
+table.cmp tr.highlight td { background: #fef2f2; font-weight: 600; }
+table.cmp td.num { text-align: right; font-weight: 600; }
+
+.list-block { background: #f8fafc; border-radius: 8px; padding: 18px 22px; margin-bottom: 14px; }
+.list-block h3 { font-size: 14px; font-weight: 700; color: #1a365d; margin-bottom: 10px; }
+.perf-row { display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0; border-bottom: 1px solid #eee; }
+.perf-row:last-child { border-bottom: none; }
+.perf-row .name { color: #333; }
+.perf-row .stat { color: #16a34a; font-weight: 700; }
+.perf-row .stat.bad { color: #dc2626; }
+
+.callout { border-radius: 8px; padding: 18px 22px; font-size: 14px; line-height: 1.6; }
+.callout.caution { background: #fffbeb; border-left: 4px solid #d97706; color: #78350f; }
+.callout.action { background: #eff6ff; border-left: 4px solid #2563eb; color: #1e3a5f; }
+
+ul.bullets { margin-left: 4px; }
+ul.bullets li { font-size: 16px; line-height: 1.8; color: #333; margin-bottom: 6px; padding-left: 6px; }
+
+.nav { position: fixed; bottom: 24px; right: 32px; z-index: 10; display: flex; gap: 8px; align-items: center; }
+.nav button {
+  background: #1a365d; color: white; border: none; border-radius: 6px;
+  padding: 8px 16px; font-size: 14px; cursor: pointer;
+}
+.nav button:disabled { background: #cbd5e1; cursor: default; }
+.nav .count { color: white; font-size: 13px; background: rgba(0,0,0,0.4); padding: 6px 10px; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <div class="slide title-slide active">
+    <div class="eyebrow" style="color:#7fb0ff;">MARKETING OPERATIONS</div>
+    <h1>Landing Page Value Assessment</h1>
+    <div class="sub">Sales Rep &amp; Account Support Pages — Are They Earning Their Keep?</div>
+    <div class="meta">John Wiedenheft, Director of Marketing Operations &nbsp;|&nbsp; June 2026</div>
+  </div>
+
+  <div class="slide">
+    <div class="eyebrow">THE QUESTION</div>
+    <h2>Do our rep- and account-specific landing pages justify their upkeep?</h2>
+    <ul class="bullets">
+      <li>GreatAmerica maintains 427 published landing pages across HubSpot.</li>
+      <li>A meaningful share are built to support a specific sales rep, manufacturer, or franchise account rather than general lead generation.</li>
+      <li>Each one carries naming, governance, and CMS maintenance overhead.</li>
+      <li>This assessment pulls 90 days of HubSpot analytics to see what they're actually producing.</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="eyebrow">METHODOLOGY</div>
+    <h2>How the pages were classified</h2>
+    <ul class="bullets">
+      <li><b>Vendor/account pages (67):</b> named after a specific manufacturer or franchise partner — e.g. CNST - Yanmar, SMG - Hunter Engineering, NAPA P3 Sales Tools.</li>
+      <li><b>Individual rep pages (21):</b> named after a specific person — e.g. "Meet Nate Eades," Field Sales Team Contact Page - Von Ahsen.</li>
+      <li><b>Excluded (21):</b> generic team/contact sheets (e.g. GPSG Team Sheet, SMG Healthcare Contact Sheet) — these are permanent infrastructure, not part of this evaluation.</li>
+      <li><b>General marketing (318):</b> everything else — webinars, ebooks, thank-you pages, campaign content.</li>
+    </ul>
+    <div class="callout action" style="margin-top:20px;">Data source: HubSpot CMS + Analytics API, 90-day window (Mar 20 – Jun 18, 2026).</div>
+  </div>
+
+  <div class="slide">
+    <div class="eyebrow">THE HEADLINE NUMBERS</div>
+    <h2>Individual rep pages perform — vendor pages need a closer look first</h2>
+    <div class="kpi-row">
+      <div class="kpi-card individual">
+        <div class="kpi-label">Individual Rep Pages (21)</div>
+        <div class="kpi-big">18%</div>
+        <div class="kpi-detail">submission rate<br><b>189</b> views &rarr; <b>34</b> submissions<br>only 3 of 21 had zero traffic</div>
+      </div>
+      <div class="kpi-card general">
+        <div class="kpi-label">General Marketing Pages (318)</div>
+        <div class="kpi-big">19.7%</div>
+        <div class="kpi-detail">submission rate<br><b>8,061</b> views &rarr; <b>1,587</b> submissions<br>baseline for comparison</div>
+      </div>
+      <div class="kpi-card vendor">
+        <div class="kpi-label">Vendor / Account Pages (67)</div>
+        <div class="kpi-big">?</div>
+        <div class="kpi-detail">submission rate doesn't apply to most of this group<br>see next slide</div>
+      </div>
+    </div>
+    <div class="callout caution">My first pass compared all 67 vendor pages to the general baseline using submission rate and it looked damning. That comparison was wrong for most of this group — see why on the next slide.</div>
+  </div>
+
+  <div class="slide">
+    <div class="eyebrow">WHAT I FOUND WHEN I CHECKED THE PAGES THEMSELVES</div>
+    <h2>"Vendor pages" aren't one bucket — they're three</h2>
+    <div class="list-block">
+      <h3>1. CSS redirect pages — submission rate is the wrong metric</h3>
+      <div class="perf-row"><span class="name">Ag Leader, Yanmar, Hunter Engineering, WhiteCap, Leica GeoSystems, Skyjack, Sherwin-Williams, Jersey Mike's, Dominos...</span><span class="stat bad">no form exists on these pages</span></div>
+    </div>
+    <div class="list-block">
+      <h3>2. Sales enablement resources — not customer-facing at all</h3>
+      <div class="perf-row"><span class="name">NAPA P3 Sales Tools</span><span class="stat bad">built for reps to pitch customers, not for customers to convert</span></div>
+    </div>
+    <div class="list-block">
+      <h3>3. Real form, real traffic, zero conversions — the actual issue</h3>
+      <div class="perf-row"><span class="name">Palo Alto Networks</span><span class="stat bad">42 views, 0 submissions</span></div>
+      <div class="perf-row"><span class="name">ChargePoint</span><span class="stat bad">22 views, 0 submissions</span></div>
+      <div class="perf-row"><span class="name">Kyocera (ABM)</span><span class="stat bad">9 views, 0 submissions</span></div>
+      <div class="perf-row"><span class="name">Myers Industries</span><span class="stat bad">13 views, 0 submissions</span></div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="eyebrow">THE BRIGHT SPOT</div>
+    <h2>Individual rep pages are small but punch above their weight</h2>
+    <div class="list-block">
+      <h3>"Meet [Rep]" pages — low traffic, strong conversion</h3>
+      <div class="perf-row"><span class="name">Meet Nate Eades</span><span class="stat">19 views, 13 submissions (68%)</span></div>
+      <div class="perf-row"><span class="name">Meet Chad Sowers</span><span class="stat">21 views, 8 submissions (38%)</span></div>
+      <div class="perf-row"><span class="name">Meet Jordan Crone</span><span class="stat">26 views, 5 submissions (19%)</span></div>
+      <div class="perf-row"><span class="name">Meet Zach Patterson</span><span class="stat">10 views, 3 submissions (30%)</span></div>
+      <div class="perf-row"><span class="name">Meet Taylor McDonough</span><span class="stat">10 views, 2 submissions (20%)</span></div>
+    </div>
+    <div class="callout action">These pages are likely shared directly by reps (email signature, LinkedIn, 1:1 outreach) rather than discovered organically — low traffic by design, high intent by nature. Worth keeping and possibly expanding to more reps.</div>
+  </div>
+
+  <div class="slide">
+    <div class="eyebrow">RECOMMENDATION</div>
+    <h2>Three different actions for three different problems</h2>
+    <ul class="bullets">
+      <li><b>CSS redirect pages:</b> don't judge these on submission rate — get application volume from whoever owns the credit-app platform, attributed back to the referring page. That's the real conversion event, and we can't see it yet.</li>
+      <li><b>The four pages with a real, unused form</b> (Palo Alto Networks, Kyocera, ChargePoint, Myers Industries): worth a content/CRO review — the mechanism exists and isn't working.</li>
+      <li><b>Enablement resources like NAPA P3:</b> pull these out of any lead-gen scorecard entirely. Wrong page, wrong metric.</li>
+      <li><b>Individual rep pages:</b> keep them, and consider expanding the format to more reps.</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="eyebrow">CAVEATS</div>
+    <h2>What this is and isn't</h2>
+    <div class="callout caution" style="margin-bottom:16px;">This sampled 17 of the 67 vendor pages by checking actual rendered content, not just HubSpot metrics. The pattern was consistent, but a full audit of all 67 would confirm whether any other pages belong in the "real form, not converting" group.</div>
+    <ul class="bullets">
+      <li>We do not currently have visibility into application volume on the credit-app/CSS side — that's the missing piece for judging the redirect-page group fairly.</li>
+      <li>Seasonal or event-driven pages (tradeshow handouts, in-person promos) may show low digital traffic by design, not failure.</li>
+      <li>This is a starting point for a conversation with each segment, not a final retirement list.</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button id="prevBtn" onclick="go(-1)">&larr; Prev</button>
+  <span class="count" id="count"></span>
+  <button id="nextBtn" onclick="go(1)">Next &rarr;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let idx = 0;
+function render() {
+  slides.forEach((s,i) => s.classList.toggle('active', i === idx));
+  document.getElementById('count').textContent = (idx+1) + ' / ' + slides.length;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx === slides.length - 1;
+}
+function go(delta) {
+  idx = Math.min(Math.max(idx + delta, 0), slides.length - 1);
+  render();
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+  if (e.key === 'ArrowLeft') go(-1);
+});
+render();
+</script>
+
+</body>
+</html>

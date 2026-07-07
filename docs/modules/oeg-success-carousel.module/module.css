@@ -1,0 +1,191 @@
+/* ── Section wrapper ── */
+.section--columns--inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── Carousel wrapper ── */
+.section--columns--wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Nav buttons ── */
+.carousel-nav {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 56px;
+}
+.carousel-nav--label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #002855;
+}
+.carousel-nav--arrow {
+  font-size: 24px;
+  color: #002855;
+  transition: transform 0.2s;
+}
+.carousel-nav:hover .carousel-nav--arrow,
+.carousel-nav:focus .carousel-nav--arrow { transform: scale(1.2); }
+
+/* ── Track ── */
+.section--columns--track {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Card ── */
+.section--columns--card {
+  display: none;
+  height: 360px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.section--columns--card.is-active { display: flex; }
+
+/* ── Image side ── */
+.section--columns--card--image {
+  width: 52%;
+  flex-shrink: 0;
+  background: #001f3f;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.section--columns--card--image .vidyard-player-container {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.section--columns--card--image--inner {
+  width: 100%;
+}
+
+.section--columns--card--image--placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #002855 0%, #1a5276 50%, #002855 100%);
+}
+
+/* ── Play button ── */
+.section--columns--card--play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.section--columns--card--play--circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.section--columns--card--play--circle::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 11px 0 11px 20px;
+  border-color: transparent transparent transparent #002855;
+  margin-left: 4px;
+}
+.section--columns--card--play:hover .section--columns--card--play--circle { transform: scale(1.1); }
+
+/* ── Content side ── */
+.section--columns--card--content {
+  flex: 1;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.section--columns--card--eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #e07b00;
+  margin-bottom: 10px;
+}
+.section--columns--card--title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #002855;
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+.section--columns--card--description {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.75;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+/* ── Dots ── */
+.section--columns--dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+.section--columns--dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c8d8e8;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.section--columns--dot.is-active { background: #002855; }
+
+.section--columns--counter {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #999;
+}
+
+/* ── Section CTA ── */
+.section--columns--cta {
+  text-align: center;
+  margin-top: 32px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .section--columns--inner { padding: 0 16px; }
+
+  .section--columns--card.is-active { flex-direction: column; }
+  .section--columns--card--image { width: 100%; }
+  .section--columns--card--content { padding: 24px; }
+
+  .carousel-nav { width: 36px; }
+  .carousel-nav--label { display: none; }
+
+  .columns--header.center-align--mobile { text-align: center; }
+  .columns--header.left-align--mobile   { text-align: left; }
+}

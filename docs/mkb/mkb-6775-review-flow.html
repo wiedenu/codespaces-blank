@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MKB-6775 — External Review SLA Process Flow</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f5f5f5; padding: 32px; color: #1a1a1a;
+  }
+  .page { max-width: 720px; margin: 0 auto; background: white; border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12); padding: 28px 32px 36px; }
+  h1 { font-size: 18px; color: #1a365d; margin-bottom: 4px; }
+  .subtitle { font-size: 12px; color: #777; margin-bottom: 28px; }
+  .flow { display: flex; flex-direction: column; align-items: center; }
+  .step { width: 100%; max-width: 460px; border-radius: 6px; padding: 12px 16px;
+    font-size: 13px; text-align: center; border-left: 4px solid #3b6cb7; background: #f0f5ff; }
+  .step.green { border-left-color: #2f855a; background: #f0fff4; }
+  .step.amber { border-left-color: #e6a817; background: #fff3cd; }
+  .step.red { border-left-color: #b91c1c; background: #fee2e2; }
+  .step.gray { border-left-color: #9ca3af; background: #f3f4f6; }
+  .step strong { display: block; font-size: 12px; margin-bottom: 2px; }
+  .step span { font-size: 11px; color: #555; }
+  .arrow { font-size: 16px; color: #9ca3af; margin: 4px 0; }
+  .branch { display: flex; gap: 28px; width: 100%; max-width: 520px; justify-content: center;
+    margin: 4px 0; }
+  .branch-col { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .branch-label { font-size: 10px; font-weight: 700; text-transform: uppercase;
+    color: #777; margin-bottom: 4px; letter-spacing: 0.5px; }
+  .merge-note { font-size: 10px; color: #999; margin: 2px 0 6px; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>MKB-6775 — External Review SLA Process Flow</h1>
+  <div class="subtitle">Main task status: REVIEW &nbsp;|&nbsp; Field: "Review – Internal or External" &nbsp;|&nbsp; SLA: 5 business days (External only)</div>
+
+  <div class="flow">
+    <div class="step">
+      <strong>Work ready for review</strong>
+      <span>Assignee/Reporter moves the ticket to status: Review</span>
+    </div>
+    <div class="arrow">&#9660;</div>
+
+    <div class="step">
+      <strong>Automation fires (non-blocking)</strong>
+      <span>Trigger: status &rarr; Review. Sends email asking Reporter/Assignee to set Review Type</span>
+    </div>
+    <div class="arrow">&#9660;</div>
+
+    <div class="branch">
+      <div class="branch-col">
+        <div class="branch-label">Field filled</div>
+        <div class="step green">
+          <strong>Review Type set</strong>
+          <span>Internal or External</span>
+        </div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">Field left empty</div>
+        <div class="step amber">
+          <strong>Backstop filter catches it</strong>
+          <span>Dashboard JQL: status=Review AND Review Type is EMPTY</span>
+        </div>
+      </div>
+    </div>
+    <div class="merge-note">(empty-field path resolves back to "Review Type set" once filled manually)</div>
+    <div class="arrow">&#9660;</div>
+
+    <div class="step">
+      <strong>Review Type = External?</strong>
+      <span>No &rarr; internal review, no SLA timer tracked here</span>
+    </div>
+    <div class="arrow">&#9660;</div>
+
+    <div class="step gray">
+      <strong>5-business-day SLA clock starts</strong>
+      <span>Clock starts from status CHANGED TO Review</span>
+    </div>
+    <div class="arrow">&#9660;</div>
+
+    <div class="branch">
+      <div class="branch-col">
+        <div class="branch-label">Within 5 days</div>
+        <div class="step green">
+          <strong>Review returns on time</strong>
+          <span>Ticket moves out of Review (In Progress / Done)</span>
+        </div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">Past 5 days</div>
+        <div class="step red">
+          <strong>SLA breach</strong>
+          <span>Surfaces on breach JQL/dashboard</span>
+        </div>
+      </div>
+    </div>
+    <div class="arrow">&#9660;</div>
+
+    <div class="step amber">
+      <strong>Per SOP: comment + consider escalation</strong>
+      <span>Status update comment on who/what you're waiting on; potentially escalate to SMD</span>
+    </div>
+    <div class="arrow">&#9660;</div>
+
+    <div class="step">
+      <strong>Cycle time captured</strong>
+      <span>Time in Review status, via changelog &mdash; visible in Control Chart / Cumulative Flow Diagram</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

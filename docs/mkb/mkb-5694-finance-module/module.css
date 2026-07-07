@@ -1,0 +1,105 @@
+/*
+  Scoped styles for the Finance Category Cards module (MKB-5694).
+  Everything that already exists as a utility class in production.css
+  (.grid, .grid__item, .box-shadow, .border-radius--10, .border-radius--8,
+  .background--darkblue (#004F92), .background--bronze (#C0692D),
+  .color--white, .color--black (#2A2A2A), .bolder, .short, .padding--short,
+  .relative, .overflow--hidden, .background, .overlay, .background-size--*,
+  .background-repeat--*) is reused directly in module.html and intentionally
+  NOT redefined here. Color names are per Config_GA_2024.css, which does not
+  match the brand swatch sheet naming 1:1 — see module README note.
+*/
+
+.finance-style--blue,
+.finance-style--gold {
+  display: flex;
+  flex-wrap: wrap; /* flex lines (rows) stretch their items to equal height by default — gives equal-height cards per row without touching the global inline-block .grid system */
+}
+
+.finance-card-slot {
+  display: flex; /* stretches .finance-card to fill the row's tallest card */
+}
+
+.finance-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+  margin-bottom: 24px; /* row spacing — lives here, not on .finance-card-slot, since hard--top/hard--bottom on the slot zero out margin with !important */
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.finance-card:hover {
+  transform: translateY(-4px);
+}
+
+.finance-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.finance-card-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px; /* .grid sets font-size:0 to kill inline-block gaps; this overrides it so the icon glyph is actually visible */
+}
+.finance-card-icon img {
+  max-width: 24px;
+  max-height: 24px;
+}
+
+/* Both variants: white header text/icon. Blue variant = bronze accent, Gold/bronze variant = darkblue accent (set via background--bronze/background--darkblue in markup) */
+.finance-style--blue .finance-card-icon,
+.finance-style--gold .finance-card-icon {
+  background: rgba(255,255,255,.15);
+}
+.finance-style--blue .finance-card-icon i,
+.finance-style--gold .finance-card-icon i {
+  color: #fff;
+  --fa-primary-color: #fff;
+  --fa-secondary-color: #fff;
+}
+
+.finance-card-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 1.3;
+  margin: 0;
+  min-height: 47px; /* reserves space for 2 lines so 1-line and 2-line titles produce the same overall header height */
+  display: flex;
+  align-items: center;
+}
+
+.finance-card-accent {
+  height: 5px;
+}
+
+.finance-card-body ul,
+.finance-card-body p {
+  list-style: none;
+  padding: 0 !important;
+  margin: 0 !important; /* overrides a global rich-text/typography default margin that was stacking on top of the .short padding */
+}
+.finance-card-body p {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #2A2A2A;
+}
+.finance-card-body li {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #2A2A2A;
+  padding: 6px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.finance-card-body li:last-child {
+  border-bottom: none;
+}

@@ -1,0 +1,351 @@
+<title>Activity Sync — Proposed High-Value Triggers</title>
+<style>
+  :root {
+    --paper: #f4f6f8;
+    --card: #ffffff;
+    --ink: #16202b;
+    --ink-soft: #46586a;
+    --ink-faint: #7a8b9c;
+    --line: #dde3ea;
+    --line-soft: #e9edf2;
+    --accent: #0b6e8c;
+    --accent-soft: #e2f0f4;
+    --hot: #c2410c;
+    --hot-soft: #fbeae2;
+    --warm: #2563a8;
+    --warm-soft: #e4edf7;
+    --ok: #2f7d4f;
+    --ok-soft: #e3f1e8;
+    --flag: #a86a12;
+    --flag-soft: #f6ecd8;
+    --mute: #8896a4;
+    --hs: #ff7a59;
+    --sf: #00a1e0;
+    --shadow: 0 1px 2px rgba(22,32,43,.05), 0 6px 20px rgba(22,32,43,.06);
+    --mono: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", monospace;
+    --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #10161c;
+      --card: #18212a;
+      --ink: #e7edf3;
+      --ink-soft: #a9b8c6;
+      --ink-faint: #71828f;
+      --line: #263139;
+      --line-soft: #202a32;
+      --accent: #3fb6d4;
+      --accent-soft: #12333d;
+      --hot: #f0824f;
+      --hot-soft: #331f16;
+      --warm: #6ba3e6;
+      --warm-soft: #17263a;
+      --ok: #66c78d;
+      --ok-soft: #163326;
+      --flag: #e0ab53;
+      --flag-soft: #33280f;
+      --mute: #6c7a87;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #f4f6f8; --card: #ffffff; --ink: #16202b; --ink-soft: #46586a; --ink-faint: #7a8b9c;
+    --line: #dde3ea; --line-soft: #e9edf2; --accent: #0b6e8c; --accent-soft: #e2f0f4;
+    --hot: #c2410c; --hot-soft: #fbeae2; --warm: #2563a8; --warm-soft: #e4edf7;
+    --ok: #2f7d4f; --ok-soft: #e3f1e8; --flag: #a86a12; --flag-soft: #f6ecd8; --mute: #8896a4;
+    --shadow: 0 1px 2px rgba(22,32,43,.05), 0 6px 20px rgba(22,32,43,.06);
+  }
+  :root[data-theme="dark"] {
+    --paper: #10161c; --card: #18212a; --ink: #e7edf3; --ink-soft: #a9b8c6; --ink-faint: #71828f;
+    --line: #263139; --line-soft: #202a32; --accent: #3fb6d4; --accent-soft: #12333d;
+    --hot: #f0824f; --hot-soft: #331f16; --warm: #6ba3e6; --warm-soft: #17263a;
+    --ok: #66c78d; --ok-soft: #163326; --flag: #e0ab53; --flag-soft: #33280f; --mute: #6c7a87;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: clamp(20px, 5vw, 56px) clamp(16px, 4vw, 32px) 72px; }
+
+  /* header */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .flow { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .dot.hs { background: var(--hs); }
+  .dot.sf { background: var(--sf); }
+  .arrow { color: var(--ink-faint); }
+  h1 {
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    margin: 14px 0 6px;
+    text-wrap: balance;
+    font-weight: 700;
+  }
+  .sub { font-size: 18px; color: var(--ink-soft); margin: 0 0 22px; max-width: 60ch; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 22px;
+    padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    font-size: 13.5px; color: var(--ink-soft);
+  }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  .lede {
+    margin: 26px 0 8px; font-size: 16.5px; color: var(--ink-soft); max-width: 66ch;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  /* legend */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px 18px;
+    margin: 22px 0 8px; padding: 14px 16px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    font-size: 12.5px; color: var(--ink-soft); box-shadow: var(--shadow);
+  }
+  .legend .grp { display: flex; align-items: center; gap: 8px; }
+  .legend .lbl { font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; font-size: 11px; color: var(--ink-faint); }
+
+  /* pills */
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .03em;
+    padding: 3px 9px; border-radius: 999px; white-space: nowrap; font-weight: 500;
+  }
+  .pill.native { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); }
+  .pill.flow { background: var(--accent-soft); color: var(--accent); }
+  .pill.ready { background: var(--ok-soft); color: var(--ok); }
+  .pill.confirm { background: var(--flag-soft); color: var(--flag); }
+
+  /* section heads */
+  .sec { margin-top: 40px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+  .sec-num {
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    letter-spacing: .04em; padding: 2px 8px; border-radius: 6px;
+  }
+  .t1 .sec-num { color: var(--hot); background: var(--hot-soft); }
+  .t2 .sec-num { color: var(--warm); background: var(--warm-soft); }
+  .sec h2 { font-size: 21px; letter-spacing: -.01em; margin: 0; font-weight: 700; }
+  .sec-note { font-size: 13.5px; color: var(--ink-faint); margin: 2px 0 18px; }
+
+  /* trigger cards */
+  .grid { display: flex; flex-direction: column; gap: 12px; }
+  .trig {
+    position: relative; background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px 18px 16px 22px; box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .trig::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  }
+  .t1 .trig::before { background: var(--hot); }
+  .t2 .trig::before { background: var(--warm); }
+  .trig-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .trig-name { font-size: 16.5px; font-weight: 650; letter-spacing: -.01em; margin: 0; }
+  .trig-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .trig-desc { font-size: 14.5px; color: var(--ink-soft); margin: 7px 0 0; max-width: 68ch; }
+  .trig-desc .q { color: var(--flag); font-weight: 600; }
+
+  /* highlighted spec block */
+  .spec {
+    margin-top: 10px; padding: 12px 14px; border-radius: 9px;
+    background: var(--warm-soft); border: 1px dashed color-mix(in srgb, var(--warm) 40%, transparent);
+    font-size: 14px; color: var(--ink);
+  }
+  .spec .rule { font-family: var(--mono); font-size: 13px; color: var(--warm); font-weight: 600; display: block; margin-bottom: 4px; }
+
+  /* suppress list */
+  .suppress {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 6px 4px; box-shadow: var(--shadow); columns: 2; column-gap: 8px;
+  }
+  .suppress li {
+    list-style: none; padding: 7px 14px; font-size: 14px; color: var(--ink-faint);
+    break-inside: avoid; display: flex; gap: 9px; align-items: baseline;
+  }
+  .suppress li::before { content: "\00d7"; color: var(--mute); font-weight: 700; font-family: var(--mono); }
+
+  /* questions callout */
+  .ask {
+    margin-top: 42px; background: var(--card); border: 1px solid var(--accent);
+    border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow);
+  }
+  .ask h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -.01em; }
+  .ask .lead { font-size: 14px; color: var(--ink-soft); margin: 0 0 16px; }
+  .ask ol { margin: 0; padding: 0; counter-reset: q; list-style: none; display: flex; flex-direction: column; gap: 13px; }
+  .ask li { counter-increment: q; display: flex; gap: 13px; align-items: baseline; font-size: 15px; }
+  .ask li::before {
+    content: counter(q); flex: none; font-family: var(--mono); font-size: 12px; font-weight: 700;
+    color: var(--accent); background: var(--accent-soft); width: 24px; height: 24px;
+    border-radius: 7px; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .ask li b { font-weight: 650; }
+
+  /* noise note */
+  .note {
+    margin-top: 26px; padding: 16px 18px; border-left: 3px solid var(--accent);
+    background: color-mix(in srgb, var(--accent-soft) 55%, transparent); border-radius: 0 10px 10px 0;
+    font-size: 14.5px; color: var(--ink-soft);
+  }
+  .note b { color: var(--ink); font-weight: 650; }
+
+  footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-faint); }
+
+  code { font-family: var(--mono); font-size: .9em; background: var(--line-soft); padding: 1px 5px; border-radius: 4px; }
+
+  @media (max-width: 560px) {
+    .suppress { columns: 1; }
+    .trig-top { flex-direction: column; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">
+      <span class="flow"><span class="dot hs"></span>HubSpot</span>
+      <span class="arrow">&rarr;</span>
+      <span class="flow"><span class="dot sf"></span>Salesforce</span>
+      <span>&middot; Workflow 1 &middot; Draft for review</span>
+    </div>
+    <h1>High-value activity triggers to sync</h1>
+    <p class="sub">A shortlist of marketing activities worth surfacing to reps as Salesforce Tasks. Not everything syncs &mdash; just the signals that say <em>a human should look</em>.</p>
+    <div class="meta">
+      <span><b>From</b> John Wiedenheft</span>
+      <span><b>To</b> Cody Jandik</span>
+      <span><b>Re</b> Activity Sync build (parked since 6/26)</span>
+      <span><b>Date</b> July 7, 2026</span>
+    </div>
+  </header>
+
+  <p class="lede">The guiding rule: <strong>only fire a Task when the signal is strong enough that a rep should stop and look.</strong> Sync page views and email opens and reps mute the whole thing, and the real signals die with the noise. Everything below is scoped to what GreatAmerica can actually track today &mdash; a couple of items still need a feasibility check from you, flagged in amber.</p>
+
+  <div class="legend">
+    <span class="grp"><span class="lbl">Mechanism</span> <span class="pill native">Native activity</span> <span class="pill flow">Workflow logic</span></span>
+    <span class="grp"><span class="lbl">Status</span> <span class="pill ready">Ready</span> <span class="pill confirm">Confirm w/ you</span></span>
+  </div>
+
+  <section class="sec t1">
+    <div class="sec-head"><span class="sec-num">TIER 1</span><h2>Hot &mdash; hand-raisers</h2></div>
+    <p class="sec-note">Explicit intent. These should always sync.</p>
+    <div class="grid">
+
+      <article class="trig">
+        <div class="trig-top">
+          <h3 class="trig-name">&ldquo;Contact Sales / Request a Quote&rdquo; form submitted</h3>
+          <div class="trig-tags"><span class="pill native">Native activity</span><span class="pill ready">Ready</span></div>
+        </div>
+        <p class="trig-desc">A direct ask for a human. The cleanest signal we have &mdash; maps straight to a form-submission activity.</p>
+      </article>
+
+      <article class="trig">
+        <div class="trig-top">
+          <h3 class="trig-name">Demo or meeting booked</h3>
+          <div class="trig-tags"><span class="pill native">Native activity</span><span class="pill confirm">Confirm w/ you</span></div>
+        </div>
+        <p class="trig-desc">Self-scheduled time via a HubSpot Meetings link. <span class="q">Do reps actually book through HubSpot meeting links, or does scheduling live in Salesforce/Outlook?</span> If the latter, this one drops.</p>
+      </article>
+
+      <article class="trig">
+        <div class="trig-top">
+          <h3 class="trig-name">Payment / financing calculator used</h3>
+          <div class="trig-tags"><span class="pill flow">Workflow logic</span><span class="pill confirm">Confirm w/ you</span></div>
+        </div>
+        <p class="trig-desc">Modeling a payment is deep intent. <span class="q">Two checks: is the calculator a marketing-owned web asset we can track, and does it sit behind the same wall as the application (which marketing can&rsquo;t see)?</span> If it&rsquo;s walled off like the app, it drops too.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec t2">
+    <div class="sec-head"><span class="sec-num">TIER 2</span><h2>Warming</h2></div>
+    <p class="sec-note">Pattern-based intent. Strong, but each needs a defined page set or workflow behind it.</p>
+    <div class="grid">
+
+      <article class="trig">
+        <div class="trig-top">
+          <h3 class="trig-name">High-intent page-view threshold</h3>
+          <div class="trig-tags"><span class="pill flow">Workflow logic</span><span class="pill confirm">Confirm w/ you</span></div>
+        </div>
+        <p class="trig-desc">Raw view counts are noise &mdash; three blog reads isn&rsquo;t intent. The count only means something tied to <em>which</em> pages. Proposed rule:</p>
+        <div class="spec">
+          <span class="rule">IF 3+ views of high-intent pages within a rolling 7 days &nbsp;OR&nbsp; a return to one after 30+ days dormant &rarr; create Task</span>
+          High-intent pages = product / solution pages, the calculator, and contact / get-started pages. Built as a behavioral list or a &ldquo;visited URL&rdquo; workflow branch, not a native activity. Needs the page set defined jointly.
+        </div>
+      </article>
+
+      <article class="trig">
+        <div class="trig-top">
+          <h3 class="trig-name">Bottom-funnel content consumed</h3>
+          <div class="trig-tags"><span class="pill flow">Workflow logic</span><span class="pill confirm">Confirm w/ you</span></div>
+        </div>
+        <p class="trig-desc">Case studies and vertical solution pages &mdash; the &ldquo;this is a buyer, not a browser&rdquo; set. <span class="q">Only works if we can name a specific list of those pages;</span> we have no pricing guide to anchor it, so the set needs building.</p>
+      </article>
+
+      <article class="trig">
+        <div class="trig-top">
+          <h3 class="trig-name">High-intent email CTA clicked</h3>
+          <div class="trig-tags"><span class="pill flow">Workflow logic</span><span class="pill ready">Ready</span></div>
+        </div>
+        <p class="trig-desc">A click on the &ldquo;talk to us / get started&rdquo; link &mdash; a click, never an open. Filtered to specific CTA links so a generic click doesn&rsquo;t trip it.</p>
+      </article>
+
+      <article class="trig">
+        <div class="trig-top">
+          <h3 class="trig-name">Dormant / closed-lost contact re-engages</h3>
+          <div class="trig-tags"><span class="pill flow">Workflow logic</span><span class="pill confirm">Confirm w/ you</span></div>
+        </div>
+        <p class="trig-desc">A previously cold or closed-lost contact does anything meaningful again. Reps value reopening these &mdash; the trigger is the state change, not the specific action.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num" style="color:var(--mute);background:var(--line-soft);">EXCLUDE</span><h2>Deliberately not synced</h2></div>
+    <p class="sec-note">The noise that would train reps to ignore the sync.</p>
+    <ul class="suppress">
+      <li>Email opens, sends, deliveries</li>
+      <li>Single-page / generic page views</li>
+      <li>Newsletter or blog subscribe</li>
+      <li>Gated ebook / top-funnel downloads</li>
+      <li>List membership changes</li>
+      <li>Generic link clicks, social follows</li>
+      <li>Unsubscribes (route to ops, not a rep Task)</li>
+    </ul>
+  </section>
+
+  <div class="ask">
+    <h2>What I need from you</h2>
+    <p class="lead">Before I build a test plan around this, a few things only you can answer on the Salesforce and build side:</p>
+    <ol>
+      <li><b>Build state.</b> Where does Workflow 1 actually stand today? Still built-and-waiting from May, or has anything changed on the SF side since?</li>
+      <li><b>Task mapping.</b> Do these land cleanly as Salesforce Tasks, or is a custom Activity type / field cleaner? Any subject-line or due-date conventions reps expect?</li>
+      <li><b>Record matching.</b> How do we match a HubSpot contact to the right SF Lead/Contact and Account &mdash; existing sync ID, or something we need to define?</li>
+      <li><b>Feasibility.</b> Of the amber &ldquo;Confirm&rdquo; items, which are realistic to trigger from HubSpot on your side, and which are more trouble than they&rsquo;re worth?</li>
+      <li><b>Dedup.</b> Can we enforce one open Task per contact per rolling window on the SF side, or does HubSpot need to gate it? (See below.)</li>
+    </ol>
+  </div>
+
+  <p class="note"><b>One noise-control rule regardless of the list:</b> cap it at one open Task per contact per rolling 3&ndash;5 days, surfacing the highest-value trigger rather than one Task per action. A hot contact doing five things in an afternoon should be one Task, not five. This single rule is the biggest driver of whether reps trust the sync.</p>
+
+  <footer>
+    Draft for feedback &mdash; nothing is built off this list yet. Honest read: once the amber items shake out, launch scope may be as tight as two Tier-1 triggers plus the page-view pattern. That&rsquo;s a real finding about our trackable activity inventory, not a problem to paper over.
+  </footer>
+</div>

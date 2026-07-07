@@ -1,0 +1,472 @@
+[
+  {
+    "name": "header",
+    "label": "Header",
+    "type": "text",
+    "default": "What We Finance",
+    "required": false
+  },
+  {
+    "name": "content",
+    "label": "Content / Subheader",
+    "type": "richtext",
+    "default": "<p>From office equipment to IT infrastructure, we provide flexible financing across the technologies your business depends on.</p>",
+    "required": false
+  },
+  {
+    "name": "style_variant",
+    "label": "Card Color Style",
+    "type": "choice",
+    "display": "select",
+    "default": "blue",
+    "required": true,
+    "choices": [
+      ["blue", "Blue header / Gold accent"],
+      ["gold", "Gold header / Blue accent"]
+    ]
+  },
+  {
+    "name": "number_of_columns_desktop",
+    "label": "Number of Columns (Desktop)",
+    "type": "choice",
+    "display": "select",
+    "default": "one-third",
+    "required": true,
+    "choices": [
+      ["one-half", "2"],
+      ["one-third", "3"],
+      ["one-fourth", "4"]
+    ]
+  },
+  {
+    "name": "number_of_columns_tablet",
+    "label": "Number of Columns (Tablet)",
+    "type": "choice",
+    "display": "select",
+    "default": "tablet-one-half",
+    "required": true,
+    "choices": [
+      ["tablet-one-whole", "1"],
+      ["tablet-one-half", "2"]
+    ]
+  },
+  {
+    "name": "number_of_columns_mobile",
+    "label": "Number of Columns (Mobile)",
+    "type": "choice",
+    "display": "select",
+    "default": "palm-one-whole",
+    "required": true,
+    "choices": [
+      ["palm-one-whole", "1"],
+      ["palm-one-half", "2"]
+    ]
+  },
+  {
+    "name": "column_content",
+    "label": "Column Content",
+    "type": "group",
+    "occurrence": {
+      "default": 6,
+      "sorting_label_field": "header_label"
+    },
+    "required": false,
+    "children": [
+      {
+        "name": "icon_or_image",
+        "label": "Icon or Image",
+        "type": "choice",
+        "display": "select",
+        "default": "icon",
+        "required": true,
+        "choices": [
+          ["icon", "FontAwesome Icon"],
+          ["image", "Image"]
+        ]
+      },
+      {
+        "name": "fontawesome_icon_code",
+        "label": "FontAwesome Icon Code",
+        "type": "text",
+        "default": "<i class=\"fas fa-building\" aria-hidden=\"true\"></i>",
+        "required": true,
+        "visibility": {
+          "controlling_field": "icon_or_image",
+          "controlling_value_regex": "icon",
+          "operator": "EQUAL"
+        }
+      },
+      {
+        "name": "image_icon",
+        "label": "Image",
+        "type": "image",
+        "required": true,
+        "resizable": true,
+        "visibility": {
+          "controlling_field": "icon_or_image",
+          "controlling_value_regex": "image",
+          "operator": "EQUAL"
+        }
+      },
+      {
+        "name": "header_label",
+        "label": "Category Title",
+        "type": "text",
+        "default": "Office Equipment",
+        "required": true
+      },
+      {
+        "name": "description",
+        "label": "Item List (rich text — use a bullet list)",
+        "type": "richtext",
+        "default": "<ul><li>Printers, copiers, scanners</li><li>Mailing equipment</li><li>Paper shredders</li></ul>",
+        "required": false
+      }
+    ],
+    "default": [
+      {
+        "icon_or_image": "icon",
+        "fontawesome_icon_code": "<i class=\"fas fa-building\" aria-hidden=\"true\"></i>",
+        "header_label": "Office Equipment",
+        "description": "<ul><li>Printers, copiers, scanners</li><li>Mailing equipment</li><li>Paper shredders</li><li>Water coolers</li><li>Managed print services</li></ul>"
+      },
+      {
+        "icon_or_image": "icon",
+        "fontawesome_icon_code": "<i class=\"fas fa-server\" aria-hidden=\"true\"></i>",
+        "header_label": "IT Hardware &amp; Infrastructure",
+        "description": "<ul><li>PCs and laptops</li><li>Servers &amp; dedicated private-cloud servers</li><li>SANs &amp; backup devices</li><li>Network hardware (routers, switches, firewalls)</li><li>Wi-Fi, access points, wireless controllers</li><li>SD-WAN</li><li>IT infrastructure projects</li></ul>"
+      },
+      {
+        "icon_or_image": "icon",
+        "fontawesome_icon_code": "<i class=\"fas fa-headset\" aria-hidden=\"true\"></i>",
+        "header_label": "Communications &amp; Collaboration",
+        "description": "<ul><li>VoIP, UC, telephony</li><li>IP phones</li><li>Conferencing &amp; video devices</li><li>Contact center solutions</li></ul>"
+      },
+      {
+        "icon_or_image": "icon",
+        "fontawesome_icon_code": "<i class=\"fas fa-window\" aria-hidden=\"true\"></i>",
+        "header_label": "Software &amp; Licensing",
+        "description": "<ul><li>Business software</li><li>Software licensing</li><li>Cloud software projects</li></ul>"
+      },
+      {
+        "icon_or_image": "icon",
+        "fontawesome_icon_code": "<i class=\"fas fa-display\" aria-hidden=\"true\"></i>",
+        "header_label": "Audio-Visual &amp; Digital Experience",
+        "description": "<ul><li>Digital signage</li><li>Displays, projection, sound</li><li>Audio-visual systems</li></ul>"
+      },
+      {
+        "icon_or_image": "icon",
+        "fontawesome_icon_code": "<i class=\"fas fa-shield-check\" aria-hidden=\"true\"></i>",
+        "header_label": "Security &amp; Surveillance",
+        "description": "<ul><li>Physical security &amp; surveillance</li><li>Security equipment</li></ul>"
+      }
+    ]
+  },
+  {
+    "name": "background_type",
+    "label": "Background: Type",
+    "type": "choice",
+    "display": "select",
+    "default": "color",
+    "required": true,
+    "choices": [
+      ["image", "Image"],
+      ["color", "Color"],
+      ["gradient", "Gradient"]
+    ]
+  },
+  {
+    "name": "background_overlay_type",
+    "label": "Background: Overlay Type",
+    "type": "choice",
+    "display": "select",
+    "default": "none",
+    "required": true,
+    "choices": [
+      ["none", "No Overlay"],
+      ["image", "Image"],
+      ["color", "Color"],
+      ["gradient", "Gradient"]
+    ]
+  },
+  {
+    "name": "background",
+    "label": "Background",
+    "type": "group",
+    "required": false,
+    "default": {
+      "background_color": { "color": "#ffffff", "opacity": 100 },
+      "background_gradient_angle": "135",
+      "background_gradient_start_color": { "color": "#004F92", "opacity": 100 },
+      "background_gradient_end_color": { "color": "#003C71", "opacity": 100 },
+      "background_image_size": "background-size--cover",
+      "background_image_repeat": "background-repeat--none",
+      "background_image_vertical_alignment": "50%",
+      "background_image_horizontal_alignment": "50%"
+    },
+    "children": [
+      {
+        "name": "background_color",
+        "label": "Background: Color",
+        "type": "color",
+        "default": { "color": "#ffffff", "opacity": 100 },
+        "required": true,
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "color", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_gradient_angle",
+        "label": "Background: Gradient Angle",
+        "type": "choice",
+        "display": "select",
+        "default": "135",
+        "required": true,
+        "choices": [
+          ["180", "Top to Bottom"],
+          ["135", "Top-Left to Bottom-Right"],
+          ["90", "Left to Right"],
+          ["45", "Bottom-Left to Top-Right"],
+          ["0", "Bottom to Top"],
+          ["315", "Bottom-Right to Top-Left"],
+          ["270", "Right to Left"],
+          ["225", "Top-Right to Bottom-Left"]
+        ],
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "gradient", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_gradient_start_color",
+        "label": "Background: Gradient Start Color",
+        "type": "color",
+        "default": { "color": "#004F92", "opacity": 100 },
+        "required": true,
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "gradient", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_gradient_end_color",
+        "label": "Background: Gradient End Color",
+        "type": "color",
+        "default": { "color": "#003C71", "opacity": 100 },
+        "required": true,
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "gradient", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_image",
+        "label": "Background: Image",
+        "type": "image",
+        "required": true,
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_image_size",
+        "label": "Background: Image Size",
+        "type": "choice",
+        "display": "select",
+        "default": "background-size--cover",
+        "required": true,
+        "choices": [
+          ["background-size--cover", "Scale to Fill"],
+          ["background-size--contain", "Scale to Fit"],
+          ["background-size--stretch", "Stretch to Fill"],
+          ["background-size--auto", "Native Size"]
+        ],
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_image_repeat",
+        "label": "Background: Image Repeat",
+        "type": "choice",
+        "display": "select",
+        "default": "background-repeat--none",
+        "required": true,
+        "choices": [
+          ["background-repeat", "Repeat"],
+          ["background-repeat--none", "No Repeat"]
+        ],
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_image_vertical_alignment",
+        "label": "Background: Image Vertical Alignment",
+        "type": "choice",
+        "display": "select",
+        "default": "50%",
+        "required": true,
+        "choices": [
+          ["0%", "Top"],
+          ["50%", "Center"],
+          ["100%", "Bottom"]
+        ],
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_image_horizontal_alignment",
+        "label": "Background: Image Horizontal Alignment",
+        "type": "choice",
+        "display": "select",
+        "default": "50%",
+        "required": true,
+        "choices": [
+          ["0%", "Left"],
+          ["50%", "Center"],
+          ["100%", "Right"]
+        ],
+        "visibility": { "controlling_field_path": "background_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      }
+    ]
+  },
+  {
+    "name": "background_overlay",
+    "label": "Background: Overlay",
+    "type": "group",
+    "required": false,
+    "default": {
+      "background_overlay_display_type": "default",
+      "background_overlay_color_opacity": { "color": "#ffffff", "opacity": 100 },
+      "background_overlay_gradient_angle": "135",
+      "background_overlay_gradient_start_color_opacity": { "color": "#004F92", "opacity": 100 },
+      "background_overlay_gradient_end_color_opacity": { "color": "#003C71", "opacity": 100 },
+      "background_overlay_image_size": "background-size--cover",
+      "background_overlay_image_repeat": "background-repeat--none",
+      "background_overlay_image_vertical_alignment": "50%",
+      "background_overlay_image_horizontal_alignment": "50%",
+      "background_overlay_opacity": "85"
+    },
+    "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "none", "operator": "NOT_EQUAL" },
+    "children": [
+      {
+        "name": "background_overlay_display_type",
+        "label": "Overlay Display Type",
+        "type": "choice",
+        "display": "select",
+        "default": "default",
+        "required": true,
+        "choices": [
+          ["default", "Show on all screen sizes"],
+          ["lap-and-up-visuallyhidden", "Hide on Desktop"],
+          ["portable-visuallyhidden", "Hide on Tablet and Mobile"],
+          ["palm-visuallyhidden", "Hide on Mobile"]
+        ]
+      },
+      {
+        "name": "background_overlay_color_opacity",
+        "label": "Overlay Color & Opacity",
+        "type": "color",
+        "default": { "color": "#ffffff", "opacity": 100 },
+        "required": true,
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "color", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_gradient_angle",
+        "label": "Overlay Gradient Angle",
+        "type": "choice",
+        "display": "select",
+        "default": "135",
+        "required": true,
+        "choices": [
+          ["180", "Top to Bottom"],
+          ["135", "Top-Left to Bottom-Right"],
+          ["90", "Left to Right"],
+          ["45", "Bottom-Left to Top-Right"],
+          ["0", "Bottom to Top"],
+          ["315", "Bottom-Right to Top-Left"],
+          ["270", "Right to Left"],
+          ["225", "Top-Right to Bottom-Left"]
+        ],
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "gradient", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_gradient_start_color_opacity",
+        "label": "Overlay Start Color & Opacity",
+        "type": "color",
+        "default": { "color": "#004F92", "opacity": 100 },
+        "required": true,
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "gradient", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_gradient_end_color_opacity",
+        "label": "Overlay End Color & Opacity",
+        "type": "color",
+        "default": { "color": "#003C71", "opacity": 100 },
+        "required": true,
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "gradient", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_image",
+        "label": "Overlay Image",
+        "type": "image",
+        "required": true,
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_image_size",
+        "label": "Overlay Image Size",
+        "type": "choice",
+        "display": "select",
+        "default": "background-size--cover",
+        "required": true,
+        "choices": [
+          ["background-size--cover", "Scale to Fill"],
+          ["background-size--contain", "Scale to Fit"]
+        ],
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_image_repeat",
+        "label": "Overlay Image Repeat",
+        "type": "choice",
+        "display": "select",
+        "default": "background-repeat--none",
+        "required": true,
+        "choices": [
+          ["background-repeat", "Repeat"],
+          ["background-repeat--none", "No Repeat"]
+        ],
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_image_vertical_alignment",
+        "label": "Overlay Image Vertical Alignment",
+        "type": "choice",
+        "display": "select",
+        "default": "50%",
+        "required": true,
+        "choices": [
+          ["0%", "Top"],
+          ["50%", "Center"],
+          ["100%", "Bottom"]
+        ],
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_image_horizontal_alignment",
+        "label": "Overlay Image Horizontal Alignment",
+        "type": "choice",
+        "display": "select",
+        "default": "50%",
+        "required": true,
+        "choices": [
+          ["0%", "Left"],
+          ["50%", "Center"],
+          ["100%", "Right"]
+        ],
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      },
+      {
+        "name": "background_overlay_opacity",
+        "label": "Overlay Opacity",
+        "type": "choice",
+        "display": "select",
+        "default": "85",
+        "required": true,
+        "choices": [
+          ["100", "100% (Solid)"],
+          ["85", "85%"],
+          ["70", "70%"],
+          ["50", "50%"],
+          ["25", "25%"],
+          ["0", "0% (Transparent / No Overlay)"]
+        ],
+        "visibility": { "controlling_field_path": "background_overlay_type", "controlling_value_regex": "image", "operator": "EQUAL" }
+      }
+    ]
+  }
+]

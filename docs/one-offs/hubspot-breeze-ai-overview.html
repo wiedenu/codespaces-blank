@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HubSpot AI / Breeze Assistant — What It Is, What It's Not</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px; color: #1e1e1e; background: #f5f5f5; padding: 28px;
+  }
+  .page { max-width: 760px; margin: 0 auto; background: #fff; border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+  .header { background: #2D6B4E; color: #fff; padding: 24px 32px 18px; }
+  .header h1 { font-size: 22px; font-weight: bold; }
+  .header .meta { font-size: 12px; color: #d6e8dd; margin-top: 4px; }
+  .content { padding: 24px 32px 32px; }
+  .intro { font-size: 13px; color: #444; background: #f0f5f1; border-left: 4px solid #2D6B4E;
+    padding: 10px 14px; margin-bottom: 24px; line-height: 1.5; }
+  h2 { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;
+    color: #2D6B4E; border-bottom: 2px solid #2D6B4E; padding-bottom: 5px; margin: 26px 0 12px; }
+  h2:first-of-type { margin-top: 0; }
+  ul { margin: 0 0 4px 18px; }
+  li { font-size: 13px; line-height: 1.6; margin-bottom: 5px; }
+  .tier-box { display: flex; gap: 16px; margin-bottom: 8px; }
+  .tier { flex: 1; border-radius: 6px; padding: 12px 14px; font-size: 12.5px; line-height: 1.5; }
+  .tier.active { background: #f0f5f1; border-left: 4px solid #2D6B4E; }
+  .tier.future { background: #f3f4f6; border-left: 4px solid #9ca3af; color: #555; }
+  .tier strong { display: block; font-size: 12px; margin-bottom: 3px; color: #2D6B4E; }
+  .tier.future strong { color: #6b7280; }
+  .limits li { color: #7a2d2d; }
+  .limits li::marker { color: #b91c1c; }
+  .qa { margin-bottom: 14px; }
+  .q { font-weight: bold; font-size: 13px; color: #1e1e1e; margin-bottom: 2px; }
+  .a { font-size: 13px; color: #444; line-height: 1.5; }
+  .footer { background: #f0f5f1; border-top: 1px solid #cfe3d6; padding: 14px 32px;
+    font-size: 12px; color: #2D6B4E; text-align: center; }
+  .footer a { color: #2D6B4E; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>HubSpot AI / Breeze Assistant</h1>
+    <div class="meta">What it is, what it's not — Marketing Team Reference</div>
+  </div>
+
+  <div class="content">
+    <div class="intro">
+      We're enabling <strong>Breeze Assistant</strong> first — HubSpot's conversational AI helper. We are <em>not</em> enabling Breeze Agents (autonomous, multi-step AI) at this time. Same idea as Microsoft Copilot: it drafts, you review, you decide.
+    </div>
+
+    <h2>What's Being Enabled vs. What's Not</h2>
+    <div class="tier-box">
+      <div class="tier active">
+        <strong>Breeze Assistant — enabling now</strong>
+        Conversational, human-in-the-loop. You ask, it drafts, you review and edit before anything goes live.
+      </div>
+      <div class="tier future">
+        <strong>Breeze Agents — not enabled</strong>
+        Autonomous, multi-step AI that executes campaigns/content on its own. Not part of this rollout.
+      </div>
+    </div>
+
+    <h2>What You Can Use It For</h2>
+    <ul>
+      <li>Email subject line and body copy variations</li>
+      <li>First-draft blog post outlines or sections</li>
+      <li>Ad copy variations for paid social/search</li>
+      <li>Landing page copy drafts</li>
+      <li>SEO meta description / title tag suggestions</li>
+      <li>Summarizing a contact or company record before a call</li>
+      <li>Drafting follow-up replies based on context you provide</li>
+    </ul>
+
+    <h2>What It Can't / Shouldn't Be Used For</h2>
+    <ul class="limits">
+      <li><strong>No auto-publish</strong> — every draft needs human review before it goes live</li>
+      <li><strong>Doesn't know our brand voice or naming standards automatically</strong> — only knows what you put in the prompt; anything drafted still goes through our existing brand/naming governance</li>
+      <li><strong>No autonomous customer-facing responses</strong> — nothing replies to a customer or dealer unsupervised; anything touching rates, terms, or commitments goes through normal compliance review regardless of how good the draft looks</li>
+      <li><strong>No persistent memory</strong> — it doesn't learn your preferences over time; each interaction starts fresh</li>
+      <li><strong>Not a strategy or judgment tool</strong> — it accelerates drafting, not decision-making</li>
+    </ul>
+
+    <h2>Common Questions</h2>
+    <div class="qa">
+      <div class="q">Will it write and publish content for me?</div>
+      <div class="a">No. Drafts only — you review and publish.</div>
+    </div>
+    <div class="qa">
+      <div class="q">Will this replace my job?</div>
+      <div class="a">No. It removes the blank-page problem on first drafts. Judgment and final review are still yours.</div>
+    </div>
+    <div class="qa">
+      <div class="q">Can I use it to reply to a customer directly?</div>
+      <div class="a">Not unsupervised. Run anything customer-facing through normal review, especially anything touching rates or terms.</div>
+    </div>
+    <div class="qa">
+      <div class="q">Does it already know our brand voice?</div>
+      <div class="a">Only what you tell it. Feed it context — don't assume it knows GreatAmerica's standards.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Have a question that's not covered here? Ask anonymously: <a href="#">[FORM LINK]</a>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GOIZ Analytics — What's Already Available</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px; color: #1a1a1a; background: #f5f5f5; padding: 24px;
+}
+.page { max-width: 760px; margin: 0 auto; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+.header { background: #1a365d; color: white; padding: 22px 32px 18px; }
+.header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.header .meta { font-size: 12px; color: #a0b4cc; margin-top: 4px; }
+.intro { padding: 18px 32px 0; font-size: 13px; color: #444; line-height: 1.5; }
+.body { padding: 20px 32px 28px; }
+.card { border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px 18px; margin-bottom: 14px; }
+.card-num { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center;
+  background: #1a365d; color: white; font-size: 11px; font-weight: 700; border-radius: 50%;
+  margin-right: 8px; }
+.card h2 { font-size: 14px; font-weight: 700; display: inline; color: #1a365d; }
+.path { font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; background: #f0f5ff;
+  color: #1d4ed8; padding: 6px 10px; border-radius: 4px; margin: 8px 0; display: inline-block; }
+.card p { font-size: 12.5px; color: #555; margin-top: 6px; line-height: 1.5; }
+.note { font-size: 11.5px; color: #777; margin-top: 6px; font-style: italic; }
+.ask { background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 0 5px 5px 0;
+  padding: 12px 16px; margin-top: 18px; }
+.ask strong { display: block; font-size: 12.5px; color: #1a365d; margin-bottom: 3px; }
+.ask p { font-size: 12.5px; color: #444; line-height: 1.5; }
+.footer { background: #f0fdf4; border-top: 1px solid #bbf7d0; padding: 12px 32px;
+  font-size: 11.5px; color: #166534; }
+@media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>GOIZ Analytics — What's Already Available</h1>
+    <div class="meta">Prepared for Brenda Stroschein · GreatAmerica Marketing Operations · July 1, 2026</div>
+  </div>
+
+  <div class="intro">
+    Good news going into today's conversation: GA4 is actively collecting data on GOIZ right now
+    (confirmed via Realtime traffic during setup check). The CSP block that had been holding this
+    up since April (MKB-3913) has cleared — confirmed directly in the page source, which now
+    explicitly allowlists googletagmanager.com and google-analytics.com. Two standard dashboards —
+    no building required — cover most of what's below today.
+  </div>
+
+  <div class="body">
+    <div class="card">
+      <span class="card-num">1</span><h2>Engagement Overview</h2>
+      <div class="path">GA4 → Reports → Engagement → Overview</div>
+      <p>One screen answers two of your questions: a table of top pages/titles by views (where
+      traffic concentrates), plus average engagement time per user and per session (how long
+      people stick around).</p>
+    </div>
+
+    <div class="card">
+      <span class="card-num">2</span><h2>Retention Overview</h2>
+      <div class="path">GA4 → Reports → Retention</div>
+      <p>New vs. returning users and a retention curve out of the box. Toggle the trend chart to
+      daily granularity and the weekday/weekend cadence is visible at a glance — a good-enough
+      read on "daily vs. weekly" usage without any custom build.</p>
+    </div>
+
+    <div class="ask">
+      <strong>Next step: GA4 access</strong>
+      <p>Confirm who on your team needs direct GA4 access so these two dashboards don't have to
+      route through MOps every time. We can add viewer/analyst access this week.</p>
+    </div>
+
+    <p class="note" style="margin-top: 2px;">Going deeper later (optional, not needed today): an
+    hour-of-day heat map is buildable in GA4 Explore, and a true day-of-week breakdown requires
+    piping the data into Looker Studio — GA4's native Explore tool doesn't expose day-of-week as
+    a dimension. Worth a follow-up build if this level of granularity turns out to matter.</p>
+  </div>
+
+  <div class="footer">
+    <strong>Covers:</strong> top pages, time on site, visit frequency &nbsp;|&nbsp;
+    <strong>Not covered here:</strong> per-page action tracking, pathways, drop-off, session
+    replay, operation timing — see Sections 2 &amp; 3 of today's discussion.
+  </div>
+</div>
+</body>
+</html>

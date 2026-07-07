@@ -1,0 +1,132 @@
+{% set sc = module.section_controls %}
+{% set bg = module.background_controls %}
+
+{# ── Background style string ── #}
+{% if bg.background_type == 'color' %}
+  {% set bg_style = 'background-color: rgba(' ~ bg.background.background_color.color|convert_rgb ~ ',' ~ (bg.background.background_color.opacity / 100) ~ ');' %}
+{% elif bg.background_type == 'gradient' %}
+  {% set bg_style = 'background: linear-gradient(' ~ bg.background.background_gradient_angle ~ 'deg, rgba(' ~ bg.background.background_gradient_start_color.color|convert_rgb ~ ',' ~ (bg.background.background_gradient_start_color.opacity / 100) ~ '), rgba(' ~ bg.background.background_gradient_end_color.color|convert_rgb ~ ',' ~ (bg.background.background_gradient_end_color.opacity / 100) ~ '));' %}
+{% elif bg.background_type == 'image' %}
+  {% set bg_style = 'background-image: url(' ~ bg.background.background_image.src ~ '); background-size: cover; background-repeat: no-repeat; background-position: center center;' %}
+{% else %}
+  {% set bg_style = '' %}
+{% endif %}
+
+<section
+  {% if sc.anchor_id %}id="{{ sc.anchor_id }}"{% endif %}
+  class="section--columns {{ sc.spacing.top_padding }} {{ sc.spacing.top_padding_mobile }} {{ sc.spacing.bottom_padding }} {{ sc.spacing.bottom_padding_mobile }} {{ sc.text_color_override }}"
+  style="{{ bg_style }}"
+>
+  <div class="section--columns--inner wrapper">
+
+    {# ── Section header ── #}
+    <div class="grid__item one-whole hard--sides hard--ends first--hard--top last--hard--bottom all--text--{{ sc.header_content_alignment }} palm-all--text--{{ sc.header_content_alignment_mobile }}">
+      {% if module.header || module.content %}
+      <div class="grid__item columns--header one-whole short first--hard--top last--hard--bottom">
+        {% if module.header %}
+        <h2 class="hard--bottom">
+          {{ module.header }}
+        </h2>
+        {% endif %}
+        {% if module.header && module.content %}
+        <span class="header-rule"></span>
+        {% endif %}
+        <div class="all--text--{{ sc.subheader_content_alignment }} palm-all--text--{{ sc.subheader_content_alignment_mobile_ }}">
+          {{ module.content }}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    {# ── Carousel ── #}
+    {% if module.slide_content %}
+    <div class="section--columns--wrapper">
+
+      <button class="carousel-nav carousel-nav--prev" aria-label="Previous slide">
+        <span class="carousel-nav--label">PREV</span>
+        <span class="carousel-nav--arrow">&#8592;</span>
+      </button>
+
+      <div class="section--columns--track">
+        {% for slide in module.slide_content %}
+        <div class="section--columns--card{% if loop.first %} is-active{% endif %}" data-index="{{ loop.index0 }}" {% if not loop.first %}aria-hidden="true"{% endif %}>
+
+          {# Vidyard embed side #}
+          <div class="section--columns--card--image">
+            <div class="section--columns--card--image--inner">
+              {% if slide.vidyard_uuid %}
+                {{ require_js("https://play.vidyard.com/embed/v4.js", "footer") }}
+                <img
+                  class="vidyard-player-embed"
+                  src="https://play.vidyard.com/{{ slide.vidyard_uuid }}.jpg"
+                  data-uuid="{{ slide.vidyard_uuid }}"
+                  data-v="4"
+                  data-type="inline"
+                />
+              {% else %}
+                <div class="section--columns--card--image--placeholder"></div>
+              {% endif %}
+            </div>
+          </div>
+
+          {# Content side #}
+          <div class="section--columns--card--content">
+            {% if slide.company %}
+            <p class="section--columns--card--eyebrow">{{ slide.company }}</p>
+            {% endif %}
+            {% if slide.header_label %}
+            <h3 class="section--columns--card--title">{{ slide.header_label }}</h3>
+            {% endif %}
+            {% if slide.description %}
+            <div class="section--columns--card--description">{{ slide.description }}</div>
+            {% endif %}
+
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+
+      <button class="carousel-nav carousel-nav--next" aria-label="Next slide">
+        <span class="carousel-nav--label">NEXT</span>
+        <span class="carousel-nav--arrow">&#8594;</span>
+      </button>
+
+    </div>
+
+    {# ── Dots + counter ── #}
+    <div class="section--columns--dots" role="tablist">
+      {% for slide in module.slide_content %}
+      <span class="section--columns--dot{% if loop.first %} is-active{% endif %}"
+            role="tab"
+            tabindex="0"
+            aria-label="Slide {{ loop.index }}"
+            data-index="{{ loop.index0 }}"></span>
+      {% endfor %}
+    </div>
+    <p class="section--columns--counter" aria-live="polite">1 of {{ module.slide_content|length }}</p>
+
+    {% endif %}
+
+    {# ── Section-level CTA ── #}
+    {% if module.cta.cta_type != 'none' %}
+    <div class="section--columns--cta">
+      {% if module.cta.cta_type == 'cta' %}
+        {% cta guid="{{ module.cta.cta }}" %}
+      {% elif module.cta.cta_type == 'link' and module.cta.cta_hyperlink.href %}
+        <a href="{{ module.cta.cta_hyperlink.href }}"
+           class="btn"
+           style="background-color: {{ module.cta.cta_button_color }};"
+           {% if module.cta.cta_open_in_new_tab %}target="_blank" rel="noopener"{% endif %}>
+          {{ module.cta.cta_button_text }}
+        </a>
+      {% elif module.cta.cta_type == 'anchor' %}
+        <a href="#{{ module.cta.cta_section_anchor_id }}" class="btn" style="background-color: {{ module.cta.cta_button_color }};">
+          {{ module.cta.cta_button_text }}
+        </a>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>

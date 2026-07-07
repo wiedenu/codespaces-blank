@@ -1,0 +1,641 @@
+<title>Power Map — You &amp; Heather</title>
+<style>
+  :root {
+    --bg: #FBFAF7;
+    --surface: #FFFFFF;
+    --surface-2: #F5F3EC;
+    --ink: #1C1E24;
+    --muted: #5B606C;
+    --faint: #8A8F9A;
+    --line: #E7E3D9;
+    --brass: #A9761F;
+    --teal: #1F7A6E;
+    --shadow: 0 1px 2px rgba(28,30,36,.05), 0 10px 30px rgba(28,30,36,.08);
+
+    /* role colors */
+    --r-you: #1F9E8F;
+    --r-decider: #B0762A;
+    --r-sponsor: #5B6CC4;
+    --r-shaper: #D68A2E;
+    --r-blocker: #C6503C;
+    --r-gatekeeper: #6E7787;
+    --r-specialist: #3E90A6;
+    --r-spectator: #9BA3AF;
+    --r-ally: #3FA98D;
+
+    /* edge colors */
+    --e-you: #1F9E8F;
+    --e-shape: #D68A2E;
+    --e-report: #7C8698;
+    --e-block: #C6503C;
+    --e-ally: #3FA98D;
+    --e-spectate: #A6ABB5;
+
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, "Cascadia Code", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161B; --surface: #1D2027; --surface-2: #23262E;
+      --ink: #ECEAE3; --muted: #A2A8B4; --faint: #767C88; --line: #2C2F37;
+      --brass: #D6A44A; --teal: #55B9AB;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4);
+      --r-you: #33B8A8; --r-decider: #D6A44A; --r-sponsor: #8A97E0;
+      --r-shaper: #E6A64E; --r-blocker: #E0715C; --r-gatekeeper: #98A2B3;
+      --r-specialist: #5FB0C6; --r-spectator: #AEB4BF; --r-ally: #5FC6AA;
+      --e-you: #33B8A8; --e-shape: #E6A64E; --e-report: #98A2B3;
+      --e-block: #E0715C; --e-ally: #5FC6AA; --e-spectate: #98A2B3;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF7; --surface: #FFFFFF; --surface-2: #F5F3EC; --ink: #1C1E24;
+    --muted: #5B606C; --faint: #8A8F9A; --line: #E7E3D9; --brass: #A9761F; --teal: #1F7A6E;
+    --shadow: 0 1px 2px rgba(28,30,36,.05), 0 10px 30px rgba(28,30,36,.08);
+    --r-you:#1F9E8F;--r-decider:#B0762A;--r-sponsor:#5B6CC4;--r-shaper:#D68A2E;
+    --r-blocker:#C6503C;--r-gatekeeper:#6E7787;--r-specialist:#3E90A6;--r-spectator:#9BA3AF;--r-ally:#3FA98D;
+    --e-you:#1F9E8F;--e-shape:#D68A2E;--e-report:#7C8698;--e-block:#C6503C;--e-ally:#3FA98D;--e-spectate:#A6ABB5;
+  }
+  :root[data-theme="dark"] {
+    --bg: #14161B; --surface: #1D2027; --surface-2: #23262E; --ink: #ECEAE3;
+    --muted: #A2A8B4; --faint: #767C88; --line: #2C2F37; --brass: #D6A44A; --teal: #55B9AB;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4);
+    --r-you:#33B8A8;--r-decider:#D6A44A;--r-sponsor:#8A97E0;--r-shaper:#E6A64E;
+    --r-blocker:#E0715C;--r-gatekeeper:#98A2B3;--r-specialist:#5FB0C6;--r-spectator:#AEB4BF;--r-ally:#5FC6AA;
+    --e-you:#33B8A8;--e-shape:#E6A64E;--e-report:#98A2B3;--e-block:#E0715C;--e-ally:#5FC6AA;--e-spectate:#98A2B3;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ---- Top bar ---- */
+  header {
+    padding: 20px 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 6px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    margin: 0 0 16px;
+  }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab {
+    appearance: none;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 10px 14px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { color: var(--brass); border-bottom-color: var(--brass); }
+  .tab:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; border-radius: 4px; }
+
+  /* ---- Main split ---- */
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    min-height: 0;
+  }
+  .stage {
+    position: relative;
+    min-height: 460px;
+    background:
+      radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 26px 26px;
+    overflow: hidden;
+  }
+  svg#graph { width: 100%; height: 100%; display: block; touch-action: none; }
+
+  .hint {
+    position: absolute;
+    left: 16px; bottom: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    padding: 6px 10px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  .reset {
+    position: absolute;
+    right: 16px; top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .04em;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 11px;
+    cursor: pointer;
+  }
+  .reset:hover { color: var(--ink); border-color: var(--brass); }
+
+  /* ---- Edges ---- */
+  .edge { stroke-width: 1.6; fill: none; transition: opacity .2s; }
+  .edge.you { stroke: var(--e-you); stroke-dasharray: 5 4; }
+  .edge.shapes { stroke: var(--e-shape); }
+  .edge.reports { stroke: var(--e-report); }
+  .edge.schedule { stroke: var(--e-report); stroke-dasharray: 2 4; }
+  .edge.spectate { stroke: var(--e-spectate); stroke-dasharray: 1 5; stroke-linecap: round; }
+  .edge.blocked { stroke: var(--e-block); stroke-width: 2; }
+  .edge.ally { stroke: var(--e-ally); }
+  .edge.routes { stroke: var(--e-report); }
+  .edge.chases { stroke: var(--e-block); stroke-dasharray: 6 4; }
+  .edgelabel { font-family: var(--mono); font-size: 9.5px; fill: var(--faint); opacity: 0; transition: opacity .2s; }
+
+  .node { cursor: grab; }
+  .node:active { cursor: grabbing; }
+  .node circle.disc { transition: opacity .2s; }
+  .node .warn { fill: none; stroke: var(--e-block); stroke-width: 1.6; stroke-dasharray: 3 3; opacity: .9; }
+  .node .pin { fill: var(--ink); opacity: 0; }
+  .node.pinned .pin { opacity: .55; }
+  .node text {
+    font-family: var(--sans);
+    font-weight: 600;
+    text-anchor: middle;
+    fill: var(--ink);
+    paint-order: stroke;
+    stroke: var(--bg);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+  .node:focus-visible { outline: none; }
+  .node:focus-visible circle.disc { stroke: var(--brass); stroke-width: 3; }
+
+  /* dim non-neighbors when selection active */
+  svg.has-sel .edge:not(.hi) { opacity: .12; }
+  svg.has-sel .node.lo circle.disc { opacity: .25; }
+  svg.has-sel .node.lo text { opacity: .3; }
+  .edge.hi { opacity: 1 !important; }
+  .edge.hi + .edgelabel, .edgelabel.hi { opacity: 1; }
+
+  /* ---- Detail panel ---- */
+  aside {
+    border-left: 1px solid var(--line);
+    background: var(--surface);
+    padding: 22px 22px 28px;
+    overflow-y: auto;
+  }
+  .ctx-blurb {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0 0 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ctx-blurb b { color: var(--ink); }
+  .card-empty { font-size: 14px; color: var(--faint); font-style: italic; }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 999px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .dtl-name { font-family: var(--serif); font-size: 22px; font-weight: 700; margin: 0 0 3px; letter-spacing: -.01em; }
+  .dtl-sub { font-size: 13px; color: var(--faint); margin: 0 0 18px; }
+  .row { margin: 0 0 15px; }
+  .row .k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 4px;
+  }
+  .row .v { font-size: 14.5px; line-height: 1.5; margin: 0; color: var(--ink); }
+  .row.move .v {
+    background: var(--surface-2);
+    border-left: 2px solid var(--teal);
+    padding: 10px 12px;
+    border-radius: 6px;
+  }
+  .row.fail .v { color: var(--r-blocker); }
+
+  /* ---- Legend ---- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 14px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface);
+  }
+  .lg-group { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+  .lg-group .glabel { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .chip .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+  .chip .ln { width: 20px; height: 0; border-top-width: 2px; border-top-style: solid; flex-shrink: 0; }
+
+  @media (max-width: 820px) {
+    main { grid-template-columns: 1fr; }
+    aside { border-left: none; border-top: 1px solid var(--line); max-height: 42vh; }
+    .stage { min-height: 52vh; }
+  }
+</style>
+
+<header>
+  <p class="eyebrow">Political Field Map · Private</p>
+  <h1>The power around you &amp; Heather</h1>
+  <div class="tabs" role="tablist" aria-label="Decision context">
+    <button class="tab" role="tab" data-ctx="marketing" aria-selected="true">Marketing &amp; KPIs</button>
+    <button class="tab" role="tab" data-ctx="irh" aria-selected="false">IRH</button>
+    <button class="tab" role="tab" data-ctx="bia" aria-selected="false">BIA &amp; BCP</button>
+  </div>
+</header>
+
+<main>
+  <div class="stage">
+    <svg id="graph" aria-label="Interactive power map"></svg>
+    <button class="reset" id="reset">reset layout</button>
+    <div class="hint">drag people · click for detail · double-click to unpin</div>
+  </div>
+  <aside>
+    <p class="ctx-blurb" id="blurb"></p>
+    <div id="detail"><p class="card-empty">Click any person to see their currency, how they stall, and your move.</p></div>
+  </aside>
+</main>
+
+<footer>
+  <div class="lg-group">
+    <span class="glabel">Role</span>
+    <span class="chip"><span class="dot" style="background:var(--r-you)"></span>You</span>
+    <span class="chip"><span class="dot" style="background:var(--r-decider)"></span>Decider</span>
+    <span class="chip"><span class="dot" style="background:var(--r-sponsor)"></span>Sponsor</span>
+    <span class="chip"><span class="dot" style="background:var(--r-shaper)"></span>Shaper</span>
+    <span class="chip"><span class="dot" style="background:var(--r-blocker)"></span>Blocker</span>
+    <span class="chip"><span class="dot" style="background:var(--r-gatekeeper)"></span>Gatekeeper</span>
+    <span class="chip"><span class="dot" style="background:var(--r-specialist)"></span>Specialist</span>
+    <span class="chip"><span class="dot" style="background:var(--r-spectator)"></span>Spectator</span>
+    <span class="chip"><span class="dot" style="background:var(--r-ally)"></span>Ally</span>
+  </div>
+  <div class="lg-group">
+    <span class="glabel">Tie</span>
+    <span class="chip"><span class="ln" style="border-color:var(--e-you);border-top-style:dashed"></span>Your move</span>
+    <span class="chip"><span class="ln" style="border-color:var(--e-shape)"></span>Shapes</span>
+    <span class="chip"><span class="ln" style="border-color:var(--e-report)"></span>Reports/routes</span>
+    <span class="chip"><span class="ln" style="border-color:var(--e-block)"></span>Blocks</span>
+    <span class="chip"><span class="ln" style="border-color:var(--e-spectate);border-top-style:dotted"></span>Consulted</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const PEOPLE = {
+    john:     { name:"John",            sub:"You · Marketing Ops" },
+    heather:  { name:"Heather Friedman", sub:"Your manager",
+                currency:"Reputation; allergic to vanity metrics",
+                failure:"Says yes, then goes silent on execution" },
+    brian:    { name:"Brian",           sub:"Executive sponsor",
+                currency:"Exec priorities & business outcomes" },
+    dusty:    { name:"Dusty Kelchen",   sub:"Sales / IRH",
+                currency:"Sales alignment",
+                failure:"Silence on approvals — MKB-6281 pushed 6×" },
+    courtney: { name:"Courtney",        sub:"Sales alignment",
+                currency:"Definitions that fit sales" },
+    jana:     { name:"Jana Bennett",    sub:"Sr. marketing peer",
+                failure:"Moves without you if you're slow (MKB-5694)" },
+    juliet:   { name:"Juliet Ross",     sub:"Content & comms (rising)" },
+    carly:    { name:"Carly Hodges",    sub:"Marketing peer" },
+    nichole:  { name:"Nichole",         sub:"Heather's calendar",
+                currency:"Proceeds unless told no" },
+    dave:     { name:"Dave Wallrichs",  sub:"Business continuity / compliance",
+                failure:"Over-follows-up — chases monthly" },
+    aj:       { name:"AJ",              sub:"Regulatory / risk" },
+    michelle: { name:"Michelle's office", sub:"Legal" },
+  };
+
+  const CONTEXTS = {
+    marketing: {
+      blurb: `<b>Heather decides — but she's also the silent blocker.</b> Your leverage runs through Brian and the Shapers, not through Heather herself.`,
+      roles: { john:"you", heather:"decider", brian:"sponsor", dusty:"shaper",
+               courtney:"shaper", jana:"shaper", juliet:"spectator", carly:"spectator", nichole:"gatekeeper" },
+      warn: ["heather"],
+      moves: {
+        john: "Expertise power, limited authority. Your influence runs through Shapers and through making Heather look good.",
+        heather: "Don't lead with her. Walk in with the yes ready to sign and a forcing function attached — a date, not more evidence.",
+        brian: "Get him wanting it. His interest gives Heather tailwind — cheaper than pushing her, and no hit to her reputation.",
+        dusty: "Pre-sell 1:1 before any group meeting. Heather borrows his read on sales alignment.",
+        courtney: "Co-shapes the sales-side definitions Heather adopts (the MQL→SAL change). Pre-sell alongside Dusty.",
+        jana: "Senior enough to act without you. Hold your seat early or she moves on (MKB-5694).",
+        juliet: "Keep looped so nothing surprises her. Consulted, not deciding.",
+        carly: "Keep looped, no surprises. Consulted, not deciding.",
+        nichole: "Your scheduling forcing function. Route 'make the meeting real' through her, not Heather's memory.",
+      },
+      edges: [
+        ["heather","brian","reports","reports to"],
+        ["dusty","heather","shapes","shapes"],
+        ["courtney","heather","shapes","shapes"],
+        ["jana","heather","shapes","trusted by"],
+        ["nichole","heather","schedule","schedules for"],
+        ["juliet","heather","spectate","consulted"],
+        ["carly","heather","spectate","consulted"],
+        ["john","heather","you","proposes to"],
+        ["john","brian","you","win over"],
+        ["john","dusty","you","pre-sell"],
+        ["john","courtney","you","pre-sell"],
+        ["john","nichole","you","use as lever"],
+      ],
+    },
+    irh: {
+      blurb: `<b>Power shifts off Heather.</b> Dusty is the gate, and this is the one map where waiting is provably failing — the honest question is escalate or reframe.`,
+      roles: { john:"you", dusty:"blocker", michelle:"blocker", heather:"ally" },
+      warn: [],
+      moves: {
+        john: "The one map where waiting is provably failing. Force a resolution — escalate or change the ask.",
+        dusty: "The real gate (MKB-6281 pushed 6×). Re-asking politely isn't working — decide to escalate or reframe.",
+        michelle: "Legal gate. Registering the 'IRH Capital' trademark is what unblocks the X-account infringement claim.",
+        heather: "An ally here, not a blocker — she won't drop the handle (reputation). Use her backing to justify escalation.",
+      },
+      edges: [
+        ["john","dusty","blocked","blocked by"],
+        ["john","michelle","blocked","needs trademark"],
+        ["john","heather","ally","aligned"],
+        ["heather","dusty","ally","can pressure"],
+      ],
+    },
+    bia: {
+      blurb: `<b>Power flips: Dave is the gate</b>, and his failure mode is chasing you. Being early on MKB-7726 (due 8/30) equals total freedom.`,
+      roles: { john:"you", dave:"blocker", heather:"decider", aj:"specialist" },
+      warn: ["heather"],
+      moves: {
+        john: "You own this now (MKB-7726, due 8/30). Being early buys total freedom.",
+        dave: "Completeness gate before Heather. His failure mode is chasing you monthly — done-ahead-of-time means never managed.",
+        heather: "Official approval after Dave. Same silent-yes risk — hand her a clean, complete submit so there's nothing to stall on.",
+        aj: "Consult on the bank-downtime regulatory-penalty question. A specialist, not a blocker.",
+      },
+      edges: [
+        ["john","dave","you","submits to"],
+        ["dave","heather","routes","routes to"],
+        ["dave","john","chases","chases monthly"],
+        ["john","aj","you","consults"],
+      ],
+    },
+  };
+
+  const ROLE_LABEL = { you:"You", decider:"Decider", sponsor:"Sponsor", shaper:"Shaper",
+    blocker:"Blocker", gatekeeper:"Gatekeeper", specialist:"Specialist", spectator:"Spectator", ally:"Ally" };
+
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("graph");
+  const stage = svg.parentElement;
+  const detail = document.getElementById("detail");
+  const blurb = document.getElementById("blurb");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let W = 0, H = 0, nodes = [], edges = [], selected = null, raf = null, alpha = 1, drag = null;
+
+  function size() {
+    const r = stage.getBoundingClientRect();
+    W = r.width; H = r.height;
+    svg.setAttribute("width", W); svg.setAttribute("height", H);
+  }
+
+  function build(ctxKey) {
+    const ctx = CONTEXTS[ctxKey];
+    blurb.innerHTML = ctx.blurb;
+    selected = null;
+    detail.innerHTML = `<p class="card-empty">Click any person to see their currency, how they stall, and your move.</p>`;
+    svg.classList.remove("has-sel");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    // arrow marker (matches each line's stroke via context-stroke)
+    const defs = document.createElementNS(NS, "defs");
+    defs.innerHTML = `<marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker>`;
+    svg.appendChild(defs);
+
+    const ids = Object.keys(ctx.roles);
+    const cx = W/2, cy = H/2, R = Math.min(W, H) * 0.30;
+    nodes = ids.map((id, i) => {
+      const ang = (i / ids.length) * Math.PI * 2 - Math.PI/2;
+      const isYou = id === "john";
+      return {
+        id, role: ctx.roles[id], warn: ctx.warn.includes(id),
+        move: ctx.moves[id] || "",
+        x: isYou ? cx : cx + Math.cos(ang) * R + (Math.random()-.5)*30,
+        y: isYou ? cy : cy + Math.sin(ang) * R + (Math.random()-.5)*30,
+        vx: 0, vy: 0, fx: null, fy: null,
+        r: id === "john" ? 27 : id === "heather" ? 24 : 18,
+        anchor: isYou ? 0.06 : 0.015,
+      };
+    });
+    const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
+    edges = ctx.edges.map(([s,t,type,label]) => ({ s: byId[s], t: byId[t], type, label }));
+
+    const gEdges = document.createElementNS(NS, "g");
+    const gLabels = document.createElementNS(NS, "g");
+    const gNodes = document.createElementNS(NS, "g");
+    svg.appendChild(gEdges); svg.appendChild(gLabels); svg.appendChild(gNodes);
+
+    const arrowless = new Set(["spectate"]);
+    edges.forEach(e => {
+      const ln = document.createElementNS(NS, "line");
+      ln.setAttribute("class", "edge " + e.type);
+      if (!arrowless.has(e.type)) ln.setAttribute("marker-end", "url(#arw)");
+      e.el = ln; gEdges.appendChild(ln);
+      const lb = document.createElementNS(NS, "text");
+      lb.setAttribute("class", "edgelabel");
+      lb.textContent = e.label;
+      e.lbl = lb; gLabels.appendChild(lb);
+    });
+
+    nodes.forEach(n => {
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "node");
+      g.setAttribute("tabindex", "0");
+      g.setAttribute("role", "button");
+      g.setAttribute("aria-label", PEOPLE[n.id].name + " — " + ROLE_LABEL[n.role]);
+      if (n.warn) {
+        const w = document.createElementNS(NS, "circle");
+        w.setAttribute("class", "warn");
+        w.setAttribute("r", n.r + 5);
+        g.appendChild(w);
+      }
+      const c = document.createElementNS(NS, "circle");
+      c.setAttribute("class", "disc");
+      c.setAttribute("r", n.r);
+      c.setAttribute("fill", getComputedStyle(document.documentElement).getPropertyValue("--r-" + n.role).trim());
+      g.appendChild(c);
+      const pin = document.createElementNS(NS, "circle");
+      pin.setAttribute("class", "pin"); pin.setAttribute("r", 2.5);
+      pin.setAttribute("cy", -n.r + 3);
+      g.appendChild(pin);
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("y", n.r + 15);
+      t.setAttribute("font-size", n.id === "john" ? "13" : "11.5");
+      t.textContent = PEOPLE[n.id].name;
+      g.appendChild(t);
+      n.el = g; n.disc = c;
+      gNodes.appendChild(g);
+      attachDrag(n, g);
+      g.addEventListener("click", ev => { ev.stopPropagation(); select(n); });
+      g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); select(n); } });
+    });
+
+    alpha = 1;
+    if (reduce) { for (let i=0;i<320;i++) step(); paint(); }
+    else { start(); }
+  }
+
+  function attachDrag(n, g) {
+    g.addEventListener("pointerdown", ev => {
+      drag = n; n.fx = n.x; n.fy = n.y;
+      g.setPointerCapture(ev.pointerId);
+      g.classList.add("pinned");
+      alpha = Math.max(alpha, 0.6); start();
+    });
+    g.addEventListener("pointermove", ev => {
+      if (drag !== n) return;
+      const r = svg.getBoundingClientRect();
+      n.fx = ev.clientX - r.left; n.fy = ev.clientY - r.top;
+      n.x = n.fx; n.y = n.fy;
+      if (reduce) paint();
+    });
+    g.addEventListener("pointerup", () => { drag = null; });
+    g.addEventListener("dblclick", ev => { ev.stopPropagation(); n.fx = n.fy = null; g.classList.remove("pinned"); alpha = Math.max(alpha, 0.5); start(); });
+  }
+
+  function select(n) {
+    selected = n;
+    svg.classList.add("has-sel");
+    const neigh = new Set([n.id]);
+    edges.forEach(e => {
+      const hit = e.s === n || e.t === n;
+      e.el.classList.toggle("hi", hit);
+      e.lbl.classList.toggle("hi", hit);
+      if (hit) { neigh.add(e.s.id); neigh.add(e.t.id); }
+    });
+    nodes.forEach(m => m.el.classList.toggle("lo", !neigh.has(m.id)));
+
+    const p = PEOPLE[n.id];
+    const color = getComputedStyle(document.documentElement).getPropertyValue("--r-" + n.role).trim();
+    let html = `<span class="badge" style="background:${color}">${ROLE_LABEL[n.role]}</span>`;
+    html += `<p class="dtl-name">${p.name}</p><p class="dtl-sub">${p.sub}</p>`;
+    if (p.currency) html += `<div class="row"><p class="k">Currency</p><p class="v">${p.currency}</p></div>`;
+    if (p.failure) html += `<div class="row fail"><p class="k">How they stall</p><p class="v">${p.failure}</p></div>`;
+    if (n.move) html += `<div class="row move"><p class="k">Your move</p><p class="v">${n.move}</p></div>`;
+    detail.innerHTML = html;
+  }
+
+  svg.addEventListener("click", () => {
+    selected = null;
+    svg.classList.remove("has-sel");
+    edges.forEach(e => { e.el.classList.remove("hi"); e.lbl.classList.remove("hi"); });
+    nodes.forEach(m => m.el.classList.remove("lo"));
+    detail.innerHTML = `<p class="card-empty">Click any person to see their currency, how they stall, and your move.</p>`;
+  });
+
+  function step() {
+    const cx = W/2, cy = H/2;
+    for (let i=0;i<nodes.length;i++) {
+      const a = nodes[i];
+      for (let j=i+1;j<nodes.length;j++) {
+        const b = nodes[j];
+        let dx = a.x-b.x, dy = a.y-b.y;
+        let d2 = dx*dx+dy*dy || 0.01;
+        let d = Math.sqrt(d2);
+        const f = 5200 / d2;
+        const ux = dx/d, uy = dy/d;
+        a.vx += ux*f; a.vy += uy*f;
+        b.vx -= ux*f; b.vy -= uy*f;
+      }
+    }
+    edges.forEach(e => {
+      let dx = e.t.x-e.s.x, dy = e.t.y-e.s.y;
+      let d = Math.sqrt(dx*dx+dy*dy) || 0.01;
+      const L = 132;
+      const f = (d - L) * 0.035;
+      const ux = dx/d, uy = dy/d;
+      e.s.vx += ux*f; e.s.vy += uy*f;
+      e.t.vx -= ux*f; e.t.vy -= uy*f;
+    });
+    nodes.forEach(n => {
+      n.vx += (cx - n.x) * n.anchor;
+      n.vy += (cy - n.y) * n.anchor;
+      if (n.fx != null) { n.x = n.fx; n.y = n.fy; n.vx = n.vy = 0; return; }
+      n.vx *= 0.82; n.vy *= 0.82;
+      const cap = 30;
+      n.vx = Math.max(-cap, Math.min(cap, n.vx));
+      n.vy = Math.max(-cap, Math.min(cap, n.vy));
+      n.x += n.vx * alpha;
+      n.y += n.vy * alpha;
+      const pad = n.r + 14;
+      n.x = Math.max(pad, Math.min(W - pad, n.x));
+      n.y = Math.max(pad, Math.min(H - pad - 8, n.y));
+    });
+    alpha *= 0.985;
+  }
+
+  function paint() {
+    edges.forEach(e => {
+      e.el.setAttribute("x1", e.s.x); e.el.setAttribute("y1", e.s.y);
+      e.el.setAttribute("x2", e.t.x); e.el.setAttribute("y2", e.t.y);
+      e.lbl.setAttribute("x", (e.s.x + e.t.x)/2);
+      e.lbl.setAttribute("y", (e.s.y + e.t.y)/2 - 3);
+    });
+    nodes.forEach(n => n.el.setAttribute("transform", `translate(${n.x},${n.y})`));
+  }
+
+  function loop() {
+    step(); paint();
+    if (alpha > 0.02 || drag) raf = requestAnimationFrame(loop);
+    else raf = null;
+  }
+  function start() { if (!reduce && !raf) raf = requestAnimationFrame(loop); }
+
+  // tabs
+  let current = "marketing";
+  document.querySelectorAll(".tab").forEach(t => {
+    t.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", "false"));
+      t.setAttribute("aria-selected", "true");
+      current = t.dataset.ctx;
+      size(); build(current);
+    });
+  });
+  document.getElementById("reset").addEventListener("click", () => { size(); build(current); });
+
+  let rt = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => { size(); build(current); }, 160);
+  });
+
+  size(); build(current);
+})();
+</script>

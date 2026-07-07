@@ -1,0 +1,16 @@
+# --- Secrets / config (never commit) ---
+*.env
+.env
+hubspot.config.yml
+landing-page.env
+
+# --- Local data: PII + regenerable outputs (never commit, never sync) ---
+data/
+*.xlsx
+
+# --- Logs ---
+*.log
+
+# --- Python cruft ---
+__pycache__/
+*.pyc

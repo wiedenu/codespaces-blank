@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GOIZ Analytics — Capability Matrix</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px; color: #1a1a1a; background: #f5f5f5; padding: 24px;
+}
+.page { max-width: 860px; margin: 0 auto; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+.header { background: #1a365d; color: white; padding: 22px 32px 18px; }
+.header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.header .meta { font-size: 12px; color: #a0b4cc; margin-top: 4px; }
+.intro { padding: 18px 32px 0; font-size: 13px; color: #444; line-height: 1.5; }
+.body { padding: 20px 32px 8px; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 22px; }
+th { background: #f0f5ff; text-align: left; font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.4px; color: #1a365d; padding: 8px 10px; border: 1px solid #dbe4f3; }
+td { border: 1px solid #e5e7eb; padding: 10px 10px; font-size: 12.5px; vertical-align: top;
+  line-height: 1.4; }
+td.ask { font-weight: 600; width: 22%; }
+td.status { width: 46%; }
+.tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 3px; }
+.tag-green { background: #dcfce7; color: #15803d; }
+.tag-orange { background: #ffedd5; color: #c2410c; }
+.tag-red { background: #fee2e2; color: #b91c1c; }
+tr.tier-covered td.status { background: #f7fdf9; }
+tr.tier-config td.status { background: #fffaf3; }
+tr.tier-out td.status { background: #fef7f7; }
+.tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 0 32px 20px; }
+.tier-card { border-radius: 6px; padding: 14px 16px; border: 1px solid #e5e7eb; }
+.tier-card.green { background: #f0fff4; border-color: #bbf7d0; }
+.tier-card.orange { background: #fffaf0; border-color: #fed7aa; }
+.tier-card.red { background: #fef2f2; border-color: #fecaca; }
+.tier-card .num { display: inline-block; width: 20px; height: 20px; line-height: 20px;
+  text-align: center; border-radius: 50%; font-size: 11px; font-weight: 700; color: white;
+  margin-right: 6px; }
+.tier-card.green .num { background: #15803d; }
+.tier-card.orange .num { background: #c2410c; }
+.tier-card.red .num { background: #b91c1c; }
+.tier-card h3 { font-size: 12.5px; font-weight: 700; display: inline; color: #1a1a1a; }
+.tier-card p { font-size: 11.5px; color: #555; margin-top: 6px; line-height: 1.5; }
+.footer { background: #f0fdf4; border-top: 1px solid #bbf7d0; padding: 12px 32px;
+  font-size: 11.5px; color: #166534; line-height: 1.5; }
+@media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>GOIZ Analytics — Capability Matrix</h1>
+    <div class="meta">Prepared for Brenda Stroschein · GreatAmerica Marketing Operations · July 1, 2026</div>
+  </div>
+
+  <div class="intro">
+    Mapped against everything Brenda's team asked for, sorted into three tiers: what the current
+    GA4/GTM tag already covers, what's covered but needs event configuration, and what's genuinely
+    out of scope for GA4 and needs a separate tool plus a CSP conversation.
+  </div>
+
+  <div class="body">
+    <table>
+      <tr><th>Ask</th><th>Current GA4/GTM tag</th><th>Verdict</th></tr>
+
+      <tr class="tier-covered">
+        <td class="ask">Top pages hit</td>
+        <td class="status">✅ Already there</td>
+        <td><span class="tag tag-green">Covered</span></td>
+      </tr>
+      <tr class="tier-covered">
+        <td class="ask">Time on site</td>
+        <td class="status">✅ Engagement time metrics native</td>
+        <td><span class="tag tag-green">Covered</span></td>
+      </tr>
+      <tr class="tier-covered">
+        <td class="ask">Frequency/timing of visits</td>
+        <td class="status">✅ Sessions, new vs. returning; time-of-day needs an Explore report, not standard</td>
+        <td><span class="tag tag-green">Covered, minor config</span></td>
+      </tr>
+
+      <tr class="tier-config">
+        <td class="ask">Pathways through the site</td>
+        <td class="status">⚠️ GA4 Path Exploration exists but needs enough event volume/instrumentation to be meaningful</td>
+        <td><span class="tag tag-orange">Needs event config</span></td>
+      </tr>
+      <tr class="tier-config">
+        <td class="ask">Where users drop off</td>
+        <td class="status">⚠️ Funnel Exploration report — needs key steps defined as events first</td>
+        <td><span class="tag tag-orange">Needs event config</span></td>
+      </tr>
+      <tr class="tier-config">
+        <td class="ask">Top actions on a page (not just visits)</td>
+        <td class="status">⚠️ Pageviews only by default — clicks/form interactions need GTM triggers built per page</td>
+        <td><span class="tag tag-orange">Needs new GTM work</span></td>
+      </tr>
+
+      <tr class="tier-out">
+        <td class="ask">"How long basic operations take"</td>
+        <td class="status">❌ Not what GA4 measures — that's task-completion timing, not engagement time. Needs custom start/end event instrumentation or a dedicated UX-analytics tool</td>
+        <td><span class="tag tag-red">Out of scope for GA4</span></td>
+      </tr>
+      <tr class="tier-out">
+        <td class="ask">Session replay (Lucky Orange)</td>
+        <td class="status">❌ GA4 doesn't do this at all — separate tool, separate CSP allowlist fight (same as MKB-3913)</td>
+        <td><span class="tag tag-red">New tool + dev work</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="tiers">
+    <div class="tier-card green">
+      <span class="num">1</span><h3>Already covered</h3>
+      <p>Live today in standard GA4 reports. No build needed — just get Brenda's team looking at the right screens.</p>
+    </div>
+    <div class="tier-card orange">
+      <span class="num">2</span><h3>Needs event config</h3>
+      <p>Possible within GA4, but requires defining specific events/triggers first. This is the joint scoping work for today's meeting.</p>
+    </div>
+    <div class="tier-card red">
+      <span class="num">3</span><h3>Beyond GA4</h3>
+      <p>Needs a separate tool and a CSP conversation with whoever owns the Experience Cloud org — not something MOps can flip alone.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <strong>Framing for the meeting:</strong> three tiers, not one flat list — (1) covered today,
+    (2) covered with event/config work, (3) needs a tooling and CSP decision beyond MOps. Flag
+    tier 3 as a decision to bring back to leadership, not something to solve live.
+  </div>
+</div>
+</body>
+</html>

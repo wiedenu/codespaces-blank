@@ -1,0 +1,28 @@
+Subject: Landing Page Audit — Sales Rep & Account Support Pages
+
+Hi Heather, Jana, and Dusty,
+
+I pulled HubSpot analytics on all 427 published landing pages to evaluate whether the pages we build to support individual sales reps and named accounts/vendors are earning their keep. The first pass at this looked damning for vendor pages, but once I checked what each page actually does, the real story is more specific and more useful. Summary below.
+
+Individual rep pages (21 pages — "Meet Nate Eades," "Meet Chad Sowers," and similar):
+- 189 views, 34 submissions in 90 days — an 18% submission rate, on par with our general marketing pages (19.7%)
+- These are working as intended. No action needed other than considering whether to build more of them.
+
+Vendor/account pages (67 pages — CNST - Yanmar, SMG - Hunter Engineering, NAPA P3, etc.) broke into three distinct groups once I checked what each one actually does:
+
+1. Pure CSS redirect pages (the majority of the traffic-getting ones I checked, including Ag Leader, Yanmar, Hunter Engineering, WhiteCap, Leica GeoSystems, Skyjack, Sherwin-Williams, Jersey Mike's, Dominos): these have no form at all — the "Apply" button sends the visitor straight to a credit application platform off our site. Zero HubSpot submissions on these is expected, not a failure. We currently can't see whether visitors complete an application on the other end, so submission rate is the wrong metric for this group entirely.
+
+2. Pages with a real on-page form that isn't converting (Palo Alto Networks, Kyocera, ChargePoint, Myers Industries): these have a genuine lead-capture form, real traffic, and zero submissions. This is the group worth a content/CRO look — the conversion mechanism exists and isn't working.
+
+3. Sales enablement resources, not customer-facing pages (NAPA P3 Sales Tools is the clearest example): built for our own reps to pitch a program to customers, not for the customer to convert directly. These shouldn't be evaluated by submission rate at all.
+
+What I'd recommend:
+- Don't use submission rate to judge the CSS-redirect group. To actually know if these pages are worth keeping, we'd need application volume from whoever owns the credit app platform, attributed back to the referring page. I don't have that access — let me know if one of you does, or who to ask.
+- Do take a content/CRO look at the four pages with a real, unused form (Palo Alto Networks, Kyocera, ChargePoint, Myers Industries).
+- Reclassify the enablement-resource pages (NAPA P3 and similar) out of any lead-gen scorecard.
+- Keep and consider expanding the individual rep page format — it's the one part of this analysis with a clean, positive answer.
+
+Happy to walk through the full breakdown whenever works, or just send the deck if that's easier.
+
+Thanks!
+John

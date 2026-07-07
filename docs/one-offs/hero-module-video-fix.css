@@ -1,0 +1,186 @@
+/* Base video styling */
+.section--herovideo video {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  max-width: 75%;
+  min-height: 100%;
+  z-index: -100;
+}
+
+.section--herovideo .left-column {
+  max-height: 530px;
+}
+
+/* HIDDEN SEO H1 TITLE */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Updated H2 styling to match original H1 styling */
+/* Update these CSS selectors to target both h1 and h2 */
+.section--herovideo .h0,
+.section--herovideo h1,
+.section--herovideo h2.h0 {
+    margin-bottom: 35px;
+}
+
+@media screen and (min-width: 1280px) {
+    .section--herovideo h1,
+    .section--herovideo h2.h0,
+    .section--herovideo h4 {
+        padding-right: 100px;
+    }
+}
+
+/* Make sure the base heading styles also apply to h2.h0 */
+h1, h2.h0, .h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 45px;
+    line-height: 1.15em;
+    font-weight: 900;
+    text-transform: none;
+}
+
+/* Responsive breakpoints */
+@media screen and (min-width: 1280px) {
+  .section--herovideo h1,h4 {
+  padding-right: 100px;
+}
+}
+@media screen and (min-width: 1280px) and (max-width: 1600px) {
+  .section--herovideo video {
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: cover;
+    left: 25%;
+  }
+}
+
+/* Wide viewport fix — video previously fell back to the base rule (max-width:75%; left:30%)
+   above 1600px, exposing the gradient background on the right edge. The top offset shifts per
+   range to keep faces/logo in frame as the video's rendered crop changes with viewport width. */
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .section--herovideo video {
+    max-width: none !important;
+    width: 75% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    left: 25% !important;
+    top: 10% !important;
+    overflow: visible;
+  }
+}
+
+@media screen and (min-width: 1921px) and (max-width: 2560px) {
+  .section--herovideo video {
+    max-width: none !important;
+    width: 75% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    left: 25% !important;
+    top: 20% !important;
+    overflow: visible;
+  }
+}
+
+/* TODO: untested above 2560px (4K/ultrawide — 3440px, 3840px). Carrying the 2560px top value
+   forward as a starting point; verify faces/logo are still in frame and adjust if needed. */
+@media screen and (min-width: 2561px) {
+  .section--herovideo video {
+    max-width: none !important;
+    width: 75% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    left: 25% !important;
+    top: 20% !important;
+    overflow: visible;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1279px) {
+ .section--herovideo video {
+   height: 100%;
+   width: 100%;
+   object-fit: cover;
+   left: 25%;
+ }
+}
+@media screen and (max-width: 1024px) {
+  .grid__item.five-twelfths {
+    width: 100%;
+    order: 2;
+  }
+
+  .grid__item.seven-twelfths {
+    width: 100%;
+    order: 1;
+  }
+}
+
+/* Mobile breakpoint */
+@media screen and (max-width: 1023px) {
+ h1, h2.h0, .h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 40px;
+    line-height: 1.15em;
+    font-weight: 900;
+    text-transform: none;
+}
+  .section--herovideo video {
+   display: none !important;
+ }
+
+  .overlay {
+    z-index: 0;
+  }
+
+  {# TEST REMOVE
+  .section--herovideo .hero--bg {
+   /* background-image: none !important; */
+    {% if module.background_controls.background_overlay_type == 'gradient' %}
+    background: rgba({{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.color|convert_rgb }}, {{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.opacity|int/100 }});
+    background: -moz-linear-gradient(90deg, rgba({{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.color|convert_rgb }}, {{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.opacity|int/100 }}) 0%, rgba({{ module.background_controls.background_overlay.background_overlay_gradient_end_color_opacity.color|convert_rgb }}, {{ module.background_controls.background_overlay.background_overlay_gradient_end_color_opacity.opacity|int/100 }}) 100%);
+    background: -webkit-linear-gradient(90deg, rgba({{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.color|convert_rgb }}, {{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.opacity|int/100 }}) 0%, rgba({{ module.background_controls.background_overlay.background_overlay_gradient_end_color_opacity.color|convert_rgb }}, {{ module.background_controls.background_overlay.background_overlay_gradient_end_color_opacity.opacity|int/100 }}) 100%);
+    background: linear-gradient(90deg, rgba({{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.color|convert_rgb }}, {{ module.background_controls.background_overlay.background_overlay_gradient_start_color_opacity.opacity|int/100 }}) 0%, rgba({{ module.background_controls.background_overlay.background_overlay_gradient_end_color_opacity.color|convert_rgb }}, {{ module.background_controls.background_overlay.background_overlay_gradient_end_color_opacity.opacity|int/100 }}) 100%);
+    {% else %}
+    background: linear-gradient(90deg, #1c3b69 100%, #1e61a7 100%, #4993c5 100%) !important;
+    {% endif %}
+  } #}
+
+  .section--herovideo .content--bg .content--bg--copy {
+    padding: 60px 4% !important;
+  }
+
+  .section--herovideo .content--bg {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+   .section--herovideo .content--bg .content--bg--copy {
+    padding: 60px 4% !important;
+  }
+  .section--herovideo .overlay,
+  .section--herovideo--overlay {
+    display: none !important;
+    opacity: 0 !important;
+  }
+
+  .section--herovideo .content--bg--copy {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero--bg {
+    background-image: url('https://www.greatamerica.com/hubfs/2024%20Rebrand/2024-gradient-background.png') !important;
+}
+}

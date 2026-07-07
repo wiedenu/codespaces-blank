@@ -1,0 +1,423 @@
+<title>Activity Sync — Content &amp; Trigger Worksheet</title>
+<style>
+  :root {
+    --paper: #f4f6f8;
+    --card: #ffffff;
+    --field: #ffffff;
+    --ink: #16202b;
+    --ink-soft: #46586a;
+    --ink-faint: #7a8b9c;
+    --line: #dbe2ea;
+    --line-soft: #e9edf2;
+    --accent: #0b6e8c;
+    --accent-soft: #e2f0f4;
+    --hot: #c2410c;
+    --warm: #2563a8;
+    --ok: #2f7d4f;
+    --flag: #a86a12;
+    --flag-soft: #f6ecd8;
+    --hs: #ff7a59;
+    --sf: #00a1e0;
+    --shadow: 0 1px 2px rgba(22,32,43,.05), 0 6px 20px rgba(22,32,43,.06);
+    --mono: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", monospace;
+    --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #10161c; --card: #18212a; --field: #131c24; --ink: #e7edf3; --ink-soft: #a9b8c6;
+      --ink-faint: #71828f; --line: #2a3742; --line-soft: #202a32; --accent: #3fb6d4; --accent-soft: #12333d;
+      --hot: #f0824f; --warm: #6ba3e6; --ok: #66c78d; --flag: #e0ab53; --flag-soft: #33280f;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #f4f6f8; --card: #ffffff; --field: #ffffff; --ink: #16202b; --ink-soft: #46586a; --ink-faint: #7a8b9c;
+    --line: #dbe2ea; --line-soft: #e9edf2; --accent: #0b6e8c; --accent-soft: #e2f0f4; --hot: #c2410c;
+    --warm: #2563a8; --ok: #2f7d4f; --flag: #a86a12; --flag-soft: #f6ecd8;
+    --shadow: 0 1px 2px rgba(22,32,43,.05), 0 6px 20px rgba(22,32,43,.06);
+  }
+  :root[data-theme="dark"] {
+    --paper: #10161c; --card: #18212a; --field: #131c24; --ink: #e7edf3; --ink-soft: #a9b8c6; --ink-faint: #71828f;
+    --line: #2a3742; --line-soft: #202a32; --accent: #3fb6d4; --accent-soft: #12333d; --hot: #f0824f;
+    --warm: #6ba3e6; --ok: #66c78d; --flag: #e0ab53; --flag-soft: #33280f;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: clamp(18px, 4vw, 44px) clamp(14px, 3.5vw, 30px) 90px; }
+
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .flow { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot.hs { background: var(--hs); } .dot.sf { background: var(--sf); }
+  h1 { font-size: clamp(25px, 4.5vw, 34px); line-height: 1.1; letter-spacing: -.02em; margin: 12px 0 6px; font-weight: 700; text-wrap: balance; }
+  .sub { font-size: 16px; color: var(--ink-soft); margin: 0 0 20px; max-width: 64ch; }
+
+  /* meta row */
+  .metabar { display: flex; flex-wrap: wrap; gap: 14px 18px; padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+  .metabar label { display: flex; flex-direction: column; gap: 5px; font-size: 11px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-faint); flex: 1 1 160px; }
+  input, textarea, select { font-family: var(--sans); font-size: 14px; color: var(--ink); background: var(--field); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; transition: border-color .12s, box-shadow .12s; }
+  textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  input::placeholder, textarea::placeholder { color: var(--ink-faint); opacity: .8; }
+  select { appearance: none; cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, var(--ink-faint) 50%), linear-gradient(135deg, var(--ink-faint) 50%, transparent 50%); background-position: calc(100% - 16px) 52%, calc(100% - 11px) 52%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 30px; }
+
+  /* toolbar */
+  .toolbar { position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 4px; padding: 10px 0; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(6px); }
+  button { font-family: var(--sans); font-size: 13.5px; font-weight: 600; padding: 9px 15px; border-radius: 9px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; transition: border-color .12s, background .12s, transform .05s; }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button:active { transform: translateY(1px); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover { color: #fff; filter: brightness(1.06); }
+  button:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  .saved { font-size: 12px; color: var(--ink-faint); align-self: center; margin-left: auto; font-family: var(--mono); }
+
+  .guard { display: flex; gap: 12px; align-items: flex-start; margin: 18px 0 4px; padding: 13px 16px; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent-soft) 55%, transparent); border-radius: 0 10px 10px 0; font-size: 13.5px; color: var(--ink-soft); }
+  .guard b { color: var(--ink); }
+
+  section.block { margin-top: 34px; }
+  .block-head { display: flex; align-items: baseline; gap: 11px; margin-bottom: 3px; }
+  .step { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 6px; }
+  .block h2 { font-size: 19px; letter-spacing: -.01em; margin: 0; font-weight: 700; }
+  .block-note { font-size: 13px; color: var(--ink-faint); margin: 3px 0 16px; max-width: 72ch; }
+
+  .subgroup { font-family: var(--mono); font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); margin: 18px 0 8px; display: flex; align-items: center; gap: 9px; }
+  .subgroup::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; }
+  thead th { font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); text-align: left; font-weight: 600; padding: 11px 12px; border-bottom: 1px solid var(--line); background: var(--line-soft); }
+  tbody td { padding: 8px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  .rowlabel { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .rowlabel small { display: block; font-weight: 400; font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+  td .dep { font-size: 11.5px; color: var(--flag); margin-top: 5px; font-style: italic; }
+  .tier { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: .05em; padding: 2px 6px; border-radius: 5px; margin-right: 6px; vertical-align: middle; }
+  .tier.t1 { color: var(--hot); background: color-mix(in srgb, var(--hot) 14%, transparent); }
+  .tier.t2 { color: var(--warm); background: color-mix(in srgb, var(--warm) 14%, transparent); }
+
+  .fieldblock { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
+
+  /* compiled output */
+  .output { margin-top: 40px; }
+  .output textarea { min-height: 220px; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; }
+  .hint { font-size: 12.5px; color: var(--ink-faint); margin: 8px 0 0; }
+
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-faint); }
+
+  @media print {
+    .toolbar, .hint, .output { display: none !important; }
+    body { background: #fff; }
+    .fieldblock, .tablewrap, .metabar { box-shadow: none; }
+    section.block { break-inside: avoid; }
+    input, textarea, select { border-color: #bbb; }
+  }
+  @media (max-width: 640px) {
+    .metabar label { flex-basis: 100%; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">
+      <span class="flow"><span class="dot hs"></span>HubSpot</span> &rarr;
+      <span class="flow"><span class="dot sf"></span>Salesforce</span>
+      <span>&middot; Working session worksheet</span>
+    </div>
+    <h1>Activity Sync &mdash; content &amp; trigger decisions</h1>
+    <p class="sub">Fill this in together. Two jobs: inventory the high-value content we actually have to trigger on, then decide which triggers launch now versus later. Type directly into the fields &mdash; your entries save in this browser.</p>
+  </header>
+
+  <div class="metabar">
+    <label>Date <input type="text" name="meta_date" placeholder="July __, 2026"></label>
+    <label>In the room <input type="text" name="meta_people" placeholder="John, Jana, Dusty"></label>
+    <label>Related Jira <input type="text" name="meta_jira" placeholder="MKB-____ (if one exists)"></label>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" id="compile">Compile summary</button>
+    <button id="print">Print / Save PDF</button>
+    <button id="clear">Clear all</button>
+    <span class="saved" id="saveState">not saved yet</span>
+  </div>
+
+  <div class="guard">
+    <span>&#9873;</span>
+    <span><b>Hold this rule while deciding:</b> only sync what makes a rep stop and look, and cap it at one Task per contact per rolling 3&ndash;5 days. If a trigger wouldn&rsquo;t earn a rep&rsquo;s attention on its own, it belongs in &ldquo;Exclude.&rdquo;</span>
+  </div>
+
+  <!-- STEP 1 -->
+  <section class="block">
+    <div class="block-head"><span class="step">STEP 1</span><h2>What high-value content do we actually have?</h2></div>
+    <p class="block-note">The behavioral triggers can only fire on content that exists. For each type, mark whether we have it, drop in the URL(s), and name who owns it. Honest &ldquo;Don&rsquo;t have&rdquo; answers here become the build roadmap in Step 3.</p>
+
+    <div class="subgroup">Borrower / end-customer &mdash; near a financing decision</div>
+    <div class="tablewrap">
+      <table class="sheet-table" data-title="Content Inventory — Borrower">
+        <thead><tr><th style="width:26%">Content type</th><th style="width:16%">Do we have it?</th><th style="width:26%">URL(s)</th><th style="width:14%">Owner</th><th style="width:18%">Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="rowlabel">Payment / financing calculator<small>the one interactive asset &mdash; highest intent</small></td>
+            <td><select name="inv_calc_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_calc_url" placeholder="/…"></td><td><input name="inv_calc_owner"></td><td><input name="inv_calc_notes" placeholder="marketing-owned? trackable?"></td></tr>
+          <tr><td class="rowlabel">Lease-vs-buy / financing options explainer</td>
+            <td><select name="inv_lvb_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_lvb_url" placeholder="/…"></td><td><input name="inv_lvb_owner"></td><td><input name="inv_lvb_notes"></td></tr>
+          <tr><td class="rowlabel">Industry / vertical financing pages<small>office tech, IT, healthcare/dental…</small></td>
+            <td><select name="inv_ind_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_ind_url" placeholder="/…"></td><td><input name="inv_ind_owner"></td><td><input name="inv_ind_notes"></td></tr>
+          <tr><td class="rowlabel">Rates / terms / end-of-lease detail</td>
+            <td><select name="inv_rates_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_rates_url" placeholder="/…"></td><td><input name="inv_rates_owner"></td><td><input name="inv_rates_notes"></td></tr>
+          <tr><td class="rowlabel">Apply / get-started / contact pages</td>
+            <td><select name="inv_apply_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_apply_url" placeholder="/…"></td><td><input name="inv_apply_owner"></td><td><input name="inv_apply_notes"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subgroup">Vendor / dealer partner &mdash; evaluating a program</div>
+    <div class="tablewrap">
+      <table class="sheet-table" data-title="Content Inventory — Partner">
+        <thead><tr><th style="width:26%">Content type</th><th style="width:16%">Do we have it?</th><th style="width:26%">URL(s)</th><th style="width:14%">Owner</th><th style="width:18%">Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="rowlabel">&ldquo;Become a partner&rdquo; / vendor program pages<small>likely our core motion</small></td>
+            <td><select name="inv_partner_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_partner_url" placeholder="/…"></td><td><input name="inv_partner_owner"></td><td><input name="inv_partner_notes"></td></tr>
+          <tr><td class="rowlabel">Program ROI content<small>&ldquo;how offering financing grows your sales&rdquo;</small></td>
+            <td><select name="inv_roi_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_roi_url" placeholder="/…"></td><td><input name="inv_roi_owner"></td><td><input name="inv_roi_notes"></td></tr>
+          <tr><td class="rowlabel">Partner case studies (by vertical)</td>
+            <td><select name="inv_case_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_case_url" placeholder="/…"></td><td><input name="inv_case_owner"></td><td><input name="inv_case_notes"></td></tr>
+          <tr><td class="rowlabel">Program tier / comparison pages</td>
+            <td><select name="inv_comp_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_comp_url" placeholder="/…"></td><td><input name="inv_comp_owner"></td><td><input name="inv_comp_notes"></td></tr>
+          <tr><td class="rowlabel">Partner testimonials w/ real metrics</td>
+            <td><select name="inv_test_have"><option value=""></option><option>Have it</option><option>Partial</option><option>Don&rsquo;t have</option></select></td>
+            <td><input name="inv_test_url" placeholder="/…"></td><td><input name="inv_test_owner"></td><td><input name="inv_test_notes"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="block">
+    <div class="block-head"><span class="step">STEP 2</span><h2>Which triggers launch, and when?</h2></div>
+    <p class="block-note">For each proposed trigger, decide: sync at launch, phase 2 (once dependency clears), or drop. The dependency for each is called out in amber.</p>
+    <div class="tablewrap">
+      <table class="sheet-table" data-title="Trigger Decisions">
+        <thead><tr><th style="width:38%">Proposed trigger</th><th style="width:20%">Decision</th><th style="width:42%">Notes / condition</th></tr></thead>
+        <tbody>
+          <tr><td class="rowlabel"><span class="tier t1">TIER 1</span>Contact / Request-a-Quote form submitted</td>
+            <td><select name="trg_form"><option value=""></option><option>Sync at launch</option><option>Phase 2</option><option>Drop</option></select></td>
+            <td><input name="trg_form_note" placeholder="cleanest signal we have"></td></tr>
+          <tr><td class="rowlabel"><span class="tier t1">TIER 1</span>Demo / meeting booked<div class="dep">Dep: do reps book via HubSpot Meetings links, or in SF/Outlook?</div></td>
+            <td><select name="trg_meet"><option value=""></option><option>Sync at launch</option><option>Phase 2</option><option>Drop</option></select></td>
+            <td><input name="trg_meet_note"></td></tr>
+          <tr><td class="rowlabel"><span class="tier t1">TIER 1</span>Payment calculator used<div class="dep">Dep: marketing-owned + trackable, not walled off like the application</div></td>
+            <td><select name="trg_calc"><option value=""></option><option>Sync at launch</option><option>Phase 2</option><option>Drop</option></select></td>
+            <td><input name="trg_calc_note"></td></tr>
+          <tr><td class="rowlabel"><span class="tier t2">TIER 2</span>High-intent page-view threshold<div class="dep">Dep: define the high-intent page set in Step 2b below</div></td>
+            <td><select name="trg_pv"><option value=""></option><option>Sync at launch</option><option>Phase 2</option><option>Drop</option></select></td>
+            <td><input name="trg_pv_note" placeholder="rule: 3+ views in 7 days, or return after 30d dormant"></td></tr>
+          <tr><td class="rowlabel"><span class="tier t2">TIER 2</span>Bottom-funnel content consumed<div class="dep">Dep: the case-study / vertical content actually exists (Step 1)</div></td>
+            <td><select name="trg_content"><option value=""></option><option>Sync at launch</option><option>Phase 2</option><option>Drop</option></select></td>
+            <td><input name="trg_content_note"></td></tr>
+          <tr><td class="rowlabel"><span class="tier t2">TIER 2</span>High-intent email CTA clicked<div class="dep">A click on the &ldquo;talk to us&rdquo; link, never an open</div></td>
+            <td><select name="trg_cta"><option value=""></option><option>Sync at launch</option><option>Phase 2</option><option>Drop</option></select></td>
+            <td><input name="trg_cta_note"></td></tr>
+          <tr><td class="rowlabel"><span class="tier t2">TIER 2</span>Dormant / closed-lost re-engages</td>
+            <td><select name="trg_dormant"><option value=""></option><option>Sync at launch</option><option>Phase 2</option><option>Drop</option></select></td>
+            <td><input name="trg_dormant_note"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subgroup">Step 2b &mdash; define the &ldquo;high-intent page set&rdquo;</div>
+    <div class="fieldblock">
+      <p class="block-note" style="margin-top:0">List the exact pages that should count toward the page-view threshold. Pull these from the URLs marked &ldquo;Have it&rdquo; in Step 1 &mdash; product/program pages, the calculator, contact/get-started. If it&rsquo;s not decision-stage, leave it out.</p>
+      <textarea name="pageset" data-label="High-intent page set" placeholder="/business-equipment-financing&#10;/vendor-program&#10;/…"></textarea>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="block">
+    <div class="block-head"><span class="step">STEP 3</span><h2>Content gaps &rarr; build roadmap</h2></div>
+    <p class="block-note">Every &ldquo;Don&rsquo;t have&rdquo; from Step 1 that would unlock a trigger goes here. This is the lead-gen ask &mdash; the content that makes the sync richer over time (ties to CEO priority #1).</p>
+    <div class="tablewrap">
+      <table class="sheet-table" data-title="Content Gaps to Build">
+        <thead><tr><th style="width:34%">Content to build</th><th style="width:34%">Why it matters / trigger it unlocks</th><th style="width:16%">Priority</th><th style="width:16%">Owner</th></tr></thead>
+        <tbody>
+          <tr><td><input name="gap1_what"></td><td><input name="gap1_why"></td><td><select name="gap1_pri"><option value=""></option><option>High</option><option>Medium</option><option>Low</option></select></td><td><input name="gap1_owner"></td></tr>
+          <tr><td><input name="gap2_what"></td><td><input name="gap2_why"></td><td><select name="gap2_pri"><option value=""></option><option>High</option><option>Medium</option><option>Low</option></select></td><td><input name="gap2_owner"></td></tr>
+          <tr><td><input name="gap3_what"></td><td><input name="gap3_why"></td><td><select name="gap3_pri"><option value=""></option><option>High</option><option>Medium</option><option>Low</option></select></td><td><input name="gap3_owner"></td></tr>
+          <tr><td><input name="gap4_what"></td><td><input name="gap4_why"></td><td><select name="gap4_pri"><option value=""></option><option>High</option><option>Medium</option><option>Low</option></select></td><td><input name="gap4_owner"></td></tr>
+          <tr><td><input name="gap5_what"></td><td><input name="gap5_why"></td><td><select name="gap5_pri"><option value=""></option><option>High</option><option>Medium</option><option>Low</option></select></td><td><input name="gap5_owner"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="block">
+    <div class="block-head"><span class="step">STEP 4</span><h2>Decisions &amp; open questions</h2></div>
+    <p class="block-note">What we settled, and what&rsquo;s still open (including anything that needs Cody on the Salesforce/build side).</p>
+    <div class="fieldblock">
+      <textarea name="decisions" data-label="Decisions &amp; open questions" placeholder="Decided: …&#10;Open (needs Cody): record matching, dedup, Task field mapping…"></textarea>
+    </div>
+  </section>
+
+  <!-- STEP 5 -->
+  <section class="block">
+    <div class="block-head"><span class="step">STEP 5</span><h2>Action items</h2></div>
+    <div class="tablewrap">
+      <table class="sheet-table" data-title="Action Items">
+        <thead><tr><th style="width:22%">Owner</th><th style="width:56%">Action</th><th style="width:22%">By when</th></tr></thead>
+        <tbody>
+          <tr><td><input name="act1_who"></td><td><input name="act1_what"></td><td><input name="act1_when"></td></tr>
+          <tr><td><input name="act2_who"></td><td><input name="act2_what"></td><td><input name="act2_when"></td></tr>
+          <tr><td><input name="act3_who"></td><td><input name="act3_what"></td><td><input name="act3_when"></td></tr>
+          <tr><td><input name="act4_who"></td><td><input name="act4_what"></td><td><input name="act4_when"></td></tr>
+          <tr><td><input name="act5_who"></td><td><input name="act5_what"></td><td><input name="act5_when"></td></tr>
+          <tr><td><input name="act6_who"></td><td><input name="act6_what"></td><td><input name="act6_when"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- OUTPUT -->
+  <section class="block output" id="outputBlock" hidden>
+    <div class="block-head"><span class="step">EXPORT</span><h2>Compiled summary</h2></div>
+    <p class="hint">Copy this into your notes, an email, or the Jira ticket. Re-run &ldquo;Compile summary&rdquo; anytime to refresh it.</p>
+    <textarea id="outputText" readonly></textarea>
+    <div class="toolbar" style="position:static;background:none;backdrop-filter:none;padding-top:10px">
+      <button class="primary" id="copyOut">Copy to clipboard</button>
+      <span class="saved" id="copyState"></span>
+    </div>
+  </section>
+
+  <footer>
+    Working document &mdash; nothing is built off this yet. The point of Step 1 is honesty: if the high-value content mostly reads &ldquo;Don&rsquo;t have,&rdquo; that&rsquo;s the finding, and the launch sync is the hand-raisers while the content roadmap catches up.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var KEY = "activity-sync-worksheet-v1";
+  var fields = Array.prototype.slice.call(document.querySelectorAll("input, textarea, select"));
+  var saveEl = document.getElementById("saveState");
+  var store = null;
+  try { store = window.localStorage; } catch (e) { store = null; }
+
+  function save() {
+    if (!store) { saveEl.textContent = "in-session only"; return; }
+    var data = {};
+    fields.forEach(function (f) { if (f.name) data[f.name] = f.value; });
+    try {
+      store.setItem(KEY, JSON.stringify(data));
+      var t = new Date();
+      saveEl.textContent = "saved " + t.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    } catch (e) { saveEl.textContent = "save failed"; }
+  }
+
+  function load() {
+    if (!store) { saveEl.textContent = "in-session only"; return; }
+    var raw;
+    try { raw = store.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    var data;
+    try { data = JSON.parse(raw); } catch (e) { return; }
+    fields.forEach(function (f) { if (f.name && data[f.name] != null) f.value = data[f.name]; });
+    saveEl.textContent = "restored";
+  }
+
+  var t;
+  fields.forEach(function (f) {
+    f.addEventListener("input", function () { clearTimeout(t); t = setTimeout(save, 350); });
+    f.addEventListener("change", save);
+  });
+
+  function compile() {
+    var lines = [];
+    lines.push("# Activity Sync — Content & Trigger Worksheet");
+    lines.push("");
+    lines.push("- Date: " + (val("meta_date") || "—"));
+    lines.push("- In the room: " + (val("meta_people") || "—"));
+    lines.push("- Related Jira: " + (val("meta_jira") || "—"));
+    lines.push("");
+
+    document.querySelectorAll("table.sheet-table").forEach(function (tbl) {
+      var title = tbl.getAttribute("data-title") || "Table";
+      var heads = Array.prototype.map.call(tbl.querySelectorAll("thead th"), function (th) { return clean(th.textContent); });
+      lines.push("## " + title);
+      Array.prototype.forEach.call(tbl.querySelectorAll("tbody tr"), function (tr) {
+        var cells = Array.prototype.slice.call(tr.children);
+        var parts = [];
+        var anyValue = false;
+        cells.forEach(function (td, i) {
+          var f = td.querySelector("input, select, textarea");
+          var label, value;
+          if (f) { value = (f.value || "").trim(); if (value) anyValue = true; }
+          else { value = ""; }
+          // first cell may be a static label (rowlabel)
+          var rl = td.querySelector(".rowlabel");
+          if (!f && rl) { label = clean(rl.textContent); parts.push(label); }
+          else { parts.push((heads[i] ? heads[i] + ": " : "") + (value || "—")); }
+        });
+        // only print row if it has a static label or any filled field
+        var hasLabel = tr.querySelector(".rowlabel");
+        if (hasLabel || anyValue) lines.push("- " + parts.join(" | "));
+      });
+      lines.push("");
+    });
+
+    // standalone labeled fields (page set, decisions)
+    document.querySelectorAll("textarea[data-label]").forEach(function (ta) {
+      var v = (ta.value || "").trim();
+      lines.push("## " + clean(ta.getAttribute("data-label")));
+      lines.push(v ? v : "—");
+      lines.push("");
+    });
+
+    return lines.join("\n");
+  }
+
+  function val(name) { var f = document.querySelector('[name="' + name + '"]'); return f ? f.value.trim() : ""; }
+  function clean(s) { return (s || "").replace(/\s+/g, " ").trim(); }
+
+  var outBlock = document.getElementById("outputBlock");
+  var outText = document.getElementById("outputText");
+  document.getElementById("compile").addEventListener("click", function () {
+    outText.value = compile();
+    outBlock.hidden = false;
+    outBlock.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.getElementById("copyOut").addEventListener("click", function () {
+    var cs = document.getElementById("copyState");
+    outText.select();
+    function ok() { cs.textContent = "copied"; setTimeout(function () { cs.textContent = ""; }, 2000); }
+    function fail() { cs.textContent = "select the text above and copy manually"; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(outText.value).then(ok, function () {
+        try { document.execCommand("copy") ? ok() : fail(); } catch (e) { fail(); }
+      });
+    } else {
+      try { document.execCommand("copy") ? ok() : fail(); } catch (e) { fail(); }
+    }
+  });
+
+  document.getElementById("print").addEventListener("click", function () { window.print(); });
+
+  document.getElementById("clear").addEventListener("click", function () {
+    if (!window.confirm("Clear every field on this worksheet? This can’t be undone.")) return;
+    fields.forEach(function (f) { f.value = ""; });
+    if (store) { try { store.removeItem(KEY); } catch (e) {} }
+    outBlock.hidden = true;
+    saveEl.textContent = "cleared";
+  });
+
+  load();
+})();
+</script>

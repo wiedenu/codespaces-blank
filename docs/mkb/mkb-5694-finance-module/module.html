@@ -1,0 +1,59 @@
+<div class="section section--columns--finance relative overflow--hidden"
+     style="{% if module.background_type == 'color' %}background-color:{{ module.background.background_color.color }};{% endif %}">
+
+  <div class="background {% if module.background_type == 'image' %}{{ module.background.background_image_size }} {{ module.background.background_image_repeat }}{% endif %}"
+       style="{% if module.background_type == 'image' %}background-image:url('{{ module.background.background_image.src }}');background-position:{{ module.background.background_image_horizontal_alignment }} {{ module.background.background_image_vertical_alignment }};{% elif module.background_type == 'gradient' %}background:linear-gradient({{ module.background.background_gradient_angle }}deg, {{ module.background.background_gradient_start_color.color }} 0%, {{ module.background.background_gradient_end_color.color }} 100%);{% endif %}">
+  </div>
+
+  {% if module.background_overlay_type != "none" %}
+  <div class="overlay {{ module.background_overlay.background_overlay_display_type }}"
+       style="{% if module.background_overlay_type == 'color' %}background-color:{{ module.background_overlay.background_overlay_color_opacity.color }};{% elif module.background_overlay_type == 'gradient' %}background:linear-gradient({{ module.background_overlay.background_overlay_gradient_angle }}deg, {{ module.background_overlay.background_overlay_gradient_start_color_opacity.color }} 0%, {{ module.background_overlay.background_overlay_gradient_end_color_opacity.color }} 100%);{% elif module.background_overlay_type == 'image' %}background-image:url('{{ module.background_overlay.background_overlay_image.src }}');background-position:{{ module.background_overlay.background_overlay_image_horizontal_alignment }} {{ module.background_overlay.background_overlay_image_vertical_alignment }};{{ module.background_overlay.background_overlay_image_size }} {{ module.background_overlay.background_overlay_image_repeat }};opacity:{{ module.background_overlay.background_overlay_opacity|int / 100 }};{% endif %}">
+  </div>
+  {% endif %}
+
+  <div class="block relative z-index--3 section--columns--outer">
+    <div class="grid">
+
+      {% if module.header or module.content %}
+      <div class="grid__item one-whole all--text--center short first--hard--top">
+        {% if module.header %}
+        <h2 class="bolder">{{ module.header }}</h2>
+        {% endif %}
+        {% if module.content %}
+        {{ module.content }}
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <div class="grid__item one-whole hard--sides hard--bottom short--top finance-style--{{ module.style_variant|default('blue') }}">
+        {% for item in module.column_content %}
+        <div class="finance-card-slot grid__item {{ module.section_controls.number_of_columns_desktop }} {{ module.section_controls.number_of_columns_tablet }} {{ module.section_controls.number_of_columns_mobile }} hard--top hard--bottom">
+          <div class="finance-card box-shadow border-radius--10">
+
+            <div class="finance-card-header short padding--short all--text--{{ module.section_controls.columns_content_alignment }} {% if module.style_variant == 'gold' %}background--bronze{% else %}background--darkblue{% endif %}">
+              <div class="finance-card-icon border-radius--8">
+                {% if item.icon_or_image == 'image' and item.image_icon.src %}
+                  <img src="{{ item.image_icon.src }}" alt="{{ item.image_icon.alt|default(item.header_label) }}">
+                {% else %}
+                  {{ item.fontawesome_icon_code }}
+                {% endif %}
+              </div>
+              <h3 class="finance-card-title bolder color--white">
+                {{ item.header_label }}
+              </h3>
+            </div>
+
+            <div class="finance-card-accent {% if module.style_variant == 'gold' %}background--darkblue{% else %}background--bronze{% endif %}"></div>
+
+            <div class="finance-card-body short padding--short all--text--{{ module.section_controls.columns_content_alignment }}">
+              {{ item.description }}
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>

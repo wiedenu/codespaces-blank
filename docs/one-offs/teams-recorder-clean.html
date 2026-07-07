@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body { font-family: sans-serif; text-align: center; background: #f4f4f9; padding: 20px; }
+    canvas { background: #000; width: 100%; height: 150px; border-radius: 8px; margin: 20px 0; }
+    #timer { font-size: 2rem; font-weight: bold; margin: 10px 0; color: #333; }
+    button { padding: 10px 20px; font-size: 1rem; cursor: pointer; margin: 5px; font-weight: bold; }
+    #startBtn { background: #28a745; color: white; border: none; border-radius: 4px; }
+    #stopBtn { background: #dc3545; color: white; border: none; border-radius: 4px; }
+    button:disabled { background: #ccc !important; cursor: not-allowed; }
+</style>
+<body>
+    <h2>Teams & Mic Audio Recorder (WAV Output)</h2>
+    <div id="timer">00:00:00</div>
+    <canvas id="visualizer"></canvas>
+
+    <br>
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn" disabled>Stop Recording</button>
+    <br><br>
+    <audio id="playback" controls></audio>
+    <br><br>
+    <a id="downloadLink" style="display:none;"><button style="background:#007bff; color:white; border:none; border-radius:4px;">Download WAV for Word</button></a>
+
+    <script>
+        let audioContext, analyser, dataArray, animationId, timerInterval;
+        let scriptNode;
+        let audioBuffers = [];
+        let startTime;
+        let sampleRate = 44100;
+        let globalScreenStream, globalMicStream;
+
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const canvas = document.getElementById('visualizer');
+        const canvasCtx = canvas.getContext('2d');
+        const timerDisplay = document.getElementById('timer');
+        const playback = document.getElementById('playback');
+        const downloadLink = document.getElementById('downloadLink');
+
+        // --- Visualizer Function ---
+        function draw() {
+            animationId = requestAnimationFrame(draw);
+            analyser.getByteFrequencyData(dataArray);
+
+            canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+            let barWidth = (canvas.width / analyser.frequencyBinCount) * 2.5;
+            let barHeight;
+            let x = 0;
+
+            for(let i = 0; i < analyser.frequencyBinCount; i++) {
+                barHeight = dataArray[i] / 2;
+                canvasCtx.fillStyle = `rgb(${barHeight + 100}, 50, 255)`;
+                canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+
+        // --- Timer Function ---
+        function updateTimer() {
+            const now = Date.now();
+            const diff = new Date(now - startTime);
+            const h = String(diff.getUTCHours()).padStart(2, '0');
+            const m = String(diff.getUTCMinutes()).padStart(2, '0');
+            const s = String(diff.getUTCSeconds()).padStart(2, '0');
+            timerDisplay.innerText = `${h}:${m}:${s}`;
+        }
+
+        // --- WAV Encoder Functions ---
+        function mergeBuffers(buffers, length) {
+            let result = new Float32Array(length);
+            let offset = 0;
+            for (let i = 0; i < buffers.length; i++) {
+                result.set(buffers[i], offset);
+                offset += buffers[i].length;
+            }
+            return result;
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        function encodeWAV(samples) {
+            let buffer = new ArrayBuffer(44 + samples.length * 2);
+            let view = new DataView(buffer);
+
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + samples.length * 2, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // Linear PCM
+            view.setUint16(22, 1, true); // Mono channel
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true); // 16-bit
+            writeString(view, 36, 'data');
+            view.setUint32(40, samples.length * 2, true);
+
+            // Write PCM audio samples
+            let offset = 44;
+            for (let i = 0; i < samples.length; i++, offset += 2) {
+                let s = Math.max(-1, Math.min(1, samples[i]));
+                view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        startBtn.onclick = async () => {
+            try {
+                // 1. Explicitly prompt for your local microphone voice
+                globalMicStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                // 2. Prompt for Teams / Browser tab share audio
+                globalScreenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+                const screenAudioTracks = globalScreenStream.getAudioTracks();
+
+                if (screenAudioTracks.length === 0) {
+                    alert("Error: You must check 'Share audio' in the screen share prompt!");
+                    globalMicStream.getTracks().forEach(t => t.stop());
+                    globalScreenStream.getTracks().forEach(t => t.stop());
+                    return;
+                }
+
+                // Setup Modern Audio Pipeline to blend them
+                audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
+                sampleRate = audioContext.sampleRate;
+
+                // Create audio nodes from both streams
+                const micSource = audioContext.createMediaStreamSource(globalMicStream);
+                const screenSource = audioContext.createMediaStreamSource(new MediaStream(screenAudioTracks));
+
+                analyser = audioContext.createAnalyser();
+
+                // Legacy ScriptProcessor to extract mixed raw PCM data for WAV creation
+                scriptNode = audioContext.createScriptProcessor(4096, 1, 1);
+                audioBuffers = [];
+
+                scriptNode.onaudioprocess = (e) => {
+                    const inputBuffer = e.inputBuffer.getChannelData(0);
+                    audioBuffers.push(new Float32Array(inputBuffer));
+                };
+
+                // Connect BOTH sources to the analyzer and the script processor
+                micSource.connect(analyser);
+                screenSource.connect(analyser);
+
+                micSource.connect(scriptNode);
+                screenSource.connect(scriptNode);
+
+                scriptNode.connect(audioContext.destination);
+
+                // Setup Visuals
+                analyser.fftSize = 256;
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+                draw();
+
+                // Start UI tracking
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 1000);
+
+                // Reset elements
+                downloadLink.style.display = 'none';
+                playback.src = '';
+
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+
+                // Stop handler when user clicks browser's native "Stop Sharing" button.
+                // getVideoTracks() returns an array, so grab the actual track to bind onended.
+                const [videoTrack] = globalScreenStream.getVideoTracks();
+                if (videoTrack) {
+                    videoTrack.onended = () => {
+                        if (!stopBtn.disabled) stopBtn.click();
+                    };
+                }
+
+            } catch (err) {
+                alert("Recording cancelled or permissions denied.");
+                console.error(err);
+            }
+        };
+
+        stopBtn.onclick = () => {
+            // Disconnect audio processors
+            scriptNode.disconnect();
+
+            // Clean up intervals and animations
+            clearInterval(timerInterval);
+            cancelAnimationFrame(animationId);
+
+            // Calculate total length and compile samples
+            let totalLength = audioBuffers.reduce((acc, buf) => acc + buf.length, 0);
+            let mergedSamples = mergeBuffers(audioBuffers, totalLength);
+
+            // Generate final WAV Blob using original engine
+            let wavBlob = encodeWAV(mergedSamples);
+            let audioUrl = URL.createObjectURL(wavBlob);
+
+            // Update Audio Element and Download button
+            playback.src = audioUrl;
+            downloadLink.href = audioUrl;
+            downloadLink.download = `Meeting_Recording_${new Date().toISOString().slice(0,10)}.wav`;
+            downloadLink.style.display = 'inline-block';
+
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+
+            // Turn off the hardware mic/screen sharing active indicators in browser
+            if (globalMicStream) globalMicStream.getTracks().forEach(track => track.stop());
+            if (globalScreenStream) globalScreenStream.getTracks().forEach(track => track.stop());
+        };
+    </script>
+</body>
+</html>

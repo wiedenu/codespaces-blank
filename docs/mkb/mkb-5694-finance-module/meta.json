@@ -1,0 +1,12 @@
+{
+  "label": "Finance Category Cards",
+  "css_assets": [],
+  "global": false,
+  "help_text": "Icon-tile card grid for listing financed equipment/technology categories (built for MKB-5694, OEG 'List of What We Finance' section). Choose Blue or Gold card style, set up to 4 columns, and optionally configure a section background/overlay.",
+  "host_template_types": ["PAGE"],
+  "js_assets": [],
+  "other_assets": [],
+  "smart_type": "NOT_SMART",
+  "tags": [],
+  "is_available_for_new_content": true
+}

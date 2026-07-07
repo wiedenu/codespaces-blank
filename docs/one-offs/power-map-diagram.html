@@ -1,0 +1,228 @@
+<title>Power Map — Framework Diagram</title>
+<style>
+  :root {
+    --bg: #FBFAF7;
+    --surface: #FFFFFF;
+    --ink: #1C1E24;
+    --muted: #5B606C;
+    --faint: #8A8F9A;
+    --line: #E7E3D9;
+    --brass: #A9761F;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, "Cascadia Code", monospace;
+    --shadow: 0 1px 2px rgba(28,30,36,.05), 0 18px 50px rgba(28,30,36,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161B; --surface: #1D2027; --ink: #ECEAE3; --muted: #A2A8B4;
+      --faint: #767C88; --line: #2C2F37; --brass: #D6A44A;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 20px 55px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#FBFAF7;--surface:#FFFFFF;--ink:#1C1E24;--muted:#5B606C;--faint:#8A8F9A;
+    --line:#E7E3D9;--brass:#A9761F;--shadow:0 1px 2px rgba(28,30,36,.05), 0 18px 50px rgba(28,30,36,.10);
+  }
+  :root[data-theme="dark"] {
+    --bg:#14161B;--surface:#1D2027;--ink:#ECEAE3;--muted:#A2A8B4;--faint:#767C88;
+    --line:#2C2F37;--brass:#D6A44A;--shadow:0 1px 2px rgba(0,0,0,.3), 0 20px 55px rgba(0,0,0,.5);
+  }
+
+  /* Node/edge colors — constant across themes so contrast on discs is stable */
+  :root {
+    --c-you:#1F9E8F; --c-decider:#B0762A; --c-sponsor:#5B6CC4; --c-shaper:#D68A2E;
+    --c-blocker:#C6503C; --c-gatekeeper:#6E7787; --c-spectator:#9BA3AF;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center;
+    padding: 40px 20px;
+  }
+  .figure {
+    width: 100%; max-width: 960px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 34px 34px 26px;
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--brass); margin: 0 0 8px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 700;
+    font-size: clamp(24px, 4vw, 31px); line-height: 1.12;
+    letter-spacing: -.01em; margin: 0 0 12px; text-wrap: balance;
+  }
+  .caption {
+    font-size: 15px; line-height: 1.55; color: var(--muted);
+    margin: 0 0 8px; max-width: 68ch;
+  }
+  .caption b { color: var(--ink); }
+
+  .canvas { width: 100%; overflow-x: auto; }
+  svg.map { width: 100%; height: auto; display: block; min-width: 560px; }
+
+  .edge { fill: none; stroke-width: 1.8; }
+  .e-shape { stroke: var(--c-shaper); }
+  .e-back { stroke: var(--c-sponsor); }
+  .e-block { stroke: var(--c-blocker); stroke-width: 2.2; }
+  .e-gate { stroke: var(--c-gatekeeper); stroke-dasharray: 2 5; stroke-linecap: round; }
+  .e-spec { stroke: var(--c-spectator); stroke-dasharray: 1 6; stroke-linecap: round; }
+  .e-prop { stroke: var(--muted); stroke-width: 1.4; }
+  .e-lev  { stroke: var(--c-you); stroke-width: 2; stroke-dasharray: 6 5; }
+
+  .elabel {
+    font-family: var(--mono); font-size: 11px; fill: var(--muted);
+    text-anchor: middle; paint-order: stroke; stroke: var(--surface);
+    stroke-width: 4px; stroke-linejoin: round;
+  }
+  .disc { stroke: var(--surface); stroke-width: 2.5; }
+  .warn { fill: none; stroke: var(--c-blocker); stroke-width: 1.8; stroke-dasharray: 4 4; }
+  .nlabel { font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+  .gloss  { font-family: var(--sans); font-size: 12px; fill: var(--muted); text-anchor: middle; }
+  .gloss.alert { fill: var(--c-blocker); font-size: 11px; font-style: italic; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px 22px;
+    margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line);
+  }
+  .lg { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+  .lg .h { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .chip .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .chip .ln { width: 22px; height: 0; border-top-width: 2.4px; flex-shrink: 0; }
+  .credit { font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin: 14px 0 0; letter-spacing: .03em; }
+</style>
+
+<div class="figure">
+  <p class="eyebrow">The Prework · Field Map</p>
+  <h1>Map the room by power, not by title</h1>
+  <p class="caption">The cast around any decision. Your real leverage runs through the <b>Shapers</b> and the <b>Sponsor</b> — the people the Decider borrows opinions from — not head-on at the <b>Decider</b>, who often agrees in the room and then quietly never executes.</p>
+
+  <div class="canvas">
+    <svg class="map" viewBox="0 0 1000 700" role="img" aria-label="A power map showing You, the Decider, Sponsor, two Shapers, a Blocker, a Gatekeeper, and two Spectators, with relationship lines between them.">
+      <defs>
+        <marker id="arw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/>
+        </marker>
+      </defs>
+
+      <!-- ===== EDGES ===== -->
+      <!-- Sponsor -> Decider -->
+      <line class="edge e-back" x1="500" y1="139" x2="500" y2="284" marker-end="url(#arw)"/>
+      <text class="elabel" x="500" y="215">backs</text>
+      <!-- Shaper A -> Decider -->
+      <line class="edge e-shape" x1="285.1" y1="198.1" x2="453.3" y2="309.1" marker-end="url(#arw)"/>
+      <text class="elabel" x="360" y="243">shapes</text>
+      <!-- Shaper B -> Decider -->
+      <line class="edge e-shape" x1="714.9" y1="198.1" x2="546.7" y2="309.1" marker-end="url(#arw)"/>
+      <text class="elabel" x="640" y="243">shapes</text>
+      <!-- Blocker -> Decider -->
+      <line class="edge e-block" x1="189.9" y1="357.7" x2="444.1" y2="343.2" marker-end="url(#arw)"/>
+      <text class="elabel" x="315" y="342">can veto</text>
+      <!-- Gatekeeper -> Decider -->
+      <line class="edge e-gate" x1="810.1" y1="357.7" x2="555.9" y2="343.2" marker-end="url(#arw)"/>
+      <text class="elabel" x="686" y="342">controls access</text>
+      <!-- Spectator L -> Decider -->
+      <line class="edge e-spec" x1="309" y1="531" x2="460.4" y2="379.6"/>
+      <text class="elabel" x="372" y="462">consulted</text>
+      <!-- Spectator R -> Decider -->
+      <line class="edge e-spec" x1="691" y1="531" x2="539.6" y2="379.6"/>
+      <text class="elabel" x="628" y="462">consulted</text>
+      <!-- You -> Decider -->
+      <line class="edge e-prop" x1="500" y1="552" x2="500" y2="396" marker-end="url(#arw)"/>
+      <text class="elabel" x="500" y="478">proposes to</text>
+      <!-- You -> Shaper A (leverage) -->
+      <line class="edge e-lev" x1="475.7" y1="558.6" x2="273.3" y2="214.6" marker-end="url(#arw)"/>
+      <text class="elabel" x="336" y="404">pre-sell</text>
+      <!-- You -> Shaper B (leverage) -->
+      <line class="edge e-lev" x1="524.3" y1="558.6" x2="726.7" y2="214.6" marker-end="url(#arw)"/>
+      <text class="elabel" x="664" y="404">pre-sell</text>
+
+      <!-- ===== NODES ===== -->
+      <!-- Sponsor -->
+      <g>
+        <circle class="disc" cx="500" cy="95" r="40" fill="var(--c-sponsor)"/>
+        <text class="nlabel" x="500" y="95" fill="#fff" font-size="14">Sponsor</text>
+        <text class="gloss" x="500" y="152">whose priorities she serves</text>
+      </g>
+      <!-- Shaper A -->
+      <g>
+        <circle class="disc" cx="250" cy="175" r="38" fill="var(--c-shaper)"/>
+        <text class="nlabel" x="250" y="175" fill="#1C1E24" font-size="13.5">Shaper</text>
+        <text class="gloss" x="250" y="230">opinion she borrows</text>
+      </g>
+      <!-- Shaper B -->
+      <g>
+        <circle class="disc" cx="750" cy="175" r="38" fill="var(--c-shaper)"/>
+        <text class="nlabel" x="750" y="175" fill="#1C1E24" font-size="13.5">Shaper</text>
+        <text class="gloss" x="750" y="230">opinion she borrows</text>
+      </g>
+      <!-- Decider -->
+      <g>
+        <circle class="warn" cx="500" cy="340" r="55"/>
+        <circle class="disc" cx="500" cy="340" r="48" fill="var(--c-decider)"/>
+        <text class="nlabel" x="500" y="340" fill="#fff" font-size="16">Decider</text>
+        <text class="gloss" x="500" y="404">holds the yes</text>
+        <text class="gloss alert" x="500" y="421">often also the silent blocker</text>
+      </g>
+      <!-- Blocker -->
+      <g>
+        <circle class="disc" cx="150" cy="360" r="36" fill="var(--c-blocker)"/>
+        <text class="nlabel" x="150" y="360" fill="#fff" font-size="13">Blocker</text>
+        <text class="gloss" x="150" y="413">can only say no</text>
+      </g>
+      <!-- Gatekeeper -->
+      <g>
+        <circle class="disc" cx="850" cy="360" r="36" fill="var(--c-gatekeeper)"/>
+        <text class="nlabel" x="850" y="360" fill="#fff" font-size="12.5">Gatekeeper</text>
+        <text class="gloss" x="850" y="413">controls the forum</text>
+      </g>
+      <!-- Spectator L -->
+      <g opacity="0.82">
+        <circle class="disc" cx="285" cy="555" r="30" fill="var(--c-spectator)"/>
+        <text class="nlabel" x="285" y="555" fill="#1C1E24" font-size="12">Spectator</text>
+        <text class="gloss" x="285" y="602">wants no surprises</text>
+      </g>
+      <!-- Spectator R -->
+      <g opacity="0.82">
+        <circle class="disc" cx="715" cy="555" r="30" fill="var(--c-spectator)"/>
+        <text class="nlabel" x="715" y="555" fill="#1C1E24" font-size="12">Spectator</text>
+        <text class="gloss" x="715" y="602">wants no surprises</text>
+      </g>
+      <!-- You -->
+      <g>
+        <circle class="disc" cx="500" cy="600" r="44" fill="var(--c-you)"/>
+        <text class="nlabel" x="500" y="600" fill="#fff" font-size="15">You</text>
+        <text class="gloss" x="500" y="662">expertise, limited authority</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="legend">
+    <div class="lg">
+      <span class="h">Roles</span>
+      <span class="chip"><span class="dot" style="background:var(--c-you)"></span>You</span>
+      <span class="chip"><span class="dot" style="background:var(--c-decider)"></span>Decider</span>
+      <span class="chip"><span class="dot" style="background:var(--c-sponsor)"></span>Sponsor</span>
+      <span class="chip"><span class="dot" style="background:var(--c-shaper)"></span>Shaper</span>
+      <span class="chip"><span class="dot" style="background:var(--c-blocker)"></span>Blocker</span>
+      <span class="chip"><span class="dot" style="background:var(--c-gatekeeper)"></span>Gatekeeper</span>
+      <span class="chip"><span class="dot" style="background:var(--c-spectator)"></span>Spectator</span>
+    </div>
+    <div class="lg">
+      <span class="h">Ties</span>
+      <span class="chip"><span class="ln" style="border-top:2.4px dashed var(--c-you)"></span>Your leverage</span>
+      <span class="chip"><span class="ln" style="border-top:2.4px solid var(--c-shaper)"></span>Shapes / backs</span>
+      <span class="chip"><span class="ln" style="border-top:2.4px solid var(--c-blocker)"></span>Can veto</span>
+      <span class="chip"><span class="ln" style="border-top:2.4px dotted var(--c-gatekeeper)"></span>Access / consulted</span>
+    </div>
+  </div>
+  <p class="credit">Framework diagram — roles, not real people.</p>
+</div>
