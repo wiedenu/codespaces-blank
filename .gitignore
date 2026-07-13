@@ -14,3 +14,6 @@ data/
 # --- Python cruft ---
 __pycache__/
 *.pyc
+
+# --- Job search (discreet — never commit, never sync) ---
+docs/job-search/

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HubSpot AI (Breeze) Rollout Plan — GreatAmerica Marketing</title>
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef2f6; --line:#dde4ec;
+  --ink:#16222e; --ink-2:#47586a; --ink-3:#7a8b9a;
+  --navy:#003868; --darkblue:#004F92; --midblue:#3096D5; --bronze:#C0692D; --bronze-soft:#f4e4d5;
+  --good:#2f7d57; --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f151b; --surface:#18212b; --surface-2:#212c37; --line:#2b3947;
+    --ink:#e7eef5; --ink-2:#a6b7c6; --ink-3:#71828f;
+    --navy:#3096D5; --darkblue:#4E92D0; --midblue:#6fb7e6; --bronze:#d4813f; --bronze-soft:#3a2a1b; --good:#4bb081;}
+}
+:root[data-theme="light"]{--bg:#f4f6f9;--surface:#fff;--surface-2:#eef2f6;--line:#dde4ec;--ink:#16222e;--ink-2:#47586a;--ink-3:#7a8b9a;--navy:#003868;--darkblue:#004F92;--midblue:#3096D5;--bronze:#C0692D;--bronze-soft:#f4e4d5;--good:#2f7d57;}
+:root[data-theme="dark"]{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;--ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;--navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;--good:#4bb081;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;font-size:15.5px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 90px}
+.tnum{font-variant-numeric:tabular-nums}
+
+header{border-bottom:3px solid var(--bronze);padding-bottom:22px;margin-bottom:30px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--bronze);margin:0 0 8px}
+h1{font-size:clamp(26px,4vw,36px);line-height:1.08;margin:0;font-weight:780;letter-spacing:-.02em;color:var(--navy)}
+.thesis{font-size:18px;color:var(--ink-2);margin:14px 0 0;max-width:64ch}
+.thesis b{color:var(--ink)}
+.meta{margin-top:16px;font-size:13px;color:var(--ink-3);display:flex;gap:18px;flex-wrap:wrap}
+
+h2{font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);
+  margin:40px 0 16px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+
+.principles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.principle{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.principle h3{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--ink)}
+.principle p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.45}
+
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;
+  display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.phase .num{width:44px;height:44px;border-radius:11px;background:var(--navy);color:#fff;display:grid;place-items:center;
+  font-weight:800;font-size:18px;flex:none}
+.phase.gate .num{background:var(--bronze)}
+.phase h3{margin:0;font-size:18px;font-weight:740;letter-spacing:-.01em}
+.phase .tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  padding:2px 9px;border-radius:99px;margin-left:10px;vertical-align:middle}
+.tag-cost{background:var(--surface-2);color:var(--good);border:1px solid var(--line)}
+.tag-gate{background:var(--bronze-soft);color:var(--bronze)}
+.phase p{margin:8px 0 0;font-size:14.5px;color:var(--ink-2)}
+.phase .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.phase .split div{font-size:13.5px}
+.phase .split .lbl{font-weight:700;color:var(--ink);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.phase ul{margin:4px 0 0;padding-left:18px;color:var(--ink-2)}
+.phase li{margin:2px 0}
+@media(max-width:620px){.phase .split{grid-template-columns:1fr}.principles{grid-template-columns:1fr}}
+
+.guard{background:var(--bronze-soft);border:1px solid var(--bronze);border-left-width:4px;border-radius:12px;padding:18px 22px}
+.guard h3{margin:0 0 6px;font-size:16px;color:var(--bronze);font-weight:740}
+.guard p{margin:0 0 10px;font-size:14px;color:var(--ink-2)}
+.guard ul{margin:0;padding-left:20px}
+.guard li{margin:5px 0;font-size:14.5px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface-2);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);font-weight:700}
+tbody tr:last-child td{border-bottom:none}
+td .ph{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.ph.p0{background:var(--bronze-soft);color:var(--bronze)}
+.ph.p1{background:var(--surface-2);color:var(--darkblue)}
+.ph.p2{background:var(--surface-2);color:var(--navy)}
+.ph.always{background:var(--surface-2);color:var(--good)}
+td.topic{font-weight:600;color:var(--ink)}
+
+.owners{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.owner{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 18px}
+.owner .r{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--bronze);font-weight:700;margin-bottom:4px}
+.owner .n{font-weight:700;font-size:15px}
+.owner p{margin:4px 0 0;font-size:13.5px;color:var(--ink-2)}
+@media(max-width:620px){.owners{grid-template-columns:1fr}}
+
+.next{background:var(--navy);color:#fff;border-radius:14px;padding:22px 24px;margin-top:34px}
+.next h3{margin:0 0 6px;font-size:18px;color:#fff}
+.next p{margin:0;font-size:15px;color:#cfe0ef}
+.next b{color:#fff}
+:root[data-theme="dark"] .next{background:var(--surface-2);border:1px solid var(--line)}
+:root[data-theme="dark"] .next p{color:var(--ink-2)}
+
+.footnote{font-size:12.5px;color:var(--ink-3);margin-top:30px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">GreatAmerica Marketing · Marketing Operations</p>
+    <h1>HubSpot AI (Breeze) Rollout Plan</h1>
+    <p class="thesis">We turn on the safe layer first, use it, and <b>build the governance from real use</b> rather than predicting it in a vacuum. HubSpot AI has been off for two-plus years, so the fastest way to answer our open questions is to start using the lowest-risk capability and learn from it.</p>
+    <div class="meta"><span>Owner: John Wiedenheft, Marketing Ops</span><span>Reviewed with: Risk</span><span>Status: Ready for Phase 0</span></div>
+  </header>
+
+  <h2>Guiding principles</h2>
+  <div class="principles">
+    <div class="principle"><h3>Phased and reversible</h3><p>Start with the no-cost, no-credit, lowest-risk capability. Nothing customer-facing turns on automatically.</p></div>
+    <div class="principle"><h3>Learn by doing</h3><p>We cannot govern a tool no one has used in two years. The real questions and answers surface from use, not before it.</p></div>
+    <div class="principle"><h3>Guardrails scale with capability</h3><p>Light touch on the embedded Assistant. Tighter controls as we add credit-based tools and anything touching external data.</p></div>
+    <div class="principle"><h3>$0 to start</h3><p>Phase 1 uses no credits and no new spend. Any cost is gated to a measured pilot, consistent with our FY27 direction.</p></div>
+  </div>
+
+  <h2>The phases</h2>
+
+  <div class="phase gate">
+    <div class="num">0</div>
+    <div>
+      <h3>Ready to launch<span class="tag tag-gate">Gate</span></h3>
+      <p>The prerequisites before anything turns on. This is where roles and the Day 1 guardrails get set.</p>
+      <div class="split">
+        <div><div class="lbl">Decided now</div>
+          <ul><li>Everyone completes <b>AI for Marketers</b> (HubSpot Academy) by <b>July 10</b></li><li>Risk sign-off confirmed</li><li>Day 1 guardrails communicated (below)</li><li>Roles named: rollout owner + who to ask</li></ul>
+        </div>
+        <div><div class="lbl">Exit criteria</div>
+          <ul><li>Training complete for all marketing HubSpot users</li><li>Guardrails acknowledged</li><li>Green light to flip Phase 1 on</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="num">1</div>
+    <div>
+      <h3>Breeze Assistant, account-wide<span class="tag tag-cost">No cost · No credits</span></h3>
+      <p>Turn on Breeze Assistant for the team. It is embedded throughout HubSpot, similar to how Copilot works in Microsoft, and is not separate from daily work. Low risk, high learning. <b>This is where we build fluency and collect the real questions.</b></p>
+      <div class="split">
+        <div><div class="lbl">Goal</div>
+          <ul><li>Adoption and comfort with the Assistant</li><li>A running list of real use cases and questions from actual use</li><li>Spot where it helps and where it falls short</li></ul>
+        </div>
+        <div><div class="lbl">Guardrails</div>
+          <ul><li>Human review before anything customer-facing</li><li>No sensitive or customer data pasted into prompts</li><li>Brand voice and standards still apply</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="num">2</div>
+    <div>
+      <h3>Pilot the credit-based tools<span class="tag tag-cost">Metered · Small group</span></h3>
+      <p>A small pilot group tests the AI tools that use HubSpot Credits, where the deeper generation, insights, and integrations live. Now we address the bigger governance questions <b>with real context</b> instead of guessing. Cost and usage get measured before any expansion.</p>
+      <div class="split">
+        <div><div class="lbl">What we work out here</div>
+          <ul><li>Reporting, KPIs, and AI-driven insights</li><li>Campaign workflow best practices</li><li>LinkedIn and Google Ads connectivity</li><li>Forms strategy and ownership</li></ul>
+        </div>
+        <div><div class="lbl">Governance</div>
+          <ul><li><b>Governance forum:</b> join an existing GreatAmerica AI group, or charter our own (to be determined)</li><li>Guardrails informed by Phase 1 learnings</li><li>Cost and usage tracked against value</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="num">3</div>
+    <div>
+      <h3>Expand to the team</h3>
+      <p>Roll the proven tools out to the rest of the team once we understand capability, usage, and cost. Governance and enablement become standard practice rather than a special project.</p>
+      <div class="split">
+        <div><div class="lbl">Trigger</div>
+          <ul><li>Pilot shows clear value at a cost we can justify</li><li>Guardrails hold up in real use</li></ul>
+        </div>
+        <div><div class="lbl">Ongoing</div>
+          <ul><li>Enablement and refreshers</li><li>Success measures reviewed on a set cadence</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Guardrails that apply from Day 1</h2>
+  <div class="guard">
+    <h3>Non-negotiable, every phase</h3>
+    <p>These hold regardless of which phase we are in. They are light on purpose. We are a bank now, so they exist to keep us safe without slowing adoption.</p>
+    <ul>
+      <li><b>Training first.</b> No AI features until the course is complete.</li>
+      <li><b>Human in the loop.</b> A person reviews anything before it goes to a customer.</li>
+      <li><b>Protect data.</b> No sensitive, confidential, or customer data goes into prompts without review.</li>
+      <li><b>Brand holds.</b> AI output meets our brand voice and standards, same as anything else we publish.</li>
+      <li><b>Privacy and opt-out respected.</b> Existing privacy and opt-out rules apply to anything AI touches.</li>
+    </ul>
+  </div>
+
+  <h2>Every question has a home</h2>
+  <p style="color:var(--ink-2);font-size:14.5px;margin:0 0 14px;max-width:66ch">The topics raised in team feedback are all here. Most are answered by <b>using</b> the tool, not before it, which is why they land in the phase where we will actually have the context to answer them well.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Topic raised</th><th>Where it lands</th><th>How we handle it</th></tr></thead>
+      <tbody>
+        <tr><td class="topic">System limits &amp; AI efficiencies</td><td><span class="ph p1">Phase 1</span></td><td>Discovered by using the Assistant. This is exactly what Phase 1 is for.</td></tr>
+        <tr><td class="topic">Reporting, KPIs &amp; AI insights</td><td><span class="ph p2">Phase 2</span></td><td>Needs credit tools plus the leadership KPI direction. Ties to the FY27 scorecard work.</td></tr>
+        <tr><td class="topic">LinkedIn &amp; Google Ads integration</td><td><span class="ph p2">Phase 2</span></td><td>Also being explored in the CaaS campaign session. Prove connectivity in the pilot.</td></tr>
+        <tr><td class="topic">Campaign workflow best practices</td><td><span class="ph p2">Phase 2</span></td><td>Builds on our current campaign and naming work; AI-assisted workflows tested in the pilot.</td></tr>
+        <tr><td class="topic">Privacy considerations &amp; governance</td><td><span class="ph always">Day 1</span></td><td>Baseline guardrail now; formalized with the advisory group in Phase 2.</td></tr>
+        <tr><td class="topic">Opt-out review processes</td><td><span class="ph always">Day 1</span></td><td>Existing opt-out rules apply immediately to anything AI touches.</td></tr>
+        <tr><td class="topic">Forms strategy &amp; ownership</td><td><span class="ph p2">Phase 2</span></td><td>Decided alongside the request-form and intake work already underway.</td></tr>
+        <tr><td class="topic">Roles, responsibilities &amp; expectations</td><td><span class="ph p0">Phase 0</span></td><td>Set at launch, refined as each phase adds capability.</td></tr>
+        <tr><td class="topic">Advisory group (MOps / Tech / Legal)</td><td><span class="ph p2">Phase 2</span></td><td>First determine whether to join an existing GreatAmerica AI forum before standing up a new group.</td></tr>
+        <tr><td class="topic">Ongoing training &amp; enablement</td><td><span class="ph p1">Phase 1+</span></td><td>Starts in Phase 1, formalized as we expand in Phase 3.</td></tr>
+        <tr><td class="topic">Brand alignment of AI output</td><td><span class="ph always">Day 1</span></td><td>Brand standards apply to AI output the same as any content we publish.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Owners</h2>
+  <div class="owners">
+    <div class="owner"><div class="r">Rollout owner</div><div class="n">John Wiedenheft — Marketing Ops</div><p>Owns the phased rollout, the go/no-go gates, and the guardrails.</p></div>
+    <div class="owner"><div class="r">Enablement &amp; governance backlog</div><div class="n">Jana Bennett (proposed)</div><p>Owns the running list of use cases and open questions from Phase 1, and helps shape the Phase 2 governance work.</p></div>
+    <div class="owner"><div class="r">Governance forum (Phase 2)</div><div class="n">Existing AI group, or new — TBD</div><p>Before creating a group, confirm whether GreatAmerica already has an AI forum Marketing should join. Sets guardrails informed by real Phase 1 use.</p></div>
+    <div class="owner"><div class="r">Risk</div><div class="n">Sign-off &amp; compliance</div><p>Confirmed training gate; consulted on data handling as capability expands.</p></div>
+  </div>
+
+  <div class="next">
+    <h3>The one thing that unblocks all of this</h3>
+    <p><b>Finish the AI for Marketers course by July 10.</b> That is the only gate between us and Phase 1. Everything else on this page is built as we go.</p>
+  </div>
+
+  <p class="footnote">Draft rollout plan · Marketing Ops · Built to turn team feedback into a phased plan we can act on now. Names and timing to confirm.</p>
+
+</div>
+
+<script>
+// no-op: theme handled by prefers-color-scheme + host data-theme
+</script>
+</body>
+</html>

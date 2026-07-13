@@ -1,0 +1,15 @@
+To: AJ
+Subject: Quick regulatory question for the marketing BIA
+
+AJ,
+
+I'm working through the marketing Business Impact Analysis this year (Dave Wallrichs has it due by the end of August), and I hit a question Heather thought you'd be the right person for.
+
+One line in the BIA asks whether a marketing outage could trigger legal or regulatory fines or penalties. It's been marked "Yes" for a while, but that answer was carried over from prior years and nobody can recall the original reasoning.
+
+Here's what I want to get right now that we're a bank. Marketing owns the websites, and HubSpot hosts all of them, including the bank site. So if the bank website, mobile app, or online checking access went down, would that actually expose us to regulatory penalties? Or is "Yes" the wrong call for the marketing function? The mobile app and online checking access would still work, but not accessible via greatamericabank.com.
+
+I want the answer to reflect our reality as a bank before I submit. Happy to hop on a quick call if that is easier than email.
+
+Thanks!
+John

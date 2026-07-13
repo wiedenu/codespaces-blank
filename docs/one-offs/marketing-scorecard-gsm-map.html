@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FY27 Marketing Scorecard — Goals / Signals / Measures Map</title>
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef2f6; --line:#dce4ec;
+  --ink:#16222e; --ink-2:#47586a; --ink-3:#7c8b9a;
+  --navy:#003868; --darkblue:#004F92; --midblue:#3096D5; --bronze:#C0692D; --bronze-soft:#f4e4d5;
+  --now:#2f7d57; --now-soft:#e5f1ea;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f151b; --surface:#18212b; --surface-2:#212c37; --line:#2b3947;
+    --ink:#e7eef5; --ink-2:#a6b7c6; --ink-3:#71828f;
+    --navy:#3096D5; --darkblue:#4E92D0; --midblue:#6fb7e6; --bronze:#d4813f; --bronze-soft:#3a2a1b;
+    --now:#4bb081; --now-soft:#183028;}
+}
+:root[data-theme="light"]{--bg:#f4f6f9;--surface:#fff;--surface-2:#eef2f6;--line:#dce4ec;--ink:#16222e;--ink-2:#47586a;--ink-3:#7c8b9a;--navy:#003868;--darkblue:#004F92;--midblue:#3096D5;--bronze:#C0692D;--bronze-soft:#f4e4d5;--now:#2f7d57;--now-soft:#e5f1ea;}
+:root[data-theme="dark"]{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;--ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;--navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;--now:#4bb081;--now-soft:#183028;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:38px 22px 90px}
+.tnum{font-variant-numeric:tabular-nums}
+
+header{border-bottom:3px solid var(--bronze);padding-bottom:20px;margin-bottom:24px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--bronze);margin:0 0 7px}
+h1{font-size:clamp(24px,3.6vw,33px);line-height:1.1;margin:0;font-weight:770;letter-spacing:-.02em;color:var(--navy)}
+.sub{color:var(--ink-2);margin:12px 0 0;font-size:15px;max-width:76ch}
+
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 6px}
+.how div{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+.how .t{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:3px}
+.how .g .t{color:var(--navy)} .how .s .t{color:var(--midblue)} .how .m .t{color:var(--bronze)}
+.how p{margin:0;font-size:13px;color:var(--ink-2)}
+
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:14px 0 4px}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.pip{width:11px;height:11px;border-radius:50%;flex:none}
+.pip.now{background:var(--now)}
+.pip.later{background:transparent;border:1.5px dashed var(--ink-3)}
+.toggle{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);border-radius:99px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer}
+.toggle:hover{border-color:var(--bronze);color:var(--ink)}
+
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin:20px 0;overflow:hidden;box-shadow:0 1px 3px rgba(16,32,48,.05)}
+.mod-h{background:linear-gradient(180deg,var(--navy),var(--darkblue));color:#fff;padding:17px 22px}
+.pchip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.16);padding:3px 10px;border-radius:99px;margin-bottom:9px}
+.goal-label{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.75;margin-bottom:3px}
+.goal{font-size:18.5px;font-weight:720;letter-spacing:-.01em;line-height:1.25}
+.serves{margin-top:11px;font-size:12px;opacity:.92;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.serves .lb{opacity:.7;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;font-weight:700}
+.serves b{background:rgba(255,255,255,.15);padding:2px 8px;border-radius:6px;font-weight:600}
+
+.sigs{padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+.sig{border:1px solid var(--line);border-radius:11px;padding:14px 15px;background:var(--surface)}
+.slabel{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--midblue);margin-bottom:5px}
+.stext{font-size:14.5px;font-weight:650;line-height:1.32;margin-bottom:12px}
+.mlabel{font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.measure{display:flex;align-items:flex-start;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;margin-bottom:6px;font-size:12.8px;line-height:1.32}
+.measure:last-child{margin-bottom:0}
+.measure.later{background:transparent;border-style:dashed}
+.measure.later .mtxt{color:var(--ink-2)}
+.measure .pip{margin-top:2px}
+.mtxt b{font-weight:680}
+
+.callout{background:var(--bronze-soft);border:1px solid var(--bronze);border-left-width:4px;border-radius:12px;padding:18px 22px;margin:26px 0}
+.callout h3{margin:0 0 4px;font-size:16px;color:var(--bronze);font-weight:740}
+.callout p{margin:0 0 12px;font-size:14px;color:var(--ink-2)}
+.callout .row{display:flex;gap:12px;align-items:flex-start;margin-bottom:9px;font-size:14px}
+.callout .row:last-child{margin-bottom:0}
+.callout .k{font-weight:700;color:var(--ink);flex:none;min-width:200px}
+.callout .v{color:var(--ink-2)}
+@media(max-width:640px){.callout .row{flex-direction:column;gap:2px}.callout .k{min-width:0}.how{grid-template-columns:1fr}}
+
+.top{background:var(--navy);color:#fff;border-radius:14px;padding:20px 24px;margin:26px 0}
+.top h3{margin:0 0 10px;font-size:17px;color:#fff}
+.top ol{margin:0;padding-left:20px}
+.top li{margin:5px 0;font-size:14.5px;color:#dce8f3}
+.top li b{color:#fff}
+.top .note{margin:12px 0 0;font-size:13px;color:#aecbe4}
+:root[data-theme="dark"] .top{background:var(--surface-2);border:1px solid var(--line)}
+:root[data-theme="dark"] .top li{color:var(--ink-2)} :root[data-theme="dark"] .top .note{color:var(--ink-3)}
+
+.footnote{font-size:12.5px;color:var(--ink-3);margin-top:26px;padding-top:15px;border-top:1px solid var(--line)}
+@media print{body{background:#fff}.mod,.callout,.top{break-inside:avoid;box-shadow:none}.toggle{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">GreatAmerica Marketing · FY27 Scorecard (Heather Friedman, May 27 2026)</p>
+    <h1>Goals → Signals → Measures Map</h1>
+    <p class="sub">The five scorecard priorities, each recast as one <b>Goal</b>, a few <b>Signals</b> that tell us it's working, and the <b>Measures</b> under each. Goals are the top-level scorecard; everything rolls up. FY27 is a benchmark year, so this is about defining and baselining what to watch, not hitting targets yet.</p>
+  </header>
+
+  <div class="how">
+    <div class="g"><div class="t">Goal</div><p>The strategic objective (the scorecard priority). Tied to an enterprise goal.</p></div>
+    <div class="s"><div class="t">Signal</div><p>How we'd know we're making progress. Observable, usually leading.</p></div>
+    <div class="m"><div class="t">Measure</div><p>The specific number on the dashboard for each signal.</p></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="legend">
+      <span><i class="pip now"></i> Measurable now (HubSpot / GA4 / Jira / survey)</span>
+      <span><i class="pip later"></i> Needs plumbing (Salesforce sync / attribution)</span>
+    </div>
+    <button class="toggle" id="themeBtn">◐ Theme</button>
+  </div>
+
+  <!-- P1 -->
+  <section class="mod">
+    <div class="mod-h">
+      <span class="pchip">Priority 1</span>
+      <div class="goal-label">Goal</div>
+      <div class="goal">Align Marketing &amp; Sales on an enterprise lead-gen strategy that drives measurable pipeline</div>
+      <div class="serves"><span class="lb">Serves</span><b>Growth · $1.744B</b><b>Customer Focus</b></div>
+    </div>
+    <div class="sigs">
+      <div class="sig">
+        <div class="slabel">Signal A</div><div class="stext">Marketing &amp; Sales share one definition of a lead</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Standard MQL / SAL definitions</b> adopted across BUs</span></div>
+        <div class="measure later"><i class="pip later"></i><span class="mtxt"><b>Lead-to-opportunity conversion</b> defined &amp; monitored</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal B</div><div class="stext">Marketing's pipeline contribution is visible</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure later"><i class="pip later"></i><span class="mtxt"><b>Pipeline contribution</b> reported quarterly (directional)</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal C</div><div class="stext">Alignment is strong enough that requests fall</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Sales / BU leadership alignment feedback</b></span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Inbound request volume trending down</b> (Marketing Request Form)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P2 -->
+  <section class="mod">
+    <div class="mod-h">
+      <span class="pchip">Priority 2</span>
+      <div class="goal-label">Goal</div>
+      <div class="goal">Run focused, multi-channel programs that generate qualified leads and cut low-value activity</div>
+      <div class="serves"><span class="lb">Serves</span><b>Growth</b><b>JOMO</b></div>
+    </div>
+    <div class="sigs">
+      <div class="sig">
+        <div class="slabel">Signal A</div><div class="stext">Campaigns produce more qualified leads</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Qualified lead volume</b> across priority campaigns</span></div>
+        <div class="measure later"><i class="pip later"></i><span class="mtxt"><b>Lead-to-opportunity conversion rate</b></span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal B</div><div class="stext">We know which channels perform</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Channel performance benchmarks</b> + optimization cadence</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal C</div><div class="stext">We're cutting low-value work (JOMO)</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Reduction in low-impact / redundant activities</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P3 -->
+  <section class="mod">
+    <div class="mod-h">
+      <span class="pchip">Priority 3</span>
+      <div class="goal-label">Goal</div>
+      <div class="goal">Improve the martech stack and data quality to support lead gen, reporting, and compliance</div>
+      <div class="serves"><span class="lb">Serves</span><b>Bank Compliance</b><b>Customer Focus</b></div>
+    </div>
+    <div class="sigs">
+      <div class="sig">
+        <div class="slabel">Signal A</div><div class="stext">We know our stack and have a roadmap</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Tech &amp; data assessment</b> completed w/ recommendations</span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Tool-audit baseline</b> established &amp; carried forward</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal B</div><div class="stext">Data is getting cleaner</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Data quality</b>: accuracy / completeness / usability</span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Deliverability</b>: delivery-to-open, fewer bounces</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal C</div><div class="stext">Systems connect; leads are traceable end-to-end</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure later"><i class="pip later"></i><span class="mtxt"><b>Lead-tracking visibility across systems</b> (SF, Fiserv, Calyx)</span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Workflow efficiency</b> / reduced manual effort</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P4 -->
+  <section class="mod">
+    <div class="mod-h">
+      <span class="pchip">Priority 4</span>
+      <div class="goal-label">Goal</div>
+      <div class="goal">Strengthen brand awareness and positioning to support lead gen and engagement</div>
+      <div class="serves"><span class="lb">Serves</span><b>Growth</b><b>Team Engagement</b><b>Customer Focus</b></div>
+    </div>
+    <div class="sigs">
+      <div class="sig">
+        <div class="slabel">Signal A</div><div class="stext">Brand visibility is growing</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Web traffic</b> via SEO / AEO / GEO</span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Brand visibility</b>, engagement, external recognition</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal B</div><div class="stext">Thought leadership is expanding</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Thought-leadership placements</b> + speaking opportunities</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal C</div><div class="stext">Brand connects to demand, and to culture</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure later"><i class="pip later"></i><span class="mtxt"><b>Brand → demand-gen alignment</b> demonstrated</span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Employee engagement</b> + cultural alignment feedback</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P5 -->
+  <section class="mod">
+    <div class="mod-h">
+      <span class="pchip">Priority 5</span>
+      <div class="goal-label">Goal</div>
+      <div class="goal">Build an engaged, high-performing team that operates with autonomy, focus, and alignment</div>
+      <div class="serves"><span class="lb">Serves</span><b>Team Member Engagement</b></div>
+    </div>
+    <div class="sigs">
+      <div class="sig">
+        <div class="slabel">Signal A</div><div class="stext">The team owns more of the strategy</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Team ownership</b> of strategy &amp; execution</span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Leadership capacity</b> &amp; scalability</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal B</div><div class="stext">Roles are clear</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Documented role clarity</b> tied to BU support + lead gen</span></div>
+      </div>
+      <div class="sig">
+        <div class="slabel">Signal C</div><div class="stext">Engagement and focus are trending up</div>
+        <div class="mlabel">Measures</div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Engagement / feedback / development</b> trends (360s)</span></div>
+        <div class="measure"><i class="pip now"></i><span class="mtxt"><b>Focus &amp; prioritization</b> across workload (Jira)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECTIONS -->
+  <div class="callout">
+    <h3>Your active work is already the measurement backbone</h3>
+    <p>The scorecard doesn't ask for new projects. It asks for measures that your in-flight work produces. Name these connections and you own the "how do we know it's working" layer.</p>
+    <div class="row"><div class="k">Marketing Request Form analysis</div><div class="v">→ Priority 1 (requests-down = alignment, the scorecard's own success definition) and Priority 2 (JOMO / reduce low-value activity).</div></div>
+    <div class="row"><div class="k">Activity Sync with Cody</div><div class="v">→ The <b>keystone</b>. It's the plumbing behind every dashed-dot measure: pipeline contribution and lead-to-opportunity conversion in P1, P2, and end-to-end lead tracking in P3.</div></div>
+    <div class="row"><div class="k">MarTech Audit (MKB-6270) + Data Quality tasks</div><div class="v">→ Priority 3 assessment and data-quality KPIs, nearly one-to-one.</div></div>
+    <div class="row"><div class="k">Breeze AI rollout</div><div class="v">→ Priority 3 (tools) and Priority 2 (efficiency / doing more with less).</div></div>
+    <div class="row"><div class="k">AEO / GEO content strategy</div><div class="v">→ Priority 4 (AI-driven search, brand visibility).</div></div>
+  </div>
+
+  <!-- TOP 3-5 -->
+  <div class="top">
+    <h3>The hierarchy: your top measures</h3>
+    <ol>
+      <li><b>Qualified lead volume (SAL)</b> — the headline lead-gen number (P1, P2)</li>
+      <li><b>Lead-to-opportunity conversion</b> — are leads good, not just plentiful (P1, P2)</li>
+      <li><b>Marketing-sourced / influenced pipeline contribution</b> — the revenue tie (P1)</li>
+      <li><b>Brand visibility / qualified web traffic</b> — the top-of-funnel driver (P4)</li>
+      <li><b>Data quality &amp; system integration health</b> — the enabler everything else depends on (P3)</li>
+    </ol>
+    <p class="note">P3 (tech/data) and P5 (team) are enablers that make the top three trustworthy. P4 feeds the funnel. The three revenue-facing measures are what leadership will actually judge Marketing on, and two of them (conversion, pipeline) unlock the moment the Salesforce sync lands.</p>
+  </div>
+
+  <p class="footnote">Framework: Goals → Signals → Measures. Source: FY27 Marketing Scorecard (Heather Friedman). Benchmark year: identify and baseline; set targets at the Marketing Strategy meeting. Draft · Marketing Ops · John Wiedenheft.</p>
+
+</div>
+
+<script>
+document.getElementById('themeBtn').addEventListener('click',function(){
+  var r=document.documentElement;
+  var c=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme', c==='dark'?'light':'dark');
+});
+</script>
+</body>
+</html>

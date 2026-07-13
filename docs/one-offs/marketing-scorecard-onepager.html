@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FY27 Marketing Scorecard — One Page</title>
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef2f6; --line:#dce4ec;
+  --ink:#16222e; --ink-2:#47586a; --ink-3:#7c8b9a;
+  --navy:#003868; --darkblue:#004F92; --midblue:#3096D5; --bronze:#C0692D; --bronze-soft:#f4e4d5;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;
+    --ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;
+    --navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;}
+}
+:root[data-theme="light"]{--bg:#f4f6f9;--surface:#fff;--surface-2:#eef2f6;--line:#dce4ec;--ink:#16222e;--ink-2:#47586a;--ink-3:#7c8b9a;--navy:#003868;--darkblue:#004F92;--midblue:#3096D5;--bronze:#C0692D;--bronze-soft:#f4e4d5;}
+:root[data-theme="dark"]{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;--ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;--navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.45;font-size:14.5px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:840px;margin:0 auto;padding:34px 24px 48px}
+
+header{border-bottom:3px solid var(--bronze);padding-bottom:16px;margin-bottom:18px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);margin:0 0 6px}
+h1{font-size:clamp(22px,3.4vw,30px);line-height:1.1;margin:0;font-weight:770;letter-spacing:-.02em;color:var(--navy)}
+.sub{color:var(--ink-2);margin:9px 0 0;font-size:14px;max-width:80ch}
+.flow{margin:12px 0 0;font-size:12.5px;color:var(--ink-3);font-weight:600}
+.flow b{color:var(--midblue)}
+
+h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:800;margin:22px 0 10px}
+
+.prio{display:flex;gap:13px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
+.prio:first-of-type{border-top:none}
+.pnum{flex:none;width:24px;height:24px;border-radius:7px;background:var(--navy);color:#fff;font-weight:800;font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;margin-top:1px}
+.pbody{flex:1;min-width:0}
+.pgoal{font-weight:700;font-size:14.5px;color:var(--ink);margin:0}
+.pmeasure{font-size:13px;color:var(--ink-2);margin:2px 0 0}
+.pmeasure b{color:var(--bronze);font-weight:700}
+
+.band{background:var(--navy);color:#fff;border-radius:13px;padding:18px 22px;margin:22px 0 0}
+.band h3{margin:0 0 4px;font-size:16px;color:#fff}
+.band .lede{margin:0 0 12px;font-size:13px;color:#bcd2e6}
+.rollup{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rollup .m{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:9px;padding:10px 12px}
+.rollup .m .t{font-size:13.5px;font-weight:700;color:#fff;line-height:1.25}
+.rollup .m .d{font-size:11.5px;color:#aecbe4;margin-top:3px}
+.band .note{margin:12px 0 0;font-size:12px;color:#9fc0dd}
+.band .note b{color:#fff}
+:root[data-theme="dark"] .band{background:var(--surface-2);border:1px solid var(--line)}
+:root[data-theme="dark"] .band .lede,:root[data-theme="dark"] .band .note{color:var(--ink-2)}
+:root[data-theme="dark"] .rollup .m{background:var(--surface);border-color:var(--line)}
+:root[data-theme="dark"] .rollup .m .d{color:var(--ink-3)}
+
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.rule .t{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--midblue);margin-bottom:4px}
+.rule p{margin:0;font-size:12.5px;color:var(--ink-2)}
+
+.foot{font-size:11.5px;color:var(--ink-3);margin-top:20px;padding-top:12px;border-top:1px solid var(--line)}
+
+@media(max-width:620px){.rollup,.rules{grid-template-columns:1fr}}
+@media print{body{background:#fff}.band,.rule,.prio{break-inside:avoid}@page{margin:14mm}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">FY27 Marketing Scorecard · 30,000-ft view</p>
+    <h1>The scorecard on one page</h1>
+    <p class="sub">Heather's five FY27 priorities, each reduced to the one thing we'd watch to know it's working. A benchmark year: we baseline the signals now and set targets later.</p>
+    <p class="flow">Framework: <b>Goals</b> (the priority) &rarr; <b>Signals</b> (how we'd know) &rarr; <b>Measures</b> (the number on the dashboard).</p>
+  </header>
+
+  <h2>The five priorities &mdash; and the one thing we watch for each</h2>
+
+  <div class="prio">
+    <span class="pnum">1</span>
+    <div class="pbody">
+      <p class="pgoal">Align Marketing &amp; Sales on a lead-gen strategy that drives measurable pipeline</p>
+      <p class="pmeasure">Watch: <b>qualified leads (SAL)</b> + marketing-sourced pipeline contribution. Success signal: inbound requests trending <b>down</b> (alignment is working).</p>
+    </div>
+  </div>
+
+  <div class="prio">
+    <span class="pnum">2</span>
+    <div class="pbody">
+      <p class="pgoal">Run focused, multi-channel programs that generate qualified leads and cut low-value work</p>
+      <p class="pmeasure">Watch: <b>qualified lead volume by campaign</b> + channel performance. Success signal: low-value / redundant activity down (JOMO).</p>
+    </div>
+  </div>
+
+  <div class="prio">
+    <span class="pnum">3</span>
+    <div class="pbody">
+      <p class="pgoal">Improve the martech stack and data quality for lead gen, reporting, and compliance</p>
+      <p class="pmeasure">Watch: <b>data quality + system-integration health</b> (deliverability, clean data, end-to-end lead tracking).</p>
+    </div>
+  </div>
+
+  <div class="prio">
+    <span class="pnum">4</span>
+    <div class="pbody">
+      <p class="pgoal">Strengthen brand awareness and positioning to support lead gen and engagement</p>
+      <p class="pmeasure">Watch: <b>qualified web traffic (SEO / AEO / GEO)</b> + brand visibility and thought-leadership reach.</p>
+    </div>
+  </div>
+
+  <div class="prio">
+    <span class="pnum">5</span>
+    <div class="pbody">
+      <p class="pgoal">Build an engaged, high-performing team that operates with autonomy, focus, and alignment</p>
+      <p class="pmeasure">Watch: <b>team engagement + ownership</b> of strategy, role clarity, focus across workload.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <h3>It all rolls up to a few headline numbers</h3>
+    <p class="lede">These are what leadership actually judges Marketing on:</p>
+    <div class="rollup">
+      <div class="m"><div class="t">Qualified leads (SAL)</div><div class="d">The headline lead-gen number</div></div>
+      <div class="m"><div class="t">Lead &rarr; opportunity conversion</div><div class="d">Are the leads good, not just plentiful</div></div>
+      <div class="m"><div class="t">Marketing-influenced pipeline</div><div class="d">The revenue tie</div></div>
+    </div>
+    <p class="note"><b>Brand visibility / qualified traffic</b> feeds the top of that funnel; <b>data + integration health</b> is the enabler underneath it all. Two of the three headline numbers (conversion, pipeline) unlock the moment the <b>Salesforce / Activity Sync</b> plumbing lands.</p>
+  </div>
+
+  <div class="rules">
+    <div class="rule"><div class="t">Benchmark year</div><p>Baseline the signals now; set directional targets once the baselines are trustworthy.</p></div>
+    <div class="rule"><div class="t">No vanity metrics</div><p>Raw sessions, pageviews, and opens stay context, never KPIs. If it can rise while nothing improves, it isn't a KPI.</p></div>
+    <div class="rule"><div class="t">No new projects</div><p>The measures come from work the team is already doing. This names how we'll know it's working.</p></div>
+  </div>
+
+  <p class="foot">FY27 Marketing Scorecard (Heather Friedman). 30,000-ft view; the full Goals &rarr; Signals &rarr; Measures map sits underneath. Marketing Ops &middot; John Wiedenheft.</p>
+
+</div>
+</body>
+</html>

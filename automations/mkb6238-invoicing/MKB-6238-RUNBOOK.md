@@ -133,9 +133,12 @@ Sending behavior: one send at a time, ~0.2s apart, with automatic retry/backoff 
 
 ## Reference numbers
 
-- **April '26:** 1,304 contacts, 22 flagged (corrected + resent).
-- **July '26:** 1,440 records → **1,448 sends** after splitting 14 two-address cells;
-  6 flagged malformed (5 typos + 1 with no usable address), sent back for correction.
+- **April '26:** 1,304 contacts, 22 flagged (corrected + resent). *(Live send.)*
+- **July '26 — DRY-RUN / EMAIL TEST ONLY, LIVE SEND NOT YET RUN as of 2026-07-13.**
+  Dry-run showed 1,440 records → **1,448 would-be sends** after splitting 14 two-address
+  cells; 6 flagged malformed (5 typos + 1 with no usable address) to correct. The live
+  send is tracked under **MKB-7737, scheduled 2026-07-15**. Do NOT read these numbers as a
+  completed send when checking for double-sends.
 
 ---
 

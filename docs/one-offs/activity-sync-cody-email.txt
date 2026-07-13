@@ -1,0 +1,19 @@
+To: Cody Jandik
+Subject: Activity Sync is ready to move, need 30 minutes
+
+Cody,
+
+I picked the HubSpot to Salesforce Activity Sync back up and got it to a decision point. Short version: we sync high-value marketing activities from HubSpot onto the Salesforce contact record, where they roll up to the account, primarily as durable account history and AI-ready data, with a rep task firing only when the signal is strong enough to be worth it.
+
+I have made the calls I can make on the marketing side. What we sync, the phased rollout, and what we deliberately leave out are all decided and written up in the attached spec. What Sales gets out of it: the full marketing timeline on the account weeks later when they actually need it, a task only when it is hot, and the form and integration detail carried across so the rep knows the vertical and the tech stack before the call.
+
+There are three things I cannot close without you, all on the Salesforce side:
+
+1. Do reps book through HubSpot meeting links, or does scheduling live in Salesforce or Outlook? This decides whether the "meeting booked" trigger stays in Phase 1.
+2. How we match a HubSpot contact to the right Salesforce Lead, Contact, or Account, and whether we can cap it at one open task per contact per rolling window.
+3. Which of the "confirm" triggers in the spec are realistically fireable from HubSpot.
+
+Can you grab 30 minutes this week or next? Once we clear these, I can turn on Phase 1.
+
+Thanks!
+John

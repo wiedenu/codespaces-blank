@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRH Franchise Application — Workflow Documentation</title>
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef2f6; --line:#dce4ec;
+  --ink:#16222e; --ink-2:#47586a; --ink-3:#7c8b9a;
+  --navy:#003868; --darkblue:#004F92; --midblue:#3096D5; --bronze:#C0692D; --bronze-soft:#f4e4d5;
+  --green:#2f855a; --green-soft:#e6f4ec; --purple:#7c3aed; --purple-soft:#f2ecfd;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;
+    --ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;
+    --navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;
+    --green:#48bb78;--green-soft:#1c2e24;--purple:#a684f0;--purple-soft:#241a33;}
+}
+:root[data-theme="light"]{--bg:#f4f6f9;--surface:#fff;--surface-2:#eef2f6;--line:#dce4ec;--ink:#16222e;--ink-2:#47586a;--ink-3:#7c8b9a;--navy:#003868;--darkblue:#004F92;--midblue:#3096D5;--bronze:#C0692D;--bronze-soft:#f4e4d5;--green:#2f855a;--green-soft:#e6f4ec;--purple:#7c3aed;--purple-soft:#f2ecfd;}
+:root[data-theme="dark"]{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;--ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;--navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;--green:#48bb78;--green-soft:#1c2e24;--purple:#a684f0;--purple-soft:#241a33;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:14.5px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:34px 24px 56px}
+
+header{border-bottom:3px solid var(--bronze);padding-bottom:16px;margin-bottom:8px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);margin:0 0 6px}
+h1{font-size:clamp(22px,3.4vw,30px);line-height:1.1;margin:0;font-weight:770;letter-spacing:-.02em;color:var(--navy)}
+.sub{color:var(--ink-2);margin:9px 0 0;font-size:14px;max-width:80ch}
+
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:20px 0 8px}
+.overview h2{margin-top:0}
+.chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:12.5px}
+.chain .node{background:var(--navy);color:#fff;border-radius:8px;padding:6px 11px;font-weight:700}
+.chain .node.two{background:var(--darkblue)}
+.chain .arrow{color:var(--midblue);font-weight:800}
+
+section.wf{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:26px 0 0;scroll-margin-top:16px}
+.wf-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--navy);border-radius:6px;padding:3px 9px;margin-bottom:10px}
+.wf-tag.scaffold{background:var(--bronze)}
+h2{font-size:19px;color:var(--navy);margin:4px 0 2px;font-weight:750;letter-spacing:-.01em}
+h3{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:800;margin:20px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px}
+
+.meta-grid{display:grid;grid-template-columns:130px 1fr;gap:6px 16px;font-size:13.5px;margin-top:6px}
+.meta-grid dt{color:var(--ink-3);font-weight:700}
+.meta-grid dd{margin:0;color:var(--ink)}
+code{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--bronze)}
+
+.branch{border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin:12px 0}
+.branch.spam{border-left:4px solid var(--bronze)}
+.branch.pass{border-left:4px solid var(--green)}
+.branch .bh{font-size:13px;font-weight:800;margin-bottom:3px}
+.branch.spam .bh{color:var(--bronze)}
+.branch.pass .bh{color:var(--green)}
+.branch .cond{font-size:12.5px;color:var(--ink-2);margin:0 0 10px}
+.branch .cond b{color:var(--ink)}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px dashed var(--line);font-size:13px}
+.steps li:first-child{border-top:none}
+.steps .ico{flex:none;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.ico.edit{background:var(--green)}
+.ico.mail{background:var(--purple)}
+.ico.goto{background:var(--darkblue)}
+.ico.end{background:var(--ink-3)}
+.steps .txt b{color:var(--ink)}
+.steps .txt .d{display:block;color:var(--ink-3);font-size:11.5px;margin-top:1px}
+
+.callout{background:var(--bronze-soft);border-left:3px solid var(--bronze);border-radius:0 8px 8px 0;padding:11px 14px;margin:14px 0 0;font-size:12.5px;color:var(--ink-2)}
+.callout b{color:var(--ink)}
+.callout.info{background:rgba(48,150,213,.10);border-left-color:var(--midblue)}
+
+ul.plain{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--ink-2)}
+ul.plain li{margin:4px 0}
+ul.plain b{color:var(--ink)}
+
+.shot{border:2px dashed var(--line);border-radius:10px;padding:26px 16px;text-align:center;color:var(--ink-3);font-size:12.5px;margin-top:10px}
+.shot b{color:var(--ink-2);display:block;margin-bottom:3px}
+
+.fill{color:var(--bronze);font-weight:700;font-style:italic}
+
+.foot{font-size:11.5px;color:var(--ink-3);margin-top:28px;padding-top:14px;border-top:1px solid var(--line)}
+@media(max-width:620px){.meta-grid{grid-template-columns:1fr}.meta-grid dt{margin-top:8px}}
+@media print{body{background:#fff}section.wf,.overview,.branch{break-inside:avoid}@page{margin:14mm}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Marketing Ops · Process Documentation</p>
+    <h1>IRH Franchise Application — Workflow Documentation</h1>
+    <p class="sub">How the IRH online application flows through HubSpot: spam gating first, then concept-based rep routing. Two chained workflows, documented so anyone can see what runs, in what order, and why.</p>
+  </header>
+
+  <div class="overview">
+    <h3 style="margin-top:0">The two workflows, and how they connect</h3>
+    <p style="margin:0;font-size:13px;color:var(--ink-2)">Every IRH online application hits the <b>intake / spam gate</b> first. Clean submissions are handed off to the <b>routing workflow</b>, which assigns the right rep by franchise concept. Spam is quarantined and never reaches routing.</p>
+    <div class="chain">
+      <span class="node">Form submission</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">WF 1 · Intake &amp; Spam Gate</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node two">WF 2 · Request Financing Routing</span>
+    </div>
+  </div>
+
+  <!-- ============ WORKFLOW 1 ============ -->
+  <section class="wf" id="wf1">
+    <span class="wf-tag">Workflow 1 · Complete</span>
+    <h2>IRH — Online Application: Intake &amp; Spam Gate</h2>
+
+    <h3>Purpose</h3>
+    <p style="margin:0;font-size:13.5px;color:var(--ink-2)">The front door for every IRH online application. It filters known spam out before routing, marks each contact's spam status, notifies the team of a real submission, and hands clean records to the routing workflow. Nothing reaches a rep until it clears this gate.</p>
+
+    <h3>Enrollment Trigger</h3>
+    <dl class="meta-grid">
+      <dt>When</dt><dd>A form submission has been completed <b>any number of times, anytime</b></dd>
+      <dt>Filter</dt><dd>Form name is any of <code>IRH - Online Application - New Editor</code></dd>
+      <dt>Re-enrollment</dt><dd>Enabled &mdash; re-enrolls on repeat submissions <span class="fill">(confirm exact re-enroll criteria in Details)</span></dd>
+    </dl>
+
+    <h3>Logic — branches evaluated in order</h3>
+    <p style="margin:0 0 4px;font-size:12.5px;color:var(--ink-3)">The branch checks conditions <b>top-down and stops at the first match</b>. Spam is checked first; everything that doesn't match falls through to PASS.</p>
+
+    <div class="branch spam">
+      <div class="bh">Branch A — SPAM (checked first)</div>
+      <p class="cond">Match if: contact <b>Name is "Derrick Young"</b> &nbsp;OR&nbsp; <b>Phone contains "269"</b>. <span class="fill">(Conditions were collapsed in the editor — confirm the exact operators in Details.)</span></p>
+      <ul class="steps">
+        <li><span class="ico edit">✎</span><span class="txt"><b>Edit record:</b> Set <code>Spam Status</code> = <b>Spam Quarantine</b></span></li>
+        <li><span class="ico mail">✉</span><span class="txt"><b>Send internal email:</b> "REVIEW - Possible Spam IRH Form Submission"<span class="d">To: John Wiedenheft, Dusty Kelchen</span></span></li>
+        <li><span class="ico end">■</span><span class="txt"><b>End</b> — quarantined records do <b>not</b> go to routing</span></li>
+      </ul>
+    </div>
+
+    <div class="branch pass">
+      <div class="bh">Branch B — PASS (default / everything else)</div>
+      <p class="cond">Any submission that doesn't match the SPAM branch.</p>
+      <ul class="steps">
+        <li><span class="ico edit">✎</span><span class="txt"><b>Edit record:</b> Set <code>Spam Status</code> = <b>Clean</b></span></li>
+        <li><span class="ico goto">→</span><span class="txt"><b>Go to workflow:</b> <b>IRH - Request Financing - Routing Workflow</b> <span class="d">This is the handoff to Workflow 2</span></span></li>
+        <li><span class="ico mail">✉</span><span class="txt"><b>Send internal email:</b> "IRH - Form Submission"<span class="d">To: John Wiedenheft</span></span></li>
+        <li><span class="ico end">■</span><span class="txt"><b>End</b></span></li>
+      </ul>
+    </div>
+
+    <h3>Exclusions &amp; edge rules</h3>
+    <ul class="plain">
+      <li><b>Spam filtering is manual / known-bad signals.</b> Right now it catches the sender name "Derrick Young" and any phone containing "269" (269 = SW-Michigan area code, a known spam source). New spam patterns must be added by hand — this is not an adaptive filter.</li>
+      <li><b><code>Spam Status</code> is the gate.</b> Quarantine vs. Clean is what everything downstream keys off. Only Clean records continue to routing.</li>
+      <li><b>Step numbering is HubSpot's, not sequence.</b> HubSpot numbers actions globally across branches (2, 3, 4, 5, 6), so "step 4" and "step 6" are the two branch ends running in parallel — not a single ordered list.</li>
+    </ul>
+
+    <h3>Screenshot</h3>
+    <div class="shot"><b>Workflow 1 canvas</b>Full-workflow PNG exports cleanly (small enough). Drop the image here, or link the exported PNG.</div>
+
+    <h3>Owner &amp; review</h3>
+    <dl class="meta-grid">
+      <dt>Owner</dt><dd>John Wiedenheft · Marketing Ops</dd>
+      <dt>Notifies</dt><dd>John Wiedenheft (all submissions) · Dusty Kelchen (spam review only)</dd>
+      <dt>Jira</dt><dd>MKB-6281 (routing build) · MKB-7687 / MKB-6004 (submission-workflow edits)</dd>
+      <dt>Last reviewed</dt><dd>2026-07-13</dd>
+    </dl>
+  </section>
+
+  <!-- ============ WORKFLOW 2 (SCAFFOLD) ============ -->
+  <section class="wf" id="wf2">
+    <span class="wf-tag scaffold">Workflow 2 · To fill in</span>
+    <h2>IRH — Request Financing: Routing Workflow</h2>
+    <p style="margin:0;font-size:12.5px;color:var(--ink-3)">This is the large workflow whose PNG export stalls. Capture it in <b>labeled vertical sections</b> (one per concept/branch) instead of one export, and fill the fields below. Paste the branch logic to me and I'll complete this section to match Workflow 1.</p>
+
+    <h3>Purpose</h3>
+    <p class="fill" style="margin:0">One line: what this workflow does once a clean IRH submission arrives (assign the right rep by franchise concept, etc.).</p>
+
+    <h3>Enrollment Trigger</h3>
+    <dl class="meta-grid">
+      <dt>Entry</dt><dd class="fill">Entered via "Go to workflow" from WF 1 (confirm — and whether it also has its own enrollment trigger)</dd>
+      <dt>Re-enrollment</dt><dd class="fill">?</dd>
+    </dl>
+
+    <h3>Logic — routing branches</h3>
+    <p class="fill" style="margin:0">The concept-based routing rules: which property decides the concept, each concept &rarr; assigned rep/owner, and the fallback/default branch when no concept matches.</p>
+    <div class="branch" style="border-left:4px solid var(--midblue);margin-top:12px">
+      <div class="bh" style="color:var(--midblue)">Concept → Rep mapping <span class="fill">(fill in)</span></div>
+      <p class="cond fill">List each branch: condition (concept value) → owner assigned → any notification. Add the default/no-match branch.</p>
+    </div>
+
+    <h3>Exclusions &amp; edge rules</h3>
+    <ul class="plain"><li class="fill">Round-robin? Territory/state overrides? What happens on no-match? Dedup/re-enrollment behavior?</li></ul>
+
+    <h3>Screenshots (sectioned)</h3>
+    <div class="shot"><b>Section 1 of N</b>OS screenshot at readable zoom — one branch/concept per image, labeled.</div>
+
+    <h3>Owner &amp; review</h3>
+    <dl class="meta-grid">
+      <dt>Owner</dt><dd>John Wiedenheft · Marketing Ops</dd>
+      <dt>Last reviewed</dt><dd class="fill">2026-07-13 (on completion)</dd>
+    </dl>
+  </section>
+
+  <p class="foot">IRH Franchise Application workflow documentation · Marketing Ops · John Wiedenheft · Generated 2026-07-13. Italicized/bronze text marks fields to confirm or fill in.</p>
+
+</div>
+</body>
+</html>

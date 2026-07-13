@@ -1,0 +1,184 @@
+<title>Failure-Point Map — Where My Work Gets Stuck</title>
+<style>
+  :root {
+    --bg:#FBFAF7; --surface:#FFFFFF; --surface-2:#F5F3EC; --ink:#1C1E24;
+    --muted:#5B606C; --faint:#8A8F9A; --line:#E7E3D9; --brass:#A9761F; --teal:#1F7A6E;
+    --shadow:0 1px 2px rgba(28,30,36,.05), 0 8px 24px rgba(28,30,36,.06);
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Code",monospace;
+    /* lane accents */
+    --l-mine:#1F9E8F; --l-person:#B0762A; --l-ext:#5B6CC4; --l-gate:#6E7787;
+    /* failure-mode chips */
+    --f-silent:#C6503C; --f-withhold:#D68A2E; --f-reroute:#3E90A6; --f-chase:#6E7787;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#14161B; --surface:#1D2027; --surface-2:#23262E; --ink:#ECEAE3;
+      --muted:#A2A8B4; --faint:#767C88; --line:#2C2F37; --brass:#D6A44A; --teal:#55B9AB;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+      --l-mine:#33B8A8; --l-person:#D6A44A; --l-ext:#8A97E0; --l-gate:#98A2B3;
+      --f-silent:#E0715C; --f-withhold:#E6A64E; --f-reroute:#5FB0C6; --f-chase:#98A2B3;
+    }
+  }
+  :root[data-theme="light"]{--bg:#FBFAF7;--surface:#FFFFFF;--surface-2:#F5F3EC;--ink:#1C1E24;--muted:#5B606C;--faint:#8A8F9A;--line:#E7E3D9;--brass:#A9761F;--teal:#1F7A6E;--shadow:0 1px 2px rgba(28,30,36,.05),0 8px 24px rgba(28,30,36,.06);--l-mine:#1F9E8F;--l-person:#B0762A;--l-ext:#5B6CC4;--l-gate:#6E7787;--f-silent:#C6503C;--f-withhold:#D68A2E;--f-reroute:#3E90A6;--f-chase:#6E7787;}
+  :root[data-theme="dark"]{--bg:#14161B;--surface:#1D2027;--surface-2:#23262E;--ink:#ECEAE3;--muted:#A2A8B4;--faint:#767C88;--line:#2C2F37;--brass:#D6A44A;--teal:#55B9AB;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.4);--l-mine:#33B8A8;--l-person:#D6A44A;--l-ext:#8A97E0;--l-gate:#98A2B3;--f-silent:#E0715C;--f-withhold:#E6A64E;--f-reroute:#5FB0C6;--f-chase:#98A2B3;}
+
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:56px 24px 88px;}
+
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin:0 0 10px;}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5vw,42px);line-height:1.08;letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance;}
+  .lede{font-size:17px;color:var(--muted);max-width:66ch;margin:0;}
+  .lede b{color:var(--ink);}
+  .asof{font-family:var(--mono);font-size:12px;color:var(--faint);margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);}
+
+  .lane{margin-top:40px;}
+  .lane-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px;}
+  .lane-head .bar{width:26px;height:4px;border-radius:2px;align-self:center;}
+  .lane-head h2{font-family:var(--serif);font-size:21px;font-weight:700;margin:0;letter-spacing:-.01em;}
+  .lane-head .count{font-family:var(--mono);font-size:12px;color:var(--faint);}
+  .lane-note{font-size:14px;color:var(--muted);margin:0 0 16px;max-width:70ch;}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow);border-left-width:3px;}
+  .lane.mine .card{border-left-color:var(--l-mine);}
+  .lane.person .card{border-left-color:var(--l-person);}
+  .lane.ext .card{border-left-color:var(--l-ext);}
+  .lane.gate .card{border-left-color:var(--l-gate);}
+
+  .tick{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--faint);margin:0 0 3px;}
+  .card h4{font-size:16px;font-weight:700;margin:0 0 9px;line-height:1.25;}
+  .chip{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:#fff;padding:3px 8px;border-radius:999px;margin:0 0 10px;}
+  .chip.silent{background:var(--f-silent);}
+  .chip.withhold{background:var(--f-withhold);color:#1C1E24;}
+  .chip.reroute{background:var(--f-reroute);}
+  .chip.chase{background:var(--f-chase);}
+  .fp{font-size:13.5px;color:var(--muted);margin:0 0 11px;}
+  .fix{font-size:13.5px;color:var(--ink);margin:0;padding:9px 11px;background:var(--surface-2);border-radius:8px;}
+  .fix b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:3px;}
+
+  .footnote{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--faint);}
+  .footnote b{color:var(--muted);}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Private · Field Map</p>
+  <h1>Where my work actually gets stuck</h1>
+  <p class="lede">Every open loop that feels like "I'm blocked," sorted by <b>where the failure really is.</b> The point: over half of these aren't waiting on anyone but you — and each real blocker has exactly one move.</p>
+  <p class="asof">Built from your 7/6 notes · correct anything that's moved since</p>
+
+  <!-- ===== LANE 1: MINE ===== -->
+  <section class="lane mine">
+    <div class="lane-head">
+      <span class="bar" style="background:var(--l-mine)"></span>
+      <h2>Actually mine to move</h2>
+      <span class="count">4 items · not blocked, just not started</span>
+    </div>
+    <p class="lane-note">These feel stuck, but nobody's holding them but you. No forcing function needed — just do the next thing.</p>
+    <div class="cards">
+      <div class="card">
+        <p class="tick">MKB-7687</p>
+        <h4>IRH submission workflow edits</h4>
+        <p class="fp">Not started — and it likely <b>gates</b> the IRH routing chain (MKB-6281). The one IRH piece fully in your hands.</p>
+        <p class="fix"><b>Your move</b>Start it. Unblocking this unblocks a downstream ticket.</p>
+      </div>
+      <div class="card">
+        <p class="tick">Activity Sync · Cody</p>
+        <h4>HubSpot → Salesforce activity sync</h4>
+        <p class="fp">Parked since 6/26, drifting ~2 weeks. A 5/12 commitment to Jana/Heather/Dusty — your court, not a wait on Cody.</p>
+        <p class="fix"><b>Your move</b>Send Cody the next concrete step this week.</p>
+      </div>
+      <div class="card">
+        <p class="tick">HubSpot cleanup</p>
+        <h4>Legacy campaign cleanup (3 items)</h4>
+        <p class="fp">OEM duplicate, IRH Franchise missing FY27 prefix, Little Caesars double-tag. Undercuts the campaign-standards work you already closed.</p>
+        <p class="fix"><b>Your move</b>Quick HubSpot pass. Nobody to wait on.</p>
+      </div>
+      <div class="card">
+        <p class="tick">Marketing Strategy off-site</p>
+        <h4>Getting the meeting on a calendar</h4>
+        <p class="fp"><i>Feels</i> stuck on Heather. It isn't — scheduling is Nichole's, and she proceeds unless told no.</p>
+        <p class="fix"><b>Your move</b>Ask Nichole directly to book it. Two-minute reroute.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LANE 2: PERSON ===== -->
+  <section class="lane person">
+    <div class="lane-head">
+      <span class="bar" style="background:var(--l-person)"></span>
+      <h2>Genuinely waiting on a person</h2>
+      <span class="count">2 items · each tagged by how they stall</span>
+    </div>
+    <p class="lane-note">Real people-blockers. The tag tells you which tool to bring — you don't fix a silent blocker the way you fix a withholder.</p>
+    <div class="cards">
+      <div class="card">
+        <p class="tick">MKB-2355 / 7346 · Heather</p>
+        <h4>Scorecard sent to the team</h4>
+        <span class="chip silent">Silent Blocker · agrees, then stalls</span>
+        <p class="fp">Signed off, shown to the team, re-promised same-day — still not sent. The decision is won; execution is stuck.</p>
+        <p class="fix"><b>Your move</b>Remove the friction: draft the email, "unless you'd rather I hold, I'll send it Friday."</p>
+      </div>
+      <div class="card">
+        <p class="tick">MKB-6281 · Dusty</p>
+        <h4>IRH franchise routing approval</h4>
+        <span class="chip withhold">Withholder · won't commit</span>
+        <p class="fp">Pushed 6× over 3 months. Re-asking the same way is provably not working. (Also waiting on IRH assets — see next lane.)</p>
+        <p class="fix"><b>Your move</b>Force a decision: escalate, or change the ask. Stop re-sending it politely.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LANE 3: EXTERNAL ===== -->
+  <section class="lane ext">
+    <div class="lane-head">
+      <span class="bar" style="background:var(--l-ext)"></span>
+      <h2>Waiting on an outside party</h2>
+      <span class="count">2 items · can't force — manage the date</span>
+    </div>
+    <p class="lane-note">Not chase-able from your side. The failure here is holding the loop open in your head. Set a date or park it deliberately, then let it go.</p>
+    <div class="cards">
+      <div class="card">
+        <p class="tick">MKB-6281 assets · IRH</p>
+        <h4>Videos + email autoresponders</h4>
+        <p class="fp">IRH owes these before the routing workflow can turn on. Their side, not yours.</p>
+        <p class="fix"><b>Your move</b>Push the due date rather than hold it open. Stop carrying it.</p>
+      </div>
+      <div class="card">
+        <p class="tick">MKB-7574 · Legal</p>
+        <h4>"IRH Capital" trademark → X-account recovery</h4>
+        <p class="fp">On Heather + Michelle's office. A legal gate and a longer path — registration is what unblocks the X infringement claim.</p>
+        <p class="fix"><b>Your move</b>Track, don't chase. Nothing here is yours to execute.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LANE 4: GATE ===== -->
+  <section class="lane gate">
+    <div class="lane-head">
+      <span class="bar" style="background:var(--l-gate)"></span>
+      <h2>Gates that will chase you</h2>
+      <span class="count">1 item (+1 quick ask)</span>
+    </div>
+    <p class="lane-note">The inverted failure mode: their follow-through is fine — the risk is <i>they'll manage you.</i> Being early is the whole game.</p>
+    <div class="cards">
+      <div class="card">
+        <p class="tick">MKB-7726 · Dave</p>
+        <h4>BIA / BCP — due Aug 30</h4>
+        <span class="chip chase">The Chaser · monthly follow-ups</span>
+        <p class="fp">Now that you're a bank, Dave does monthly completion follow-ups. Reliable, but he'll chase whoever's behind.</p>
+        <p class="fix"><b>Your move</b>Get it done well before 8/30. Done-ahead means never managed.</p>
+      </div>
+      <div class="card">
+        <p class="tick">BIA answer · AJ</p>
+        <h4>Bank-downtime regulatory penalties?</h4>
+        <p class="fp">One open question you need answered to finish the BIA. A specialist, not a blocker.</p>
+        <p class="fix"><b>Your move</b>Ping AJ. Small, and it unsticks a checkbox.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="footnote"><b>Read it this way:</b> nine loops that all feel like "I'm blocked." Four are just yours to start. Two are real people-blockers, each with one named move. Two you can't force — so stop holding them. One's a gate where being early buys total freedom. The overwhelm was never the workload; it was nine open loops with no labels on them.</p>
+</div>

@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Wiedenheft • Marketing Operations Leader</title>
+    <meta name="description" content="Professional portfolio of John Wiedenheft - Marketing Operations leader with 13+ years of expertise in RevOps, HubSpot-Salesforce integration, and data-driven marketing systems.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #0f1419;
+            --color-secondary: #3a3a3a;
+            --color-tertiary: #6b6b6b;
+            --color-accent: #2c5f6f;
+            --color-accent-light: #3d7a8c;
+            --color-background: #fafaf8;
+            --color-surface: #ffffff;
+            --color-border: #e8e6e1;
+            
+            --font-display: 'Crimson Pro', serif;
+            --font-body: 'Source Serif 4', serif;
+            --font-ui: 'DM Sans', sans-serif;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 6rem;
+            --space-2xl: 8rem;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            line-height: 1.7;
+            font-size: 1.125rem;
+            overflow-x: hidden;
+        }
+
+        /* Reading Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+            z-index: 1000;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 248, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 100;
+            padding: 1.5rem 0;
+            transition: var(--transition-smooth);
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(15, 20, 25, 0.06);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-accent);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .container-wide {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: var(--space-2xl) 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section:nth-child(2) { animation-delay: 0.1s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.3s; }
+        section:nth-child(5) { animation-delay: 0.4s; }
+        section:nth-child(6) { animation-delay: 0.5s; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+        }
+
+        .hero-content {
+            animation-delay: 0s;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-ui);
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-md);
+        }
+
+        .hero-intro {
+            font-size: 1.375rem;
+            line-height: 1.7;
+            color: var(--color-secondary);
+            max-width: 700px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-surface);
+            background-color: var(--color-accent);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-cta:hover {
+            background-color: var(--color-accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-tertiary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 1.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin-bottom: var(--space-lg);
+            position: relative;
+        }
+
+        .section-label {
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: var(--color-primary);
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), transparent);
+            margin: var(--space-md) 0;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            gap: var(--space-lg);
+        }
+
+        .about-text p {
+            margin-bottom: var(--space-md);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-secondary);
+        }
+
+        .about-text p:first-of-type {
+            font-size: 1.25rem;
+            color: var(--color-primary);
+        }
+
+        .pullquote {
+            position: relative;
+            padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+            background: linear-gradient(135deg, rgba(44, 95, 111, 0.03), rgba(44, 95, 111, 0.08));
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .pullquote-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--color-primary);
+            font-style: italic;
+        }
+
+        .pullquote-attribution {
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            color: var(--color-tertiary);
+            margin-top: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Experience Section */
+        .experience-item {
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-xl);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-header {
+            margin-bottom: var(--space-md);
+        }
+
+        .experience-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--space-xs);
+            line-height: 1.3;
+        }
+
+        .experience-meta {
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            color: var(--color-tertiary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .experience-company {
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        .experience-description {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--color-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .achievement-grid {
+            display: grid;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+
+        .achievement-card {
+            background: var(--color-surface);
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            transition: var(--transition-smooth);
+            cursor: default;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(15, 20, 25, 0.08);
+            border-color: var(--color-accent);
+        }
+
+        .achievement-label {
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .achievement-title {
+            font-family: var(--font-display);
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .achievement-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-secondary);
+        }
+
+        .achievement-stat {
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        /* Capabilities Section */
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .capability-category {
+            padding: var(--space-md);
+            background: var(--color-surface);
+            border-left: 3px solid var(--color-accent);
+            transition: var(--transition-smooth);
+        }
+
+        .capability-category:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 20px rgba(15, 20, 25, 0.06);
+        }
+
+        .capability-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .capability-list {
+            list-style: none;
+        }
+
+        .capability-list li {
+            padding-left: 1.5rem;
+            margin-bottom: var(--space-sm);
+            position: relative;
+            color: var(--color-secondary);
+            line-height: 1.6;
+        }
+
+        .capability-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin-top: var(--space-sm);
+        }
+
+        .tech-badge {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--color-accent);
+            background: rgba(44, 95, 111, 0.08);
+            padding: 0.4rem 0.9rem;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-intro {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: var(--color-secondary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            align-items: center;
+            margin-top: var(--space-lg);
+        }
+
+        .contact-item {
+            font-family: var(--font-ui);
+            font-size: 1.125rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            transition: var(--transition-smooth);
+        }
+
+        .contact-item:hover {
+            color: var(--color-accent);
+            transform: translateX(8px);
+        }
+
+        .contact-label {
+            font-size: 0.875rem;
+            color: var(--color-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .contact-cta {
+            display: inline-block;
+            margin-top: var(--space-lg);
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-surface);
+            background-color: var(--color-accent);
+            padding: 1.25rem 3rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .contact-cta:hover {
+            background-color: var(--color-accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
+        }
+
+        /* Footer */
+        footer {
+            padding: var(--space-lg) 0;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .footer-content {
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            color: var(--color-tertiary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+
+            nav {
+                position: static;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+                text-align: center;
+            }
+
+            section {
+                padding: var(--space-lg) 0;
+            }
+
+            .hero {
+                min-height: 80vh;
+                padding-top: var(--space-md);
+            }
+
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scroll-indicator {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .container,
+            .container-wide {
+                padding: 0 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-intro {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">John Wiedenheft</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#ai-practice">AI Practice</a></li>
+                <li><a href="#capabilities">Capabilities</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container hero-content">
+            <div class="hero-subtitle">Marketing Operations Leader • RevOps Strategist • AI Practitioner</div>
+            <h1>Transforming marketing operations with systems, data, and AI.</h1>
+            <p class="hero-intro">
+                I'm John Wiedenheft, a Marketing Operations leader with 13+ years building the infrastructure that turns marketing effort into measurable revenue growth. From HubSpot-Salesforce integrations to AI-augmented workflows, I create the operational excellence that lets marketing teams move faster, make better decisions, and scale with confidence.
+            </p>
+            <a href="#capabilities" class="hero-cta">Explore My Work →</a>
+            <div class="scroll-indicator">Scroll to explore</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">About</div>
+                <h2 class="section-title">Building systems that scale marketing excellence</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm a Marketing Operations leader specializing in building scalable marketing technology ecosystems that drive measurable business growth. My expertise lies in the intersection of marketing strategy, technical systems, and data-driven decision making.
+                    </p>
+                    <p>
+                        Over the past 13+ years, I've evolved from hands-on campaign execution to strategic marketing operations leadership. My journey began in eMarketing management, where I discovered my passion for the intersection of marketing creativity and technical systems. I've led two complete marketing automation platform implementations, managed $100K+ website redesign projects, and built the data infrastructure that ensures every marketing dollar is tracked, measured, and optimized.
+                    </p>
+                    
+                    <div class="pullquote">
+                        <div class="pullquote-text">
+                            "Great marketing operations isn't about the tools—it's about building systems that make your team unstoppable."
+                        </div>
+                        <div class="pullquote-attribution">Philosophy on marketing ops</div>
+                    </div>
+
+                    <p>
+                        What drives me is solving the complex operational challenges that most people overlook. When data quality drops by 33% and lead routing becomes unreliable, I build automated validation systems. When teams struggle with competing priorities, I implement Agile methodology that increases output by 79%. When email deliverability becomes a concern, I establish processes that maintain 97.2% consistency.
+                    </p>
+                    <p>
+                        Based in Cedar Rapids, Iowa, I stay deeply engaged with the latest developments in marketing technology and revenue operations best practices. This site serves as a professional portfolio showcasing the systems, strategies, and measurable outcomes that define my approach to marketing operations excellence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container-wide">
+            <div class="section-header">
+                <div class="section-label">Experience</div>
+                <h2 class="section-title">Driving measurable impact through operational excellence</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- Experience Item 1 -->
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3 class="experience-title">Director, Marketing Operations</h3>
+                    <div class="experience-meta">
+                        <span class="experience-company">GreatAmerica Financial Services</span> • Cedar Rapids, IA • 2019 – Present
+                    </div>
+                </div>
+                <p class="experience-description">
+                    Leading marketing operations strategy, technology infrastructure, and cross-functional RevOps initiatives for a 550+ employee financial services organization. Responsible for marketing automation platforms, data integrity systems, campaign operations, and marketing-sales alignment.
+                </p>
+                
+                <div class="achievement-grid">
+                    <div class="achievement-card">
+                        <div class="achievement-label">Process Transformation</div>
+                        <div class="achievement-title">Agile Implementation</div>
+                        <div class="achievement-description">
+                            Transformed marketing operations by implementing Agile methodology across the team, establishing systematic capacity tracking and sprint planning. Result: <span class="achievement-stat">79% increase in measurable work output</span> over 10 months while improving cross-functional stakeholder alignment and team transparency.
+                        </div>
+                    </div>
+
+                    <div class="achievement-card">
+                        <div class="achievement-label">Data Infrastructure</div>
+                        <div class="achievement-title">Marketing Data Integrity System</div>
+                        <div class="achievement-description">
+                            Built comprehensive data integrity protocols across HubSpot-Salesforce ecosystem, implementing automated validation and quality monitoring. Reduced data inconsistencies by <span class="achievement-stat">33%</span> while ensuring reliable lead routing and accurate attribution reporting across all marketing channels.
+                        </div>
+                    </div>
+
+                    <div class="achievement-card">
+                        <div class="achievement-label">Project Leadership</div>
+                        <div class="achievement-title">Enterprise Website Redesigns</div>
+                        <div class="achievement-description">
+                            Managed <span class="achievement-stat">$100K+ website redesign projects</span> in 2019 and 2025, coordinating cross-functional teams and maintaining strict timelines. Delivered both projects on-time and within budget through systematic project management and quality assurance processes.
+                        </div>
+                    </div>
+
+                    <div class="achievement-card">
+                        <div class="achievement-label">RevOps Excellence</div>
+                        <div class="achievement-title">Lead Management Infrastructure</div>
+                        <div class="achievement-description">
+                            Architected comprehensive lead management and campaign attribution infrastructure in Salesforce, implementing MQL definitions, UTM tagging standards, and automated lead routing logic to optimize funnel conversion performance and ensure marketing data integrity.
+                        </div>
+                    </div>
+
+                    <div class="achievement-card">
+                        <div class="achievement-label">Campaign Optimization</div>
+                        <div class="achievement-title">Email Marketing Excellence</div>
+                        <div class="achievement-description">
+                            Developed automated email workflows and nurture programs in HubSpot, achieving <span class="achievement-stat">6% improvement in collection rates</span> and maintaining <span class="achievement-stat">97.2% email deliverability</span> through systematic data quality management and A/B testing optimization.
+                        </div>
+                    </div>
+
+                    <div class="achievement-card">
+                        <div class="achievement-label">Data Quality</div>
+                        <div class="achievement-title">ZoomInfo Integration & Data Enrichment</div>
+                        <div class="achievement-description">
+                            Implemented ZoomInfo data enrichment process for pre-send email cleaning, removing up to <span class="achievement-stat">33% stale/incorrect data</span> from marketing lists and establishing systematic approach to data quality and campaign performance optimization.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">HubSpot Marketing Hub</span>
+                    <span class="tech-badge">Salesforce CRM</span>
+                    <span class="tech-badge">Jira</span>
+                    <span class="tech-badge">Google Analytics</span>
+                    <span class="tech-badge">ZoomInfo</span>
+                </div>
+            </div>
+
+            <!-- Experience Item 2 -->
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3 class="experience-title">eMarketing Manager</h3>
+                    <div class="experience-meta">
+                        <span class="experience-company">GreatAmerica Financial Services</span> • Cedar Rapids, IA • 2011 – 2019
+                    </div>
+                </div>
+                <p class="experience-description">
+                    Led all email marketing operations, marketing automation platform management, and digital campaign execution. Responsible for platform implementations, sales team training, and customer portal optimization.
+                </p>
+                
+                <div class="achievement-grid">
+                    <div class="achievement-card">
+                        <div class="achievement-label">Platform Implementation</div>
+                        <div class="achievement-title">Marketing Automation Migrations</div>
+                        <div class="achievement-description">
+                            Led evaluation, selection, and implementation of marketing automation platforms in 2012 and 2017, managing vendor relationships and ensuring seamless data migration with <span class="achievement-stat">zero campaign downtime</span> during both transitions.
+                        </div>
+                    </div>
+
+                    <div class="achievement-card">
+                        <div class="achievement-label">Team Enablement</div>
+                        <div class="achievement-title">Enterprise Sales Training Program</div>
+                        <div class="achievement-description">
+                            Created comprehensive email marketing training and campaign best practices documentation for <span class="achievement-stat">100+ sales representatives</span>, driving consistent campaign execution and adoption across the enterprise sales organization.
+                        </div>
+                    </div>
+
+                    <div class="achievement-card">
+                        <div class="achievement-label">Process Optimization</div>
+                        <div class="achievement-title">Customer Portal Redesign</div>
+                        <div class="achievement-description">
+                            Redesigned customer portal and campaign management systems, reducing content update times by <span class="achievement-stat">50%</span> through workflow optimization and standardized operating procedures for campaign operations.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Item 3 -->
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3 class="experience-title">Founder & Creative Director</h3>
+                    <div class="experience-meta">
+                        <span class="experience-company">Independent Video Production</span> • Cedar Rapids, IA • 2015 – 2019
+                    </div>
+                </div>
+                <p class="experience-description">
+                    Founded and operated independent video production business serving local and regional clients. Managed all aspects of client relationships, project management, creative direction, and content delivery.
+                </p>
+                
+                <div class="achievement-grid">
+                    <div class="achievement-card">
+                        <div class="achievement-label">Entrepreneurial Leadership</div>
+                        <div class="achievement-title">End-to-End Project Management</div>
+                        <div class="achievement-description">
+                            Managed complete project execution for <span class="achievement-stat">40+ client campaigns</span>, coordinating timelines, stakeholder communication, and quality deliverables while building systematic workflow processes for consistent project delivery across diverse client needs.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI in Practice Section -->
+    <section id="ai-practice">
+        <div class="container-wide">
+            <div class="section-header">
+                <div class="section-label">AI in Practice</div>
+                <h2 class="section-title">How I use AI to sharpen marketing operations</h2>
+                <div class="section-divider"></div>
+            </div>
+            <p class="experience-description" style="margin-bottom: var(--space-lg);">
+                AI tools have changed how I work across every dimension of marketing operations — from pre-send QA to data analysis to documentation. Below are concrete workflows I've built and use regularly, each with measurable impact on speed, quality, or team capacity.
+            </p>
+
+            <div class="achievement-grid">
+
+                <div class="achievement-card">
+                    <div class="achievement-label">Campaign Operations</div>
+                    <div class="achievement-title">AI-Powered Pre-Send QA</div>
+                    <div class="achievement-description">
+                        Built a Claude-based pre-send audit workflow that reviews email campaigns against a structured checklist: segmentation logic, personalization tokens, UTM completeness, and CAN-SPAM compliance markers. What previously required <span class="achievement-stat">45+ minutes of manual review</span> now runs in under 5 — with more consistent coverage and a documented audit trail.
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-label">Data Quality</div>
+                    <div class="achievement-title">Contact Database Triage Prompts</div>
+                    <div class="achievement-description">
+                        Developed prompt frameworks for analyzing HubSpot contact exports, surfacing stale data patterns, duplicate record clusters, and missing required fields before campaigns run. Replaced ad-hoc spot-checking with a <span class="achievement-stat">systematic, repeatable process</span> that integrates directly into pre-campaign prep.
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-label">Knowledge Management</div>
+                    <div class="achievement-title">Attribution Logic Documentation</div>
+                    <div class="achievement-description">
+                        Used Claude to translate complex Salesforce lead routing rules and campaign attribution logic into plain-language documentation for stakeholders — converting years of tribal knowledge into an auditable, searchable reference. <span class="achievement-stat">New team members onboard in hours instead of weeks.</span>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-label">Reporting & Insights</div>
+                    <div class="achievement-title">Sprint Performance Narrative Generation</div>
+                    <div class="achievement-description">
+                        Prompt-engineered a monthly marketing ops review synthesis that pulls sprint velocity data, campaign performance metrics, and pipeline contribution into an exec-ready narrative summary. Reduced report-building from <span class="achievement-stat">3+ hours to under 30 minutes</span> while improving consistency across cycles.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tech-stack" style="margin-top: var(--space-lg);">
+                <span class="tech-badge">Claude (Anthropic)</span>
+                <span class="tech-badge">Prompt Engineering</span>
+                <span class="tech-badge">AI Workflow Design</span>
+                <span class="tech-badge">HubSpot + AI Integration</span>
+                <span class="tech-badge">Process Automation</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities Section -->
+    <section id="capabilities">
+        <div class="container-wide">
+            <div class="section-header">
+                <div class="section-label">Capabilities</div>
+                <h2 class="section-title">Expertise that drives marketing operations excellence</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="capabilities-grid">
+                <div class="capability-category">
+                    <h3 class="capability-title">Marketing Technology Ecosystem</h3>
+                    <ul class="capability-list">
+                        <li>HubSpot Marketing Hub administration (8+ years, 4x certified)</li>
+                        <li>Salesforce CRM integration and campaign tracking</li>
+                        <li>Marketing automation platform migrations and implementations</li>
+                        <li>Technology stack optimization and vendor management</li>
+                    </ul>
+                </div>
+
+                <div class="capability-category">
+                    <h3 class="capability-title">Revenue Operations</h3>
+                    <ul class="capability-list">
+                        <li>Lead management and routing optimization</li>
+                        <li>MQL workflow development and lead scoring systems</li>
+                        <li>Sales-marketing alignment and funnel velocity optimization</li>
+                        <li>Cross-functional RevOps stakeholder management</li>
+                    </ul>
+                </div>
+
+                <div class="capability-category">
+                    <h3 class="capability-title">Campaign Operations</h3>
+                    <ul class="capability-list">
+                        <li>End-to-end email campaign execution and workflow development</li>
+                        <li>Marketing automation and nurture sequence optimization</li>
+                        <li>A/B testing strategies and deliverability management</li>
+                        <li>Multi-channel campaign coordination and performance tracking</li>
+                    </ul>
+                </div>
+
+                <div class="capability-category">
+                    <h3 class="capability-title">Data & Analytics</h3>
+                    <ul class="capability-list">
+                        <li>Marketing data integrity systems and quality assurance</li>
+                        <li>Campaign attribution and UTM implementation</li>
+                        <li>Performance analysis, funnel conversion tracking, and ROI measurement</li>
+                        <li>Data enrichment processes and anomaly detection</li>
+                    </ul>
+                </div>
+
+                <div class="capability-category">
+                    <h3 class="capability-title">Process & Project Management</h3>
+                    <ul class="capability-list">
+                        <li>Agile methodology implementation for marketing teams</li>
+                        <li>Capacity tracking, sprint planning, and workflow optimization</li>
+                        <li>Cross-functional project coordination and timeline management</li>
+                        <li>Documentation systems and team enablement programs</li>
+                    </ul>
+                </div>
+
+                <div class="capability-category">
+                    <h3 class="capability-title">Platform Expertise</h3>
+                    <ul class="capability-list">
+                        <li>HubSpot (Marketing Hub, Sales Hub, Content Hub)</li>
+                        <li>Salesforce CRM and campaign management</li>
+                        <li>Google Analytics, Tag Manager, Search Console</li>
+                        <li>Jira, Asana, project management platforms</li>
+                    </ul>
+                </div>
+
+                <div class="capability-category">
+                    <h3 class="capability-title">AI & Automation</h3>
+                    <ul class="capability-list">
+                        <li>Claude (Anthropic) for workflow automation and QA</li>
+                        <li>Prompt engineering for marketing operations use cases</li>
+                        <li>AI-assisted data analysis and anomaly detection</li>
+                        <li>LLM integration into existing MarTech workflows</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Let's Connect</div>
+                <h2 class="section-title">Interested in connecting?</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="contact-content">
+                <p class="contact-intro">
+                    I enjoy talking through marketing operations challenges, comparing notes on how AI is reshaping RevOps, and connecting with others thinking seriously about where marketing technology is heading. If any of that sounds like a worthwhile conversation, feel free to reach out.
+                </p>
+
+                <div class="contact-methods">
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <a href="mailto:johnwiedenheft@gmail.com" style="color: inherit; text-decoration: none;">johnwiedenheft@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Location:</span>
+                        <span>Cedar Rapids, IA (Remote)</span>
+                    </div>
+                </div>
+
+                <a href="https://www.linkedin.com/in/johnwiedenheft" target="_blank" rel="noopener noreferrer" class="contact-cta">
+                    Connect on LinkedIn →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 John Wiedenheft. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrollPercentage + '%';
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections except hero
+        document.querySelectorAll('section:not(.hero)').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Achievement cards stagger animation
+        const achievementCards = document.querySelectorAll('.achievement-card');
+        achievementCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day Plan — July 9, 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px; color: #1a1a1a; background: #f5f5f5; padding: 24px;
+}
+.page { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+.header { background: #1a365d; color: white; padding: 20px 28px 16px; }
+.header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.header .meta { font-size: 12px; color: #a0b4cc; margin-top: 3px; }
+.alert { background: #fff3cd; border-left: 4px solid #e6a817; padding: 10px 16px;
+  font-size: 12px; color: #5a3e00; }
+.alert strong { font-weight: 600; }
+.body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.col { padding: 20px 24px; border-right: 1px solid #eee; }
+.col:last-child { border-right: none; }
+h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+  color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 4px; margin-bottom: 12px; }
+.schedule { margin-bottom: 20px; }
+.time-block { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+.time { font-size: 11px; font-weight: 700; color: #1a365d; min-width: 52px; padding-top: 1px; }
+.event { flex: 1; background: #f0f5ff; border-left: 3px solid #3b6cb7;
+  border-radius: 0 4px 4px 0; padding: 6px 10px; }
+.event-title { font-weight: 600; font-size: 12px; }
+.event-note { font-size: 11px; color: #555; margin-top: 2px; }
+.event.green { background: #f0fff4; border-left-color: #2f855a; }
+.event.purple { background: #faf5ff; border-left-color: #7c3aed; }
+.event.gray { background: #f3f4f6; border-left-color: #9ca3af; }
+.event.done { background: #f3f4f6; border-left-color: #9ca3af; opacity: 0.7; }
+.task-section { margin-bottom: 18px; }
+.task { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0;
+  border-bottom: 1px solid #f0f0f0; }
+.task:last-child { border-bottom: none; }
+.checkbox { width: 15px; height: 15px; border: 1.5px solid #999; border-radius: 3px;
+  flex-shrink: 0; margin-top: 1px; }
+.task-body { flex: 1; }
+.task-title { font-size: 12px; font-weight: 500; line-height: 1.3; }
+.task-meta { font-size: 11px; color: #777; margin-top: 1px; }
+.tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px;
+  border-radius: 3px; margin-right: 4px; vertical-align: middle; }
+.tag-red { background: #fee2e2; color: #b91c1c; }
+.tag-orange { background: #ffedd5; color: #c2410c; }
+.tag-blue { background: #dbeafe; color: #1d4ed8; }
+.tag-gray { background: #f3f4f6; color: #4b5563; }
+.tag-green { background: #dcfce7; color: #15803d; }
+.tag-purple { background: #ede9fe; color: #6d28d9; }
+.waiting-item { padding: 5px 0; border-bottom: 1px solid #f0f0f0; font-size: 12px; line-height: 1.4; }
+.waiting-item:last-child { border-bottom: none; }
+.waiting-who { font-weight: 600; color: #1a365d; }
+.flag-item { padding: 7px 10px; margin-bottom: 8px; border-radius: 5px;
+  font-size: 12px; line-height: 1.4; }
+.flag-warn { background: #ffedd5; border-left: 3px solid #ea580c; }
+.flag-info { background: #eff6ff; border-left: 3px solid #3b82f6; }
+.flag-item strong { font-weight: 600; display: block; margin-bottom: 2px; }
+.tomorrow { background: #f0fdf4; border-top: 1px solid #bbf7d0; padding: 12px 24px;
+  font-size: 12px; color: #166534; }
+.tomorrow strong { font-weight: 700; }
+@media print { body { background: white; padding: 0; }
+  .page { box-shadow: none; border-radius: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Day Plan — Thursday, July 9, 2026</h1>
+    <div class="meta">John Wiedenheft · Director, Marketing Operations · GreatAmerica &nbsp;|&nbsp; 🟢 Sharp · WFH (dogsitting Norm) · No hard out</div>
+  </div>
+
+  <div class="alert">
+    <strong>2 overdue:</strong> MKB-7687, MKB-6765 — clear this morning&nbsp;&nbsp;|&nbsp;&nbsp;<strong>Due tomorrow (7/10):</strong> MKB-7719, 7453, 7346, 6095, 2355
+  </div>
+
+  <div class="body">
+
+    <!-- LEFT COLUMN -->
+    <div class="col">
+      <div class="schedule">
+        <h2>Today's Schedule</h2>
+
+        <div class="time-block">
+          <div class="time">8:15–10</div>
+          <div class="event purple">
+            <div class="event-title">Focus Block — Protected</div>
+            <div class="event-note">Sharp + WFH before the day opens up. Deep work: clear the two overdue items. Take Norm out first so he settles.</div>
+          </div>
+        </div>
+
+        <div class="time-block">
+          <div class="time">10:00</div>
+          <div class="event green">
+            <div class="event-title">MarCom Weekly Standup</div>
+            <div class="event-note">Microsoft Teams. Only hard commitment on the calendar today.</div>
+          </div>
+        </div>
+
+        <div class="time-block">
+          <div class="time">11–12:30</div>
+          <div class="event">
+            <div class="event-title">Work Block — tomorrow's cluster</div>
+            <div class="event-note">Knock down the quick 7/10 due items while they're fresh.</div>
+          </div>
+        </div>
+
+        <div class="time-block">
+          <div class="time">12:30</div>
+          <div class="event gray">
+            <div class="event-title">Norm walk + reset</div>
+            <div class="event-note">Real break. Get outside.</div>
+          </div>
+        </div>
+
+        <div class="time-block">
+          <div class="time">1–3</div>
+          <div class="event purple">
+            <div class="event-title">Strategic Block</div>
+            <div class="event-note">Sharp-energy afternoon — spend it on Enable HubSpot AI + the MRF rollout, not busywork.</div>
+          </div>
+        </div>
+
+        <div class="time-block">
+          <div class="time">3:00</div>
+          <div class="event gray">
+            <div class="event-title">Lunch Hour</div>
+            <div class="event-note">Calendar has it at 3pm — that's late. Grab something earlier if Norm needs out.</div>
+          </div>
+        </div>
+
+        <div class="time-block">
+          <div class="time">4:00+</div>
+          <div class="event">
+            <div class="event-title">Open — carry-forwards / stretch</div>
+            <div class="event-note">No hard out. Stop when it stops being productive.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-section">
+        <h2>Morning Block — before standup</h2>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-red">Overdue</span>MKB-7687 — IRH Submission Workflow edits</div>
+            <div class="task-meta">In Review, was due 7/8. No single "one thing" today, so start here: close the overdue review before it ages further.</div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-red">Overdue</span>MKB-6765 — Mitch's presentation-generation options</div>
+            <div class="task-meta">In Progress, was due 7/8. Needs real thinking — land a recommendation on the options. Sharp morning is the right time.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-section">
+        <h2>Midday Block — due tomorrow (7/10)</h2>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-orange">Due 7/10</span>MKB-7719 — Weekly SF↔HubSpot Sync Errors</div>
+            <div class="task-meta">Recurring weekly runbook item. Quick to clear — do it while it's in front of you.</div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-orange">Due 7/10</span>MKB-7346 — Product Mgmt Monthly Update (May recap)</div>
+            <div class="task-meta">Draft what you can now. Final numbers unblock only when Heather sends the KPI scorecard (see Waiting) — don't wait on it to make progress.</div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-blue">Nudge</span>MKB-7453 — Team finishes "AI for Marketers" course</div>
+            <div class="task-meta">You own the deadline, the team owns the work. Send a nudge today so it's actually done by tomorrow.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col">
+      <div class="task-section">
+        <h2>Afternoon — Strategic</h2>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-purple">Due 7/10</span>MKB-6095 — Enable HubSpot AI</div>
+            <div class="task-meta">Strategic and due tomorrow. This is the best use of a rare sharp, meeting-free afternoon — push it toward done.</div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-blue">Carry-forward</span>MRF deck → Marketing Leadership</div>
+            <div class="task-meta">From yesterday: export to PDF (Chrome → Landscape → Background graphics on) and get it in front of Leadership / schedule the walk-through.</div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-blue">Carry-forward</span>Activity Sync → Cody</div>
+            <div class="task-meta">Message Cody to schedule the walk-through, and confirm whether an Activity Sync Jira ticket already exists (separate from MKB-7719).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-section">
+        <h2>Stretch — droppable</h2>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-green">Stretch</span>MKB-2355 — GreatAmerica.com KPIs</div>
+            <div class="task-meta">Due 7/10 but blocked on Heather. If she emails the scorecard today, finalize. Otherwise it waits — don't pre-pull data before the Marketing Strategy meeting sets direction.</div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="checkbox"></div>
+          <div class="task-body">
+            <div class="task-title"><span class="tag tag-green">Stretch</span>Decide: push yesterday's commit</div>
+            <div class="task-meta">Local commit 9997c66 is unpushed (main disconnected from origin). Decide if it needs to go up via the worktree method — or leave it local.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-section">
+        <h2>Flags &amp; Context</h2>
+        <div class="flag-item flag-warn">
+          <strong>Two overdue — clear early</strong>
+          MKB-7687 (Review) and MKB-6765 (In Progress) both slipped past 7/8. Handle them in the morning block before the tomorrow-cluster piles on.
+        </div>
+        <div class="flag-item flag-warn">
+          <strong>KPI chain is Heather-blocked</strong>
+          MKB-2355 (due 7/10) waits on Heather emailing the scorecard to the team; MKB-7346 depends on the same. You can't force it — draft around it, don't grind.
+        </div>
+        <div class="flag-item flag-info">
+          <strong>WFH + Norm = protect your sanity</strong>
+          First full WFH day in a while, and Norm's already whining upstairs. Take him out on the hour, keep blocks short, and don't let 5 due-tomorrow tickets turn a focus day into a grind. Spend the sharp energy on 6095 + the MRF rollout.
+        </div>
+      </div>
+
+      <div class="task-section">
+        <h2>Waiting On</h2>
+        <div class="waiting-item"><span class="waiting-who">Heather:</span> email the MKB-2355 KPI scorecard to the team — blocks 2355 + 7346.</div>
+        <div class="waiting-item"><span class="waiting-who">Michelle:</span> confirm the IRH Capital trademark approach to reclaim the X handle.</div>
+        <div class="waiting-item"><span class="waiting-who">Cody:</span> schedule the HubSpot→SF Activity Sync walk-through.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tomorrow">
+    <strong>Tomorrow (Fri Jul 10):</strong> MKB-7719, MKB-7453, MKB-7346, MKB-6095, MKB-2355 all due &nbsp;|&nbsp; <strong>Mon Jul 13:</strong> MKB-7722 (Overdue Task Report), MKB-6281 (IRH rep routing)
+  </div>
+
+</div>
+</body>
+</html>

@@ -12,173 +12,103 @@
   }
   * { box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.5; margin: 0; }
-  .wrap { max-width: 900px; margin: 0 auto; padding: 40px 28px 80px; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 40px 28px 72px; }
   .kicker { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--bronze); font-weight: 700; margin: 0 0 6px; }
   h1 { font-size: 27px; line-height: 1.2; margin: 0 0 10px; }
   .sub { color: var(--slate); font-size: 15px; margin: 0 0 4px; }
   .meta { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
-  .callout { background: var(--tint); border: 1px solid #ecd9c9; border-left: 4px solid var(--bronze); border-radius: 8px; padding: 16px 18px; margin: 26px 0; font-size: 14.5px; }
+  .callout { background: var(--tint); border: 1px solid #ecd9c9; border-left: 4px solid var(--bronze); border-radius: 8px; padding: 14px 18px; margin: 24px 0; font-size: 14.5px; }
   .callout strong { color: var(--ink); }
-  h2 { font-size: 13px; letter-spacing: .07em; text-transform: uppercase; color: var(--slate); border-bottom: 2px solid var(--line); padding-bottom: 8px; margin: 42px 0 18px; }
-  .role { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; margin: 0 0 18px; box-shadow: 0 1px 2px rgba(28,39,51,.04); }
-  .role-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 14px; }
+  h2 { font-size: 13px; letter-spacing: .07em; text-transform: uppercase; color: var(--slate); border-bottom: 2px solid var(--line); padding-bottom: 8px; margin: 38px 0 16px; }
+  .role { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; margin: 0 0 14px; box-shadow: 0 1px 2px rgba(28,39,51,.04); }
+  .role-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 10px; }
   .rank { flex: 0 0 auto; background: var(--bronze); color: #fff; font-weight: 700; font-size: 13px; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
   .rank.two, .rank.three { background: var(--slate); }
   .role-title { font-size: 18px; font-weight: 700; margin: 0; }
   .role-tag { font-size: 12px; color: var(--bronze); font-weight: 600; }
-  .q { font-size: 14.5px; color: var(--slate); font-style: italic; margin: 0 0 16px; }
-  .field { margin: 0 0 12px; }
-  .label { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 0 0 3px; }
+  .q { font-size: 14.5px; color: var(--slate); font-style: italic; margin: 0 0 12px; }
   .primary { background: #f0f7f2; border: 1px solid #cfe6d8; border-radius: 8px; padding: 12px 14px; }
   .primary .val { font-size: 15.5px; font-weight: 700; color: var(--green); }
-  ul { margin: 4px 0 0; padding-left: 18px; }
-  li { margin: 3px 0; font-size: 14px; }
   .inline { font-size: 14px; }
-  .why { font-size: 13.5px; color: var(--slate); border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 14px; }
+  .why { font-size: 13.5px; color: var(--slate); border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 12px; }
   .why b { color: var(--ink); }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .box { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
-  .box h3 { font-size: 14px; margin: 0 0 8px; }
-  .box p, .box li { font-size: 13.5px; color: var(--slate); }
-  .guard { background: #fff8f4; border: 1px solid #f0d9c9; }
-  .footer-q { background: var(--ink); color: #e8edf1; border-radius: 12px; padding: 22px 24px; margin-top: 20px; }
+  .footer-q { background: var(--ink); color: #e8edf1; border-radius: 12px; padding: 22px 24px; margin-top: 22px; }
   .footer-q h2 { color: #fff; border-color: #3a4a58; margin-top: 0; }
-  .footer-q li { color: #cdd7e0; margin: 7px 0; }
+  .footer-q li { color: #cdd7e0; margin: 7px 0; font-size: 14.5px; }
   .footer-q b { color: #fff; }
-  @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
 </style>
 
 <div class="wrap">
 
   <p class="kicker">MKB-2355 · Phase 2 · Straw Model</p>
   <h1>GreatAmerica.com KPI Signals</h1>
-  <p class="sub">A starting point for the Marketing Strategy Meeting — proposed website KPI signals for the group to shape, not a decision.</p>
-  <p class="meta">John Wiedenheft · FY27 (Take Off / benchmark year) · Built on the Website Measurement Charter (approved Apr 2026)</p>
+  <p class="sub">A starting point for the 7/21 Marketing Strategy Meeting — proposed website KPI signals for the group to shape, not a decision.</p>
+  <p class="meta">John Wiedenheft · FY27 (benchmark year) · Built on the Website Measurement Charter</p>
 
   <div class="callout">
-    <strong>How to read this.</strong> This proposes <em>what</em> to measure for each job the site does, so we have something concrete to react to. It deliberately carries <strong>no target numbers</strong> — FY27 is a benchmark year, and targets get set collectively once baselines are trustworthy. Everything here follows the charter: <em>signals over raw counts, trends over absolutes, and page type before interpretation.</em> React, cut, and swap freely.
+    <strong>How to read this.</strong> One proposed <em>signal</em> for each job the site does, so we have something concrete to react to. It carries <strong>no target numbers</strong> — FY27 sets baselines; targets come later, once they're trustworthy. React, cut, and swap freely.
   </div>
 
-  <h2>Proposed KPI signals — by the site's job, in priority order</h2>
+  <h2>Proposed signals — by the site's job, in priority order</h2>
 
-  <!-- ROLE 1 -->
   <div class="role">
     <div class="role-head">
       <span class="rank">1</span>
       <div>
         <p class="role-title">Generate qualified demand</p>
-        <span class="role-tag">Lead Generation — #1 priority · ties to FY27 Growth goal</span>
+        <span class="role-tag">Lead Generation — #1 priority</span>
       </div>
     </div>
-    <p class="q">Are the right audiences raising their hand with real intent — and does that intent translate into sales-accepted opportunity?</p>
-
-    <div class="field">
-      <p class="label">Proposed primary signal</p>
-      <div class="primary">
-        <span class="val">Site-sourced SAL trend</span>
-        <div class="inline" style="margin-top:4px;color:var(--slate)">Sales-Accepted Leads originating from website actions, watched directionally over time.</div>
-      </div>
+    <p class="q">Are the right audiences raising their hand with real intent?</p>
+    <div class="primary">
+      <span class="val">Site-sourced SAL trend</span>
+      <div class="inline" style="margin-top:4px;color:var(--slate)">Sales-Accepted Leads from website actions, watched directionally. <b>Context:</b> form-fill rate by page type, assisted conversions.</div>
     </div>
-
-    <div class="field">
-      <p class="label">Supporting / context metrics</p>
-      <ul>
-        <li>Form-fill conversion rate <b>by page type</b> (demo, contact, quote, gated content)</li>
-        <li>Assisted conversions — the site's role in multi-touch journeys, not just last-click</li>
-        <li>Lead → SAL progression (quality of what the site hands off)</li>
-      </ul>
-    </div>
-
-    <p class="why"><b>Why this one:</b> We shifted the scorecard from MQL to <b>SAL</b> (from Heather's conversation with Dusty & Courtney) precisely because it forces a quality lens instead of a volume one. This is the site job that maps most directly to the enterprise Growth goal ($1.767B originations).</p>
+    <p class="why"><b>Why:</b> the MQL → SAL shift (Heather with Dusty &amp; Courtney) forces a quality lens over a volume one, and this maps most directly to the enterprise Growth goal.</p>
   </div>
 
-  <!-- ROLE 2 -->
   <div class="role">
     <div class="role-head">
       <span class="rank two">2</span>
       <div>
-        <p class="role-title">Educate &amp; engage prospects, partners, and customers</p>
-        <span class="role-tag">Builds understanding of our value & differentiation</span>
+        <p class="role-title">Educate &amp; engage</p>
+        <span class="role-tag">Prospects, partners, customers</span>
       </div>
     </div>
-    <p class="q">Are people actually building understanding of what we do and why we're different — engaging with the content, not just landing on it?</p>
-
-    <div class="field">
-      <p class="label">Proposed primary signal</p>
-      <div class="primary">
-        <span class="val">Engaged-session trend on cornerstone content</span>
-        <div class="inline" style="margin-top:4px;color:var(--slate)">Meaningful engagement (depth / engaged sessions) on key solution, industry, and value pages — directional.</div>
-      </div>
+    <p class="q">Are people building understanding of what we do — engaging with content, not just landing on it?</p>
+    <div class="primary">
+      <span class="val">Engaged-session trend on cornerstone content</span>
+      <div class="inline" style="margin-top:4px;color:var(--slate)">Meaningful engagement on key solution, industry, and value pages. <b>Context:</b> educational → conversion pathing, returning visitors.</div>
     </div>
-
-    <div class="field">
-      <p class="label">Supporting / context metrics</p>
-      <ul>
-        <li>Pathing from educational content → conversion pages (does learning lead to raising a hand?)</li>
-        <li>Returning-visitor trend on cornerstone pages</li>
-        <li>Resource / content engagement (downloads, video completion)</li>
-      </ul>
-    </div>
-
-    <p class="why"><b>Why this one:</b> Educational content is what warms downstream sales conversations. We measure <b>engagement quality</b>, not pageview volume — a page can be popular and still fail this job.</p>
   </div>
 
-  <!-- ROLE 3 -->
   <div class="role">
     <div class="role-head">
       <span class="rank three">3</span>
       <div>
         <p class="role-title">Reinforce the GreatAmerica Experience</p>
-        <span class="role-tag">Clarity, confidence, professionalism · low friction · ties to Customer Focus goal</span>
+        <span class="role-tag">Clarity, low friction · Customer Focus goal</span>
       </div>
     </div>
-    <p class="q">Does the site reflect clarity and professionalism, and reduce friction and confusion in how people navigate and understand us?</p>
-
-    <div class="field">
-      <p class="label">Proposed primary signal</p>
-      <div class="primary">
-        <span class="val">Friction trend on key paths</span>
-        <div class="inline" style="margin-top:4px;color:var(--slate)">A friction proxy — e.g., on-site search "no result" rate + key-path completion — watched for direction, not an absolute score.</div>
-      </div>
-    </div>
-
-    <div class="field">
-      <p class="label">Supporting / context metrics</p>
-      <ul>
-        <li>On-site search success rate (are people finding what they came for?)</li>
-        <li>Page experience / Core Web Vitals on high-traffic entry pages</li>
-        <li>Exits at known friction points in key journeys</li>
-        <li>Voice-of-customer snippets where available (ties to enterprise Customer Focus goal)</li>
-      </ul>
-    </div>
-
-    <p class="why"><b>Why this one:</b> Experience resists a single number, so we track <b>friction proxies + trend</b> rather than pretend one metric captures it. This is the site-level expression of the FY27 Customer Focus goal — using the voice of the customer to reduce cost and strengthen service.</p>
-  </div>
-
-  <h2>Two things that hold the whole model together</h2>
-  <div class="grid">
-    <div class="box">
-      <h3>Page type before interpretation</h3>
-      <p>We define page types first — <b>conversion</b>, <b>educational</b>, <b>navigational/utility</b> — because the same metric means opposite things across them. A high exit rate on a contact page is a problem; on a single-answer utility page it can be success. No global bounce-rate reading.</p>
-    </div>
-    <div class="box guard">
-      <h3>The vanity-metric guardrail</h3>
-      <p>Raw sessions, pageviews, and average time stay as <b>context only</b> — never KPIs. This is the HR resume-count trap: inflate a numerator without changing an outcome. If a number can go up while the site does its job no better, it isn't a KPI.</p>
+    <p class="q">Does the site reduce friction and confusion in how people navigate and understand us?</p>
+    <div class="primary">
+      <span class="val">Friction trend on key paths</span>
+      <div class="inline" style="margin-top:4px;color:var(--slate)">A friction proxy — e.g., on-site search "no result" rate + key-path completion. <b>Context:</b> search success rate, exits at friction points.</div>
     </div>
   </div>
 
-  <div class="callout" style="margin-top:24px">
-    <strong>On targets.</strong> FY27 establishes baselines and watches direction. We set directional targets only once the baselines are trustworthy — likely late FY27 into FY28. Bringing target numbers to this meeting would be guessing; the job right now is agreeing on the signals worth trending.
+  <div class="callout">
+    <strong>Two ground rules.</strong> <b>Page type before interpretation</b> — a high exit rate is bad on a contact page and fine on a single-answer utility page, so there's no global bounce reading. <b>Vanity guardrail</b> — raw sessions, pageviews, and time stay context, never KPIs; if a number can rise while the site does its job no better, it isn't a KPI.
   </div>
 
   <div class="footer-q">
-    <h2>Open questions for the group to decide</h2>
+    <h2>What we need to decide</h2>
     <ul>
-      <li><b>Which 1–2 signals per role</b> become the actual FY27 KPIs — and which drop to supporting context?</li>
-      <li><b>SAL definition:</b> does the site-sourced SAL definition line up with what Dusty & Courtney landed on?</li>
-      <li><b>Attribution:</b> what counts as "site-sourced" — last-touch, or assisted/multi-touch?</li>
-      <li><b>Page types in scope:</b> which page types are we committing to instrument and report on this year?</li>
-      <li><b>Cadence & owner:</b> how often do we review these, and who owns the read-out?</li>
+      <li><b>Which one signal per role</b> becomes the FY27 KPI?</li>
+      <li><b>SAL definition:</b> does site-sourced SAL match what Dusty &amp; Courtney landed on?</li>
+      <li><b>Attribution:</b> what counts as "site-sourced" — last-touch or assisted?</li>
+      <li><b>Page types in scope</b> to instrument and report this year?</li>
+      <li><b>Cadence &amp; owner</b> for the read-out?</li>
     </ul>
   </div>
 

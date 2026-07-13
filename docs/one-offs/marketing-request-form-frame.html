@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Request Form — What Are We Solving For?</title>
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef2f6; --line:#dce4ec;
+  --ink:#16222e; --ink-2:#47586a; --ink-3:#7c8b9a;
+  --navy:#003868; --darkblue:#004F92; --midblue:#3096D5; --bronze:#C0692D; --bronze-soft:#f4e4d5;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;
+    --ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;
+    --navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;}
+}
+:root[data-theme="light"]{--bg:#f4f6f9;--surface:#fff;--surface-2:#eef2f6;--line:#dce4ec;--ink:#16222e;--ink-2:#47586a;--ink-3:#7c8b9a;--navy:#003868;--darkblue:#004F92;--midblue:#3096D5;--bronze:#C0692D;--bronze-soft:#f4e4d5;}
+:root[data-theme="dark"]{--bg:#0f151b;--surface:#18212b;--surface-2:#212c37;--line:#2b3947;--ink:#e7eef5;--ink-2:#a6b7c6;--ink-3:#71828f;--navy:#3096D5;--darkblue:#4E92D0;--midblue:#6fb7e6;--bronze:#d4813f;--bronze-soft:#3a2a1b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.45;font-size:14.5px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:34px 24px 46px}
+
+header{border-bottom:3px solid var(--bronze);padding-bottom:15px;margin-bottom:16px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);margin:0 0 6px}
+h1{font-size:clamp(22px,3.4vw,29px);line-height:1.1;margin:0;font-weight:770;letter-spacing:-.02em;color:var(--navy)}
+.sub{color:var(--ink-2);margin:9px 0 0;font-size:14.5px;max-width:82ch}
+.sub b{color:var(--ink)}
+
+.north{background:var(--navy);color:#fff;border-radius:13px;padding:16px 20px;margin:16px 0 4px}
+.north h3{margin:0 0 8px;font-size:15px;color:#fff}
+.north .anchors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 9px}
+.north .a{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:9px;padding:9px 12px;font-size:13px}
+.north .a b{color:#fff}
+.north .a span{color:#bcd2e6}
+.north .punch{margin:0;font-size:13.5px;color:#e7f0f8}
+.north .punch b{color:#fff}
+:root[data-theme="dark"] .north{background:var(--surface-2);border:1px solid var(--line)}
+:root[data-theme="dark"] .north .a span,:root[data-theme="dark"] .north .punch{color:var(--ink-2)}
+
+h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:800;margin:22px 0 4px}
+.h2note{font-size:13px;color:var(--ink-2);margin:0 0 12px}
+.h2note b{color:var(--bronze)}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lens{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+.lens .tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--midblue);margin:0 0 4px}
+.lens .name{font-weight:720;font-size:15px;margin:0 0 5px;color:var(--ink)}
+.lens .quote{font-size:13.5px;color:var(--ink-2);font-style:italic;margin:0 0 7px}
+.lens .who{font-size:11.5px;color:var(--ink-3);margin:0}
+.lens .who b{color:var(--ink-2);font-weight:700}
+
+.decision{background:var(--bronze-soft);border:1px solid var(--bronze);border-left-width:4px;border-radius:12px;padding:17px 20px;margin:20px 0 0}
+.decision h3{margin:0 0 5px;font-size:16.5px;color:var(--bronze);font-weight:760}
+.decision p{margin:0 0 8px;font-size:14px;color:var(--ink-2)}
+.decision p:last-child{margin-bottom:0}
+.decision b{color:var(--ink)}
+
+.run{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.step .t{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--midblue);margin-bottom:4px}
+.step p{margin:0;font-size:12.5px;color:var(--ink-2)}
+
+.foot{font-size:11.5px;color:var(--ink-3);margin-top:18px;padding-top:11px;border-top:1px solid var(--line)}
+
+@media(max-width:620px){.grid,.run,.north .anchors{grid-template-columns:1fr}}
+@media print{body{background:#fff}.north,.lens,.decision,.step{break-inside:avoid}@page{margin:13mm}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Marketing Request Form · Aligning before we redesign</p>
+    <h1>What are we actually solving for?</h1>
+    <p class="sub">The form conversation keeps scattering because <b>we're each solving a different problem</b>. Before we change anything, one decision: which problem do we take on first. This frames that.</p>
+  </header>
+
+  <div class="north">
+    <h3>Start here — the north star</h3>
+    <div class="anchors">
+      <div class="a"><b>The form is ~5% of the work.</b> <span>392 form requests vs. 7,773 total Jira tasks in the same window. Fewer than 1 in 20. Let's not over-index on this one channel.</span></div>
+      <div class="a"><b>Success = requests trending down.</b> <span>Fewer requests over time means stronger alignment across the org. A better-looking form doesn't automatically deliver that.</span></div>
+    </div>
+    <p class="punch">So the goal isn't a better form. It's <b>better alignment</b>. Every option below gets judged against that one question: does it move requests down?</p>
+  </div>
+
+  <h2>The four ways we're seeing it</h2>
+  <p class="h2note">These aren't four opinions on one problem. They're <b>four different problems</b> — which is exactly why the room scatters. All four are legitimate; they just can't all be first.</p>
+
+  <div class="grid">
+    <div class="lens">
+      <p class="tag">Lens 1 · Routing</p>
+      <p class="name">Get every request to the right place</p>
+      <p class="quote">"One smart form that routes anyone's request to the right person at the right time."</p>
+      <p class="who"><b>The problem being solved:</b> requests go to the wrong place or stall. An orchestration problem.</p>
+    </div>
+    <div class="lens">
+      <p class="tag">Lens 2 · Friction</p>
+      <p class="name">Fix the one step that's painful</p>
+      <p class="quote">"One small change would make this noticeably easier for the people using it every day."</p>
+      <p class="who"><b>The problem being solved:</b> a specific daily friction point. A tactical-fix problem, raised by the people closest to the form.</p>
+    </div>
+    <div class="lens">
+      <p class="tag">Lens 3 · Simplification</p>
+      <p class="name">Strip the form down</p>
+      <p class="quote">"The form asks too much. Cut it back to what's essential."</p>
+      <p class="who"><b>The problem being solved:</b> the form is a burden that discourages good use. A complexity problem.</p>
+    </div>
+    <div class="lens">
+      <p class="tag">Lens 4 · Capacity</p>
+      <p class="name">The real issue is intake &amp; triage</p>
+      <p class="quote">"The form isn't the bottleneck — how we receive and route the work is. Ideally requests come in and someone triages."</p>
+      <p class="who"><b>The problem being solved:</b> throughput. A capacity problem — with a real constraint: no staffing for a triage function today.</p>
+    </div>
+  </div>
+
+  <div class="decision">
+    <h3>The one decision for the room</h3>
+    <p><b>Which problem do we solve first?</b> We don't have to pick one forever — but we sequence them instead of chasing all four at once. Choose the primary problem for this round; the rest become explicitly next-in-line or out of scope.</p>
+    <p>Tie-breaker when we disagree: <b>which one most moves requests down / alignment up?</b> That's the north star, and it keeps the choice about outcomes, not preferences.</p>
+  </div>
+
+  <h2>How we'll run it</h2>
+  <div class="run">
+    <div class="step"><div class="t">Before</div><p>I pre-wire each perspective 1:1 so we walk in aligned on the frame, not debating it live.</p></div>
+    <div class="step"><div class="t">The session</div><p>30–45 min, one decision: the primary problem + the sequence for the rest. Not a form-design session.</p></div>
+    <div class="step"><div class="t">After</div><p>Designing the actual form follows — once we know which problem it's serving.</p></div>
+  </div>
+
+  <p class="foot">Marketing Ops · John Wiedenheft · Built on the Request Form analysis (392 requests, Mar 2025–Jul 2026). Runs in parallel with the FY27 scorecard work; the "requests-down = alignment" measure connects the two.</p>
+
+</div>
+</body>
+</html>

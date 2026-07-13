@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Request Form — Pick the Problem</title>
+<style>
+:root{
+  --bg:#f6f8fb; --surface:#ffffff; --ink:#12202e; --ink-2:#48586a; --ink-3:#8697a6;
+  --line:#dce4ec; --navy:#003868; --darkblue:#004F92; --midblue:#3096D5; --bronze:#C0692D; --bronze-soft:#f4e4d5;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0e141b; --surface:#141d27; --ink:#eaf1f8; --ink-2:#a7b8c6; --ink-3:#6f8090;
+    --line:#26333f; --navy:#4aa3e0; --darkblue:#5aa0d6; --midblue:#6fb7e6; --bronze:#d9853f; --bronze-soft:#33261a;}
+}
+:root[data-theme="light"]{--bg:#f6f8fb;--surface:#fff;--ink:#12202e;--ink-2:#48586a;--ink-3:#8697a6;--line:#dce4ec;--navy:#003868;--darkblue:#004F92;--midblue:#3096D5;--bronze:#C0692D;--bronze-soft:#f4e4d5;}
+:root[data-theme="dark"]{--bg:#0e141b;--surface:#141d27;--ink:#eaf1f8;--ink-2:#a7b8c6;--ink-3:#6f8090;--line:#26333f;--navy:#4aa3e0;--darkblue:#5aa0d6;--midblue:#6fb7e6;--bronze:#d9853f;--bronze-soft:#33261a;}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+.slide{
+  display:none; min-height:100vh; padding:6vh 8vw; flex-direction:column; justify-content:center;
+  position:relative;
+}
+.slide.active{display:flex}
+.eyebrow{font-size:clamp(12px,1.5vw,15px);font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze);margin:0 0 20px}
+.big{font-size:clamp(38px,8vw,84px);line-height:1.02;letter-spacing:-.03em;font-weight:800;color:var(--navy);margin:0}
+.mega{font-size:clamp(90px,26vw,300px);line-height:.9;letter-spacing:-.04em;font-weight:850;color:var(--bronze);margin:0}
+.h2{font-size:clamp(28px,5.5vw,58px);line-height:1.08;letter-spacing:-.02em;font-weight:800;color:var(--navy);margin:0 0 6px}
+.lead{font-size:clamp(17px,2.5vw,27px);line-height:1.4;color:var(--ink-2);margin:22px 0 0;max-width:24ch}
+.lead.wide{max-width:34ch}
+.lead b{color:var(--ink)}
+.reframe{font-size:clamp(16px,2.1vw,23px);line-height:1.45;color:var(--ink-2);margin:26px 0 0;max-width:40ch;padding-left:18px;border-left:4px solid var(--bronze)}
+.reframe b{color:var(--ink)}
+
+.lenses{list-style:none;padding:0;margin:14px 0 0}
+.lenses li{display:flex;align-items:baseline;gap:16px;padding:14px 0;border-top:1px solid var(--line);font-size:clamp(18px,3vw,32px)}
+.lenses li:first-child{border-top:none}
+.lenses .k{font-weight:850;color:var(--bronze);letter-spacing:.02em;min-width:clamp(150px,22vw,300px);flex:none;text-transform:uppercase;font-size:clamp(14px,1.9vw,22px)}
+.lenses .v{color:var(--ink);font-weight:600}
+.punch{margin:26px 0 0;font-size:clamp(18px,2.7vw,30px);font-weight:750;color:var(--navy)}
+.punch b{color:var(--bronze)}
+
+.steps{list-style:none;padding:0;margin:20px 0 0;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:16px;align-items:baseline;margin:0 0 16px;font-size:clamp(18px,2.6vw,28px);color:var(--ink)}
+.steps li::before{content:counter(s);flex:none;width:clamp(34px,4vw,48px);height:clamp(34px,4vw,48px);border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:clamp(16px,2vw,22px);display:inline-flex;align-items:center;justify-content:center}
+.footnote{margin:30px 0 0;font-size:clamp(14px,1.8vw,19px);color:var(--ink-3)}
+.footnote b{color:var(--bronze)}
+
+.pnum{position:absolute;bottom:3.5vh;right:8vw;font-size:13px;color:var(--ink-3);font-weight:700;letter-spacing:.05em}
+.hint{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--ink-3);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:6px 14px;opacity:.85}
+.hint b{color:var(--ink-2)}
+
+@media print{
+  .slide{display:flex !important;min-height:auto;height:100vh;page-break-after:always;padding:10vh 8vw}
+  .hint{display:none}
+  @page{size:landscape;margin:0}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <p class="eyebrow">Marketing Request Form</p>
+  <h1 class="big">Pick the problem.</h1>
+  <p class="lead wide">Not the solution. Not today. We're deciding what the form is <b>for</b>. If we jump to fixes, I'll pull us back.</p>
+  <span class="pnum">1 / 6</span>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">One fact to set the table</p>
+  <h1 class="mega">5%</h1>
+  <p class="lead wide">of ~7,800 Jira issues since we went Agile come from the request form. One in twenty.</p>
+  <p class="reframe">Good news: 95% of our work comes from being <b>in the room</b> — planning, meetings, conversations. We're well-aligned. So let's keep this <b>proportionate</b>: make a small channel work well, don't over-build it.</p>
+  <span class="pnum">2 / 6</span>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Here's what I've heard — every one is legitimate</p>
+  <ul class="lenses">
+    <li><span class="k">Routing</span><span class="v">Every request to the right place</span></li>
+    <li><span class="k">Friction</span><span class="v">Fix the one step that's painful</span></li>
+    <li><span class="k">Simplification</span><span class="v">Strip the form down</span></li>
+    <li><span class="k">Capacity</span><span class="v">The real issue is intake &amp; triage</span></li>
+  </ul>
+  <p class="punch">Four <b>different problems</b> — not four opinions. That's why this keeps scattering.</p>
+  <span class="pnum">3 / 6</span>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Today's one decision</p>
+  <h1 class="big">What problem do we solve first?</h1>
+  <p class="lead wide">Not one forever. We pick the first, and sequence the rest — next-in-line or out of scope.</p>
+  <span class="pnum">4 / 6</span>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Tie-breaker when we disagree</p>
+  <h1 class="h2">Which one gets requests trending <em>down</em> over time?</h1>
+  <p class="lead wide">Fewer requests = better alignment. That's the deciding question. Outcomes over preferences.</p>
+  <span class="pnum">5 / 6</span>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Let's decide</p>
+  <ol class="steps">
+    <li>Each of us: your pick + one reason. Thirty seconds.</li>
+    <li>We choose the first problem to solve.</li>
+    <li>Sequence the rest, name an owner and the next step.</li>
+  </ol>
+  <p class="footnote">Solutions go in the <b>parking lot</b> — we design the form once we know which problem it's serving.</p>
+  <span class="pnum">6 / 6</span>
+</section>
+
+<div class="hint">Use <b>&larr; &rarr;</b> or click to advance &middot; <b>P</b> to print</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  function show(n){
+    i = Math.max(0, Math.min(slides.length-1, n));
+    slides.forEach(function(s,idx){ s.classList.toggle('active', idx===i); });
+  }
+  show(0);
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ show(i+1); e.preventDefault(); }
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){ show(i-1); e.preventDefault(); }
+    else if(e.key==='Home'){ show(0); }
+    else if(e.key==='End'){ show(slides.length-1); }
+    else if(e.key==='p'||e.key==='P'){ window.print(); }
+  });
+  document.addEventListener('click', function(e){
+    if(e.target.closest('.hint')) return;
+    show(i+1);
+  });
+})();
+</script>
+</body>
+</html>
