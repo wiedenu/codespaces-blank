@@ -1,0 +1,970 @@
+<title>Story Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap">
+
+<style>
+:root {
+  --bg:        #F4F5F3;
+  --surface:   #FFFFFF;
+  --surface-2: #E9EBE8;
+  --surface-3: #DFE2DE;
+  --ink:       #161A19;
+  --ink-2:     #4E5654;
+  --ink-3:     #858C89;
+  --rule:      #D8DCD8;
+  --accent:    #14554F;
+  --accent-2:  #1B736B;
+  --accent-wash: #E4EEEC;
+  --on-accent: #FFFFFF;
+  --ok:        #2E6B45;
+  --warn:      #8A6212;
+  --over:      #8C3A2E;
+  --shadow:    0 1px 2px rgba(22,26,25,.06), 0 8px 24px -12px rgba(22,26,25,.18);
+
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body:    "Literata", Georgia, "Times New Roman", serif;
+  --f-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #121514;
+    --surface:   #1A1E1D;
+    --surface-2: #232827;
+    --surface-3: #2C3231;
+    --ink:       #E8EBE9;
+    --ink-2:     #A3AAA7;
+    --ink-3:     #6F7773;
+    --rule:      #2E3432;
+    --accent:    #5FBFB2;
+    --accent-2:  #82D3C7;
+    --accent-wash: #1B2A28;
+    --on-accent: #0F1413;
+    --ok:        #6FBF8E;
+    --warn:      #D2A44A;
+    --over:      #E08573;
+    --shadow:    0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:        #121514;
+  --surface:   #1A1E1D;
+  --surface-2: #232827;
+  --surface-3: #2C3231;
+  --ink:       #E8EBE9;
+  --ink-2:     #A3AAA7;
+  --ink-3:     #6F7773;
+  --rule:      #2E3432;
+  --accent:    #5FBFB2;
+  --accent-2:  #82D3C7;
+  --accent-wash: #1B2A28;
+  --on-accent: #0F1413;
+  --ok:        #6FBF8E;
+  --warn:      #D2A44A;
+  --over:      #E08573;
+  --shadow:    0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; }
+button[disabled] { cursor: default; opacity: .5; }
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 3px; }
+
+/* ---------- shell ---------- */
+
+.shell {
+  display: grid;
+  grid-template-columns: 268px minmax(0, 1fr);
+  min-height: 100vh;
+}
+body.focus .shell { grid-template-columns: minmax(0, 1fr); }
+body.focus .rail { display: none; }
+
+/* ---------- rail ---------- */
+
+.rail {
+  border-right: 1px solid var(--rule);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand { padding: 22px 20px 16px; border-bottom: 1px solid var(--rule); }
+.brand h1 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -.01em;
+  margin: 0 0 4px;
+}
+.brand p {
+  margin: 0;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.rail-list { padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+
+.story-tab {
+  width: 100%;
+  text-align: left;
+  padding: 11px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  transition: background .13s ease;
+}
+.story-tab:hover { background: var(--surface-2); }
+.story-tab[aria-current="true"] {
+  background: var(--accent-wash);
+  border-color: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+.story-tab .st-name {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.story-tab .st-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  color: var(--ink-3);
+}
+.dots { display: flex; gap: 3px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--surface-3); }
+.dot.filled { background: var(--accent); }
+
+.rail-foot {
+  margin-top: auto;
+  padding: 12px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ghost-btn {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  color: var(--ink-2);
+  text-align: left;
+  border: 1px dashed var(--rule);
+  transition: background .13s ease, color .13s ease;
+}
+.ghost-btn:hover { background: var(--surface-2); color: var(--ink); }
+
+/* ---------- main ---------- */
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.title-input {
+  flex: 1 1 300px;
+  min-width: 0;
+  background: none;
+  border: none;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -.015em;
+  padding: 4px 2px;
+  border-bottom: 1px solid transparent;
+}
+.title-input:hover { border-bottom-color: var(--rule); }
+.title-input:focus { outline: none; border-bottom-color: var(--accent); }
+
+.meter { display: flex; align-items: center; gap: 10px; }
+.meter-bar { width: 92px; height: 5px; border-radius: 3px; background: var(--surface-3); overflow: hidden; }
+.meter-fill { height: 100%; width: 0; background: var(--accent); transition: width .25s ease, background .25s ease; }
+.meter-fill.ok   { background: var(--ok); }
+.meter-fill.warn { background: var(--warn); }
+.meter-fill.over { background: var(--over); }
+.meter-read {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.meter-read b { color: var(--ink); font-weight: 500; }
+
+.bar-actions { display: flex; align-items: center; gap: 8px; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.chip .bead { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+.chip[data-state="saved"]    .bead { background: var(--ok); }
+.chip[data-state="dirty"]    .bead { background: var(--warn); }
+.chip[data-state="saving"]   .bead { background: var(--accent); }
+.chip[data-state="local"]    .bead { background: var(--warn); }
+.chip[data-state="readonly"] .bead { background: var(--ink-3); }
+.chip[data-state="error"]    .bead { background: var(--over); }
+
+.btn {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  letter-spacing: .03em;
+  padding: 8px 13px;
+  border-radius: 5px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: background .13s ease, border-color .13s ease, color .13s ease;
+}
+.btn:hover:not([disabled]) { background: var(--surface-2); color: var(--ink); border-color: var(--ink-3); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.primary:hover:not([disabled]) { background: var(--accent-2); border-color: var(--accent-2); }
+.btn[aria-pressed="true"] {
+  background: var(--accent-wash);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--accent);
+}
+
+/* ---------- beats ---------- */
+
+.sheet {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 34px 32px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+body.focus .sheet { padding-top: 48px; max-width: 700px; }
+
+.beat {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: border-color .15s ease, opacity .2s ease;
+}
+.beat.active { border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+body.focus .beat:not(.active) { opacity: .38; }
+body.focus .beat:not(.active):hover { opacity: .72; }
+
+.beat-head { display: flex; align-items: baseline; gap: 12px; padding: 14px 18px 0; }
+.beat-idx { font-family: var(--f-mono); font-size: 11px; color: var(--accent); font-weight: 500; }
+.beat-name {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.beat-time {
+  margin-left: auto;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+.beat-hint {
+  padding: 5px 18px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-3);
+  font-style: italic;
+  margin: 0;
+}
+.beat-body { padding: 10px 18px 16px; }
+body.focus .beat:not(.active) .beat-body,
+body.focus .beat:not(.active) .beat-hint { display: none; }
+body.focus .beat:not(.active) .beat-head { padding-bottom: 14px; }
+
+textarea.field {
+  width: 100%;
+  min-height: 74px;
+  resize: none;
+  border: none;
+  background: none;
+  font-family: var(--f-body);
+  font-size: 16.5px;
+  line-height: 1.68;
+  padding: 0;
+  overflow: hidden;
+}
+textarea.field:focus { outline: none; }
+textarea.field::placeholder { color: var(--ink-3); opacity: .65; }
+
+/* ---------- misc ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 14px);
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--f-mono);
+  font-size: 12px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 60;
+  max-width: min(92vw, 480px);
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+dialog {
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  padding: 0;
+  max-width: min(92vw, 640px);
+  width: 100%;
+}
+dialog::backdrop { background: rgba(10,14,13,.5); }
+.dlg-head {
+  padding: 18px 22px 12px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+.dlg-body { padding: 16px 22px; }
+.dlg-body p { margin: 0 0 12px; font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+pre.md-out {
+  margin: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 14px;
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+  max-height: 38vh;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.dlg-foot { padding: 12px 22px 18px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+  .rail-list { flex-direction: row; overflow-x: auto; }
+  .story-tab { min-width: 190px; }
+  .rail-foot { flex-direction: row; }
+  .sheet { padding: 22px 18px 100px; }
+  .topbar { padding: 12px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="brand">
+      <h1>Story Bench</h1>
+      <p>Situation · Constraint · Action · Result · Learning</p>
+    </div>
+    <div class="rail-list" id="railList"></div>
+    <div class="rail-foot">
+      <button class="ghost-btn" id="addStory">+ New story</button>
+      <button class="ghost-btn" id="resetAll">Reset to seeded drafts</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <input class="title-input" id="titleInput" aria-label="Story title" placeholder="Name this story">
+      <div class="meter">
+        <div class="meter-bar"><div class="meter-fill" id="meterFill"></div></div>
+        <span class="meter-read" id="meterRead"><b>0:00</b> spoken</span>
+      </div>
+      <div class="bar-actions">
+        <span class="chip" id="statusChip" data-state="saved"><span class="bead"></span><span id="statusText">Loading</span></span>
+        <button class="btn" id="focusBtn" aria-pressed="false">Focus</button>
+        <button class="btn" id="deleteBtn">Delete</button>
+        <button class="btn" id="saveBtn">Save</button>
+        <button class="btn primary" id="exportBtn">Export .md</button>
+      </div>
+    </div>
+    <div class="sheet" id="sheet"></div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog id="exportDlg">
+  <div class="dlg-head">Export stories</div>
+  <div class="dlg-body">
+    <p>Markdown for every story. Save it as a file, or copy it to the clipboard.</p>
+    <pre class="md-out" id="mdOut"></pre>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn" id="dlgClose">Close</button>
+    <button class="btn" id="dlgCopy">Copy to clipboard</button>
+    <button class="btn primary" id="dlgSave">Save .md file</button>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  var WPM = 140;                 // conversational interview pace
+  var TARGET = 90;               // seconds — the answer you want
+  var LS_KEY = "story-bench-v2";
+  var DATA_PATH = "data/stories.json";
+  var AUTOSAVE_MS = 4000;
+
+  var BEATS = [
+    { id: "situation",  name: "Situation",
+      hint: "Where things stood before you touched it. One or two sentences, no backstory." },
+    { id: "constraint", name: "Constraint",
+      hint: "What made it hard: budget, headcount, access, politics. This is the differentiator — don't bury it." },
+    { id: "action",     name: "Action",
+      hint: "What you decided and why. Lead with the judgment call, not the chronology." },
+    { id: "result",     name: "Result",
+      hint: "What changed, with a number. Say “estimated” out loud if it's estimated." },
+    { id: "learning",   name: "Learning",
+      hint: "What you got wrong, or would do differently. Volunteer it before you're asked." }
+  ];
+
+  var SEED = [
+    {
+      title: "Shadow-mode AI lead classification",
+      situation: "Lead qualification had been stuck for fourteen months. The original ask, from June 2025, was a Copilot prompt that asked AI to assess “fit” — with no ICP defined, no scoring model, and no context about the business. I inherited it as a technology problem.",
+      constraint: "Solo marketing ops operator, no budget for new tooling, and the enrichment source we'd need for fit scoring is one-way, so it can't feed anything back into the form.",
+      action: "I found it wasn't a technology problem. The requirement had never been specified, and that is what blocked it, not AI capability. So I separated two things nobody had separated: triage and fit. AI can triage at submission from form fields alone. It cannot score ICP fit, because all eight of our ICP attributes only exist after submission. Then I ran the classifier in shadow mode against live submissions — it writes AI properties and notifies me, production routing untouched.",
+      result: "Live since August, classifying real traffic with zero risk to routing. Roughly 80 percent accurate on hand-labeled samples — estimated, not yet measured, and measuring it properly is its own ticket.",
+      learning: "My rule treated a Salesforce Lead ID and a Contact ID as interchangeable, and it misrouted six of eight. A Lead is by definition unconverted, so a known Lead ID is evidence for prospect, not for existing customer. The model was fine. My rule was wrong. I now assume the logic is the defect before I assume the AI is."
+    },
+    {
+      title: "Building AI where there's no budget",
+      situation: "Six recurring categories of Salesforce-to-HubSpot sync errors, roughly fifteen percent of my ticket queue, every single week.",
+      constraint: "Zero dollars for new tooling through FY27, and a standing directive to fix process before buying anything.",
+      action: "I checked what we already paid for: five thousand Breeze AI credits a month, about eight hundred in use. I first tried scripting against HubSpot's Sync Health dashboard and found it has no public API, so the script approach was dead. I rebuilt it as native Breeze workflows instead, catching the bad data at write time rather than reporting on it afterward.",
+      result: "Three workflows now prevent two of the six categories at the data level. Not detected faster — prevented. Zero incremental spend.",
+      learning: "I'd defaulted to writing a script because that's my instinct. The platform's own AI built it better, and the constraint is what forced me to look. I now inventory what's already licensed before I design anything."
+    },
+    {
+      title: "Auditing my own automation",
+      situation: "I'd built about nine automated routines for myself — research digests, a follow-up watchdog, a weekly ROI tracker. Roughly forty-two outputs a week.",
+      constraint: "Solo operator, built in spare time, nobody reviewing any of it. The only measure of success I had was one I'd written myself.",
+      action: "I audited it against outcomes instead of activity. Two of five research feeds had been returning 404s silently — the script logged a warning, kept running, and kept emailing. And my ROI tracker computed value as runs times a fixed minutes-saved constant, so it reported rising value while my actual action rate went to zero.",
+      result: "Cut from about forty-two outputs a week to sixteen, killed three routines outright, and rewrote the metric to count actions taken rather than executions.",
+      learning: "I had built measurement that could only ever confirm success. Counting executions is not measuring outcomes, and unmonitored automation decays silently while reporting healthy. Now anything I automate fails loudly, or I don't trust it."
+    }
+  ];
+
+  // ---------- state ----------
+
+  var stories, activeIdx = 0, activeBeat = null;
+  var dirty = false, saving = false, readOnly = false, cloudOff = false;
+  var localTimer = null, cloudTimer = null;
+  var artifactNs = null, artifactChecked = false;
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  var $ = function (id) { return document.getElementById(id); };
+
+  function readLocal() {
+    try {
+      var raw = localStorage.getItem(LS_KEY);
+      if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (p && Array.isArray(p.stories) && p.stories.length) return p;
+    } catch (e) { /* blocked or private mode */ }
+    return null;
+  }
+
+  function writeLocal() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({
+        stories: stories, activeIdx: activeIdx, savedAt: Date.now(), dirty: dirty
+      }));
+    } catch (e) { /* nothing to do — export is the real record */ }
+  }
+
+  // ---------- helpers ----------
+
+  function words(s) {
+    if (!s) return 0;
+    var t = String(s).trim();
+    return t ? t.split(/\s+/).length : 0;
+  }
+  function secs(s) { return Math.round(words(s) / WPM * 60); }
+  function mmss(n) {
+    var m = Math.floor(n / 60), s = n % 60;
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  function storySecs(st) { return BEATS.reduce(function (n, b) { return n + secs(st[b.id]); }, 0); }
+  function filledCount(st) { return BEATS.filter(function (b) { return words(st[b.id]) >= 8; }).length; }
+  function band(n) { return n < 55 ? "warn" : (n <= 115 ? "ok" : "over"); }
+  function bandWord(n) { return n < 55 ? "thin" : (n <= 115 ? "on target" : "long"); }
+
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(t._h);
+    t._h = setTimeout(function () { t.classList.remove("show"); }, 3200);
+  }
+
+  function setStatus(state, text) {
+    $("statusChip").setAttribute("data-state", state);
+    $("statusText").textContent = text;
+  }
+
+  function refreshStatus() {
+    if (saving) return setStatus("saving", "Saving");
+    if (readOnly) return setStatus("readonly", "Read only");
+    if (cloudOff) return setStatus("local", dirty ? "This browser only" : "This browser only");
+    if (dirty) return setStatus("dirty", "Unsaved");
+    setStatus("saved", "Saved");
+  }
+
+  function markDirty() {
+    dirty = true;
+    refreshStatus();
+    clearTimeout(localTimer);
+    localTimer = setTimeout(writeLocal, 400);
+    if (!readOnly && !cloudOff) {
+      clearTimeout(cloudTimer);
+      cloudTimer = setTimeout(function () { saveCloud(true); }, AUTOSAVE_MS);
+    }
+  }
+
+  function autoGrow(ta) {
+    ta.style.height = "auto";
+    ta.style.height = (ta.scrollHeight + 2) + "px";
+  }
+
+  // ---------- render ----------
+
+  function renderRail() {
+    var wrap = $("railList");
+    wrap.textContent = "";
+    stories.forEach(function (st, i) {
+      var b = document.createElement("button");
+      b.className = "story-tab";
+      b.setAttribute("aria-current", i === activeIdx ? "true" : "false");
+
+      var name = document.createElement("span");
+      name.className = "st-name";
+      name.textContent = st.title || "Untitled story";
+      b.appendChild(name);
+
+      var meta = document.createElement("span");
+      meta.className = "st-meta";
+      var dots = document.createElement("span");
+      dots.className = "dots";
+      var f = filledCount(st);
+      for (var d = 0; d < BEATS.length; d++) {
+        var dot = document.createElement("span");
+        dot.className = "dot" + (d < f ? " filled" : "");
+        dots.appendChild(dot);
+      }
+      meta.appendChild(dots);
+      var t = document.createElement("span");
+      t.textContent = mmss(storySecs(st));
+      meta.appendChild(t);
+      b.appendChild(meta);
+
+      b.addEventListener("click", function () {
+        activeIdx = i;
+        activeBeat = null;
+        writeLocal();
+        renderAll();
+      });
+      wrap.appendChild(b);
+    });
+  }
+
+  function renderMeter() {
+    var n = storySecs(stories[activeIdx]);
+    var fill = $("meterFill");
+    fill.style.width = Math.min(100, n / (TARGET * 1.6) * 100) + "%";
+    fill.className = "meter-fill " + band(n);
+    $("meterRead").innerHTML = "<b>" + mmss(n) + "</b> spoken · " + bandWord(n);
+  }
+
+  function renderSheet() {
+    var st = stories[activeIdx];
+    var sheet = $("sheet");
+    sheet.textContent = "";
+
+    BEATS.forEach(function (beat, i) {
+      var card = document.createElement("section");
+      card.className = "beat" + (activeBeat === beat.id ? " active" : "");
+
+      var head = document.createElement("div");
+      head.className = "beat-head";
+      var idx = document.createElement("span");
+      idx.className = "beat-idx";
+      idx.textContent = String(i + 1);
+      var nm = document.createElement("span");
+      nm.className = "beat-name";
+      nm.textContent = beat.name;
+      var tm = document.createElement("span");
+      tm.className = "beat-time";
+      tm.textContent = words(st[beat.id]) + "w · " + mmss(secs(st[beat.id]));
+      head.appendChild(idx); head.appendChild(nm); head.appendChild(tm);
+      card.appendChild(head);
+
+      var hint = document.createElement("p");
+      hint.className = "beat-hint";
+      hint.textContent = beat.hint;
+      card.appendChild(hint);
+
+      var body = document.createElement("div");
+      body.className = "beat-body";
+      var ta = document.createElement("textarea");
+      ta.className = "field";
+      ta.value = st[beat.id] || "";
+      ta.placeholder = "…";
+      ta.readOnly = readOnly;
+      ta.setAttribute("aria-label", beat.name);
+
+      ta.addEventListener("input", function () {
+        st[beat.id] = ta.value;
+        autoGrow(ta);
+        tm.textContent = words(ta.value) + "w · " + mmss(secs(ta.value));
+        renderMeter();
+        renderRail();
+        markDirty();
+      });
+      ta.addEventListener("focus", function () {
+        if (activeBeat !== beat.id) {
+          activeBeat = beat.id;
+          Array.prototype.forEach.call(sheet.children, function (c) { c.classList.remove("active"); });
+          card.classList.add("active");
+        }
+      });
+      ta.addEventListener("keydown", function (e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+          e.preventDefault();
+          var next = sheet.children[i + 1];
+          if (next) next.querySelector("textarea").focus();
+          else $("saveBtn").focus();
+        }
+      });
+
+      body.appendChild(ta);
+      card.appendChild(body);
+      sheet.appendChild(card);
+      autoGrow(ta);
+    });
+
+    $("titleInput").value = st.title || "";
+    $("titleInput").readOnly = readOnly;
+  }
+
+  function renderAll() {
+    renderRail();
+    renderSheet();
+    renderMeter();
+    refreshStatus();
+  }
+
+  // ---------- markdown ----------
+
+  function toMarkdown() {
+    var out = ["# Interview Stories", "",
+      "Structure: Situation · Constraint · Action · Result · Learning. " +
+      "Spoken estimates at " + WPM + " words per minute.", ""];
+    stories.forEach(function (st, i) {
+      out.push("## " + (i + 1) + ". " + (st.title || "Untitled story"));
+      out.push("");
+      out.push("_Est. spoken: " + mmss(storySecs(st)) + " · " + bandWord(storySecs(st)) + "_");
+      out.push("");
+      BEATS.forEach(function (b) {
+        out.push("**" + b.name + "**");
+        out.push("");
+        out.push(st[b.id] ? String(st[b.id]).trim() : "_(empty)_");
+        out.push("");
+      });
+      out.push("---");
+      out.push("");
+    });
+    return out.join("\n");
+  }
+
+  // ---------- persistence ----------
+
+  function getArtifact() {
+    if (artifactChecked) return Promise.resolve(artifactNs);
+    var p = (window.claude && window.claude.use)
+      ? window.claude.use("artifact")
+      : Promise.resolve(null);
+    return p.then(function (ns) {
+      artifactChecked = true;
+      artifactNs = ns || null;
+      if (!artifactNs) { cloudOff = true; refreshStatus(); }
+      return artifactNs;
+    }, function () {
+      artifactChecked = true;
+      cloudOff = true;
+      refreshStatus();
+      return null;
+    });
+  }
+
+  function payload() {
+    return JSON.stringify({ v: 2, savedAt: Date.now(), stories: stories }, null, 2);
+  }
+
+  function saveCloud(isAuto) {
+    if (saving || readOnly || cloudOff) return Promise.resolve(false);
+    clearTimeout(cloudTimer);
+    saving = true;
+    refreshStatus();
+    writeLocal();
+
+    return getArtifact().then(function (ns) {
+      if (!ns) {
+        saving = false;
+        cloudOff = true;
+        refreshStatus();
+        if (!isAuto) toast("Saving to the page isn't available here. Your work is in this browser — use Export .md to take it with you.");
+        return false;
+      }
+      var files = {};
+      files[DATA_PATH] = { content: payload(), contentType: "application/json" };
+      return ns.publish(files).then(function () {
+        saving = false;
+        dirty = false;
+        writeLocal();
+        refreshStatus();
+        if (!isAuto) toast("Saved to the page. It'll be here next time you open it.");
+        return true;
+      }, function (err) {
+        saving = false;
+        var code = (err && err.code) || "upstream_error";
+        if (code === "not_writer" || code === "not_granted" || code === "consent_required") {
+          readOnly = true;
+          refreshStatus();
+          renderSheet();
+          toast("This view is read-only, so edits can't be saved to the page.");
+        } else if (code === "capability_disabled" || code === "not_declared" || code === "capability_removed") {
+          cloudOff = true;
+          refreshStatus();
+          toast("Saving to the page isn't available here. Your work is kept in this browser — use Export .md to take it with you.");
+        } else if (code === "conflict") {
+          refreshStatus();
+          toast("Another version was saved first. Reloading to it.");
+        } else if (code === "rate_limited") {
+          refreshStatus();
+          toast("Saving too often — waiting a moment before the next save.");
+          cloudTimer = setTimeout(function () { saveCloud(true); }, 15000);
+        } else if (code === "too_large") {
+          setStatus("error", "Too large");
+          toast("These stories are too large to save to the page. Export .md instead.");
+        } else {
+          setStatus("error", "Save failed");
+          toast("Couldn't save to the page. Your work is kept in this browser — Export .md is the safe copy.");
+        }
+        return false;
+      });
+    });
+  }
+
+  function boot() {
+    // 1. Render immediately from the local copy or the seeded drafts.
+    var local = readLocal();
+    stories = local ? local.stories : clone(SEED);
+    activeIdx = local ? Math.min(local.activeIdx || 0, stories.length - 1) : 0;
+    dirty = local ? !!local.dirty : false;
+    renderAll();
+    setStatus(dirty ? "dirty" : "saved", "Loading");
+
+    // 2. Reconcile against the copy saved into the page itself.
+    fetch(DATA_PATH, { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (remote) {
+        if (remote && Array.isArray(remote.stories) && remote.stories.length) {
+          var localAt = (local && local.savedAt) || 0;
+          var remoteAt = remote.savedAt || 0;
+          if (!local || remoteAt >= localAt || !local.dirty) {
+            stories = remote.stories;
+            activeIdx = Math.min(activeIdx, stories.length - 1);
+            dirty = false;
+            writeLocal();
+            renderAll();
+          } else {
+            toast("You have newer unsaved edits in this browser. Save to write them to the page.");
+          }
+        }
+        refreshStatus();
+        return getArtifact();
+      })
+      .then(function () { refreshStatus(); });
+  }
+
+  // ---------- wiring ----------
+
+  $("titleInput").addEventListener("input", function () {
+    stories[activeIdx].title = this.value;
+    renderRail();
+    markDirty();
+  });
+
+  $("focusBtn").addEventListener("click", function () {
+    var on = document.body.classList.toggle("focus");
+    this.setAttribute("aria-pressed", on ? "true" : "false");
+    if (on && !activeBeat) {
+      var first = $("sheet").querySelector("textarea");
+      if (first) first.focus();
+    }
+  });
+
+  $("addStory").addEventListener("click", function () {
+    if (readOnly) return;
+    var blank = { title: "" };
+    BEATS.forEach(function (b) { blank[b.id] = ""; });
+    stories.push(blank);
+    activeIdx = stories.length - 1;
+    activeBeat = null;
+    markDirty();
+    renderAll();
+    $("titleInput").focus();
+  });
+
+  $("deleteBtn").addEventListener("click", function () {
+    if (readOnly) return;
+    if (stories.length === 1) { toast("That's the last story — nothing to delete into."); return; }
+    var name = stories[activeIdx].title || "this story";
+    if (!window.confirm("Delete “" + name + "”? This can't be undone.")) return;
+    stories.splice(activeIdx, 1);
+    activeIdx = Math.max(0, activeIdx - 1);
+    activeBeat = null;
+    markDirty();
+    renderAll();
+    toast("Deleted. Save to write that to the page.");
+  });
+
+  $("resetAll").addEventListener("click", function () {
+    if (readOnly) return;
+    if (!window.confirm("Replace everything with the three seeded drafts? Your edits will be lost.")) return;
+    stories = clone(SEED);
+    activeIdx = 0;
+    activeBeat = null;
+    markDirty();
+    renderAll();
+    toast("Reset to seeded drafts.");
+  });
+
+  $("saveBtn").addEventListener("click", function () { saveCloud(false); });
+
+  var dlg = $("exportDlg");
+  $("exportBtn").addEventListener("click", function () {
+    $("mdOut").textContent = toMarkdown();
+    dlg.showModal();
+  });
+  $("dlgClose").addEventListener("click", function () { dlg.close(); });
+
+  $("dlgCopy").addEventListener("click", function () {
+    var text = toMarkdown();
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); toast("Copied to clipboard."); }
+      catch (e) { toast("Couldn't copy — select the text above instead."); }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast("Copied to clipboard."); }, fallback);
+    } else { fallback(); }
+  });
+
+  $("dlgSave").addEventListener("click", function () {
+    var btn = this;
+    btn.disabled = true;
+    (window.claude && window.claude.use ? window.claude.use("downloads") : Promise.resolve(null))
+      .then(function (downloads) {
+        if (!downloads) { toast("File saving isn't available here — use Copy to clipboard."); return; }
+        return downloads.save({ filename: "interview-stories.md", data: toMarkdown() })
+          .then(function () { toast("Saved interview-stories.md"); })
+          .catch(function (err) {
+            var code = err && err.code;
+            if (code === "declined") return;
+            if (code === "too_large") toast("Too large to save — copy to clipboard instead.");
+            else if (code === "rate_limited") toast("A save prompt is already open. Try again in a moment.");
+            else toast("Couldn't save the file — use Copy to clipboard.");
+          });
+      })
+      .catch(function () { toast("Couldn't save the file — use Copy to clipboard."); })
+      .then(function () { btn.disabled = false; });
+  });
+
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "s") {
+      e.preventDefault();
+      saveCloud(false);
+    }
+  });
+
+  window.addEventListener("beforeunload", function (e) {
+    if (dirty && !readOnly) { writeLocal(); e.preventDefault(); e.returnValue = ""; }
+  });
+
+  boot();
+})();
+</script>
