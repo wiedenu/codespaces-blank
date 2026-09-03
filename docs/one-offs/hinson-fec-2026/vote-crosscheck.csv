@@ -1,0 +1,12 @@
+fec_date,property,location,amount,entry_type,house_voting_that_day,hinson_verified_location,nearest_voting_days,assessment
+2021-07-09,Nemacolin Resort,"Farmington, PA",523.30,direct payment,no,,"Jul 1; Jul 19-22 (recess Jul 2-18)","recess window; no corroborating charges either way"
+2022-04-01,The Peninsula,"Beverly Hills, CA",500.00,direct payment,yes,,"Apr 1 4 5 6 7 26 27 28","likely booking deposit"
+2022-04-15,The Peninsula,"Beverly Hills, CA",100.00,direct payment,no,"DC-area charges same days (Charlie Palmers, Circa, Capitol Hill Club)","Apr 7 then Apr 26","coincides with DC spending"
+2022-04-27,The Peninsula,"Beverly Hills, CA",2784.71,direct payment,yes (12 roll calls),"voted DC 4:22 / 5:08 / 6:00 PM; also voted DC Apr 26 and Apr 28","Apr 26 27 28","charge date cannot be a stay date; no other CA charge in the cycle Mar-Jul 2022"
+2022-08-24,Stein Eriksen Lodge,"Park City, UT",549.09,direct payment,no (recess),"corroborated: Salt Lake City restaurants Aug 23; United Airlines Aug 23; GoGo inflight Aug 24","Aug 12 only","real trip; late August is not ski season"
+2024-02-09,Wynn Resorts,"Las Vegas, NV",565.77,direct payment,no,"voted DC Feb 7; next voted DC Feb 13","Feb 7 then Feb 13","consistent with real trip in non-voting window"
+2024-08-30,Fontainebleau,"Las Vegas, NV",1520.27,direct payment,no (recess all August),"corroborated: American Airlines Aug 28; Uber Aug 29","none in August; House returned Sep 9","real trip during recess"
+2025-08-15,Omni Homestead Resort,"Hot Springs, VA",778.97,statement batch (memo),no (recess all August),,"none in August","memo flag visible in the article's own screenshot; actual date unknown"
+2026-02-05,The Breakers,"Palm Beach, FL",1443.75,direct payment,no,"voted DC Feb 4 4:13 PM; next voted DC Feb 9 6:59 PM","Feb 4 then Feb 9","real trip; airline charges Feb 2 and Feb 4; Seafood Bar charge in later batch"
+2026-03-16,Lido House,"Newport Beach, CA",793.34,statement batch (memo),no,,"Mar 5 then Mar 17","Amex statement date; In-N-Out LA charge in Feb 20 batch suggests a February trip"
+2024-03-22,The Greenbrier (control case; NOT cited in article),"White Sulphur Springs, WV",72.60,direct payment,yes (3 roll calls),"voted DC 11:40 / 11:47 / 11:55 AM","Mar 21 22","House GOP retreat there was Mar 13-14; charge posted 8 days later"
