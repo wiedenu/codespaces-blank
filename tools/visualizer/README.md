@@ -1,22 +1,39 @@
 # Visualizer
 
 A WinAmp-style audio visualizer for whatever your machine is already playing. Five themes, four
-render modes, no dependencies and no build step.
+render modes, zero dependencies. Ships as a single self-contained HTML file you can bookmark.
 
 It never knows what the audio is. Spotify, Apple Music, a YouTube tab, a Teams call — all identical
 to the code.
 
 ## Run
 
-`getDisplayMedia` and `getUserMedia` both require a secure context, so opening the file directly
-(`file://`) will not work. Serve it:
+**Single file — no server, bookmarkable.** Open **`visualizer.html`** directly. `file://` *is* a
+secure context, so screen capture works with nothing running in the background.
+
+Copy `visualizer.html` anywhere you like (desktop, Documents), double-click it, then bookmark the
+address bar. It has no dependencies and no network calls, so it works offline and keeps working if
+this repo moves.
+
+```
+Windows   file:///C:/Users/<you>/Desktop/visualizer.html
+macOS     file:///Users/<you>/Desktop/visualizer.html
+```
+
+Regenerate it after editing any source file:
+
+```bash
+python3 tools/visualizer/build.py
+```
+
+**Modular source — for development.** Chrome blocks ES module imports over `file://` under CORS
+(the modules, *not* the media APIs — that distinction is the whole reason `build.py` exists), so the
+unbundled version needs a server:
 
 ```bash
 python3 -m http.server 8000
 # then open http://localhost:8000/tools/visualizer/
 ```
-
-`localhost` counts as secure, so no TLS setup is needed.
 
 The page opens on a built-in test tone — a 124 BPM loop with kick, hats, bass and a pad. That means
 you can build and tune themes with nothing playing and no permission prompt. Switch **Source** once
@@ -120,12 +137,13 @@ to what is actually hitting.
 ## Adding a theme
 
 Append an object to `THEMES` in `themes.js`. No other file needs to change — it appears in the
-picker and works across all four modes.
+picker and works across all four modes. Re-run `build.py` to refresh `visualizer.html`.
 
 ## Adding a mode
 
 Add `modes/yours.js` exporting `name` and `render(ctx, frame, theme, w, h)`, plus an optional
-`reset()` for internal state. Import it in `main.js` and add it to the `MODES` map.
+`reset()` for internal state. Import it in `main.js`, add it to the `MODES` map, add its name to `MODES` in `build.py`, then
+re-run `build.py`.
 
 Read palette and character from the theme (`rampColor`, `bgColor`, `applyGlow`) rather than
 hardcoding colour, and multiply anything time-based by `frame.dt` so motion matches on a 144Hz

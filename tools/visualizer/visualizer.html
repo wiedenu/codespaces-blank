@@ -1,0 +1,1340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visualizer</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23000'/><rect x='2' y='9' width='2' height='5' fill='%2300d13c'/><rect x='5.5' y='5' width='2' height='9' fill='%238ce800'/><rect x='9' y='2' width='2' height='12' fill='%23ffd400'/><rect x='12.5' y='7' width='2' height='7' fill='%23ff3b1f'/></svg>">
+<style>
+:root {
+  /* Overwritten by the active theme's chrome colors from main.js. */
+  --bg: #000;
+  --fg: #00d13c;
+  --dim: #1f6b34;
+  --accent: #ffd400;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: var(--mono);
+  transition: background .4s ease;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- status bar ---------- */
+
+.bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--dim) 45%, transparent);
+  backdrop-filter: blur(8px);
+  color: var(--fg);
+  font-size: 12px;
+  letter-spacing: .04em;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.bar.hidden {
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+.bar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--dim);
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.bar select {
+  font: inherit;
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--fg);
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--dim) 70%, transparent);
+  border-radius: 3px;
+  padding: 4px 6px;
+  max-width: 240px;
+}
+
+.bar select:focus-visible,
+.bar button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Native dropdown lists render on the OS surface, so they need explicit
+   colors — inheriting the themed background leaves them unreadable. */
+.bar select option { background: #101010; color: #e8e8e8; }
+
+.bar button {
+  font: inherit;
+  font-size: 11px;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--dim) 70%, transparent);
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.bar button:hover { border-color: var(--accent); color: var(--accent); }
+
+.meter {
+  width: 90px;
+  height: 6px;
+  border: 1px solid color-mix(in srgb, var(--dim) 70%, transparent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.meter i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width .06s linear;
+}
+
+.spacer { flex: 1; }
+
+.hint { color: var(--dim); font-size: 10px; }
+
+#bpm {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  min-width: 62px;
+}
+
+/* ---------- overlays ---------- */
+
+#gate {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  background: #000;
+  color: #00d13c;
+  cursor: pointer;
+  z-index: 3;
+}
+
+#gate h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+#gate p { margin: 0; color: #1f6b34; font-size: 12px; max-width: 30ch; text-align: center; line-height: 1.6; }
+
+#gate span {
+  border: 1px solid #1f6b34;
+  border-radius: 3px;
+  padding: 8px 22px;
+  font-size: 12px;
+  letter-spacing: .1em;
+}
+
+#gate:hover span { border-color: #ffd400; color: #ffd400; }
+
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 68px;
+  transform: translateX(-50%);
+  max-width: min(560px, 88vw);
+  padding: 10px 16px;
+  background: rgba(8, 8, 8, .94);
+  border: 1px solid var(--dim);
+  border-radius: 4px;
+  color: var(--fg);
+  font-size: 12px;
+  line-height: 1.55;
+  text-align: center;
+  z-index: 2;
+}
+
+#toast.err { border-color: #e0553f; color: #ffb2a3; }
+
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<canvas id="stage"></canvas>
+
+<div id="bar" class="bar">
+  <label>Source
+    <select id="source">
+      <option value="tone">Test tone</option>
+      <option value="display">System / tab audio</option>
+      <option value="device">Input device</option>
+    </select>
+  </label>
+
+  <label id="deviceRow" hidden>Device
+    <select id="device"></select>
+  </label>
+
+  <label>Level <span class="meter"><i id="level"></i></span></label>
+
+  <span id="bpm">--</span>
+
+  <div class="spacer"></div>
+
+  <span class="hint">1-5 theme &middot; &larr;&rarr; mode &middot; F full</span>
+
+  <label>Theme <select id="theme"></select></label>
+  <label>Mode <select id="mode"></select></label>
+
+  <button id="full" type="button">Fullscreen</button>
+</div>
+
+<div id="toast" hidden></div>
+
+<div id="gate">
+  <h1>Visualizer</h1>
+  <p>Starts on a built-in test tone. Switch the source to system audio once it's running.</p>
+  <span>Click to start</span>
+</div>
+
+<script>
+// Generated by build.py from the modular source in this directory.
+
+// Edit audio.js / themes.js / modes/*.js and re-run build.py; do not edit this file.
+
+(function () {
+
+'use strict';
+
+// Themes are data, not code. A theme carries a palette *and* render character
+// (glow, trail length, peak decay, whether bars draw as solid or as stacked
+// blocks), but never geometry — that belongs to the modes. Keeping the two
+// independent means N themes x M modes for the cost of N + M.
+
+function hexToRgb(h) {
+  const n = parseInt(h.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+const THEMES = [
+  {
+    id: 'classic',
+    name: 'Classic Green',
+    bg: '#000000',
+    ramp: ['#00300f', '#00d13c', '#8ce800', '#ffd400', '#ff3b1f'],
+    glow: 0.15,
+    trail: 1,        // full clear each frame: hard edges, no smear
+    decay: 0.90,
+    lineWidth: 2,
+    blocks: true,    // stacked segments, the 1997 look
+    scanlines: false,
+    defaultMode: 'bars',
+    chrome: { fg: '#00d13c', dim: '#1f6b34', accent: '#ffd400' },
+  },
+  {
+    id: 'midnight',
+    name: 'Midnight',
+    bg: '#070a18',
+    ramp: ['#123a6b', '#1fa8d8', '#5ee0ff', '#c86bff', '#ff5ec8'],
+    glow: 0.9,
+    trail: 0.18,
+    decay: 0.94,
+    lineWidth: 3,
+    blocks: false,
+    scanlines: false,
+    defaultMode: 'radial',
+    chrome: { fg: '#9fd8f5', dim: '#3d5a7a', accent: '#ff5ec8' },
+  },
+  {
+    id: 'amber',
+    name: 'Amber CRT',
+    bg: '#0a0704',
+    ramp: ['#3a1f00', '#a35c00', '#ffa726', '#ffd9a0'],
+    glow: 0.55,
+    trail: 0.12,      // phosphor persistence
+    decay: 0.96,
+    lineWidth: 2.5,
+    blocks: false,
+    scanlines: true,
+    defaultMode: 'scope',
+    chrome: { fg: '#ffa726', dim: '#7a4a10', accent: '#ffd9a0' },
+  },
+  {
+    id: 'milkdrop',
+    name: 'Milkdrop',
+    bg: '#05000d',
+    ramp: ['#2d0b52', '#7b1fa2', '#e91e63', '#ff9800', '#ffff00'],
+    glow: 1,
+    trail: 0.07,      // long feedback smear
+    decay: 0.97,
+    lineWidth: 3.5,
+    blocks: false,
+    scanlines: false,
+    defaultMode: 'particles',
+    chrome: { fg: '#ff9800', dim: '#6a3a7a', accent: '#ffff00' },
+  },
+  {
+    id: 'paper',
+    name: 'Paper',
+    bg: '#f4f1ea',
+    ramp: ['#c9c3b6', '#8a8578', '#4a463c', '#161412'],
+    glow: 0,
+    trail: 1,
+    decay: 0.88,
+    lineWidth: 1.5,
+    blocks: false,
+    scanlines: false,
+    defaultMode: 'scope',
+    chrome: { fg: '#161412', dim: '#8a8578', accent: '#8c3a2e' },
+  },
+];
+
+for (const t of THEMES) {
+  t._ramp = t.ramp.map(hexToRgb);
+  t._bg = hexToRgb(t.bg);
+}
+
+// Sample the ramp at 0..1.
+function rampColor(theme, v, alpha = 1) {
+  const r = theme._ramp;
+  const x = (v < 0 ? 0 : v > 1 ? 1 : v) * (r.length - 1);
+  const i = Math.floor(x);
+  const f = x - i;
+  const a = r[i];
+  const b = r[Math.min(i + 1, r.length - 1)];
+  const R = Math.round(a[0] + (b[0] - a[0]) * f);
+  const G = Math.round(a[1] + (b[1] - a[1]) * f);
+  const B = Math.round(a[2] + (b[2] - a[2]) * f);
+  return alpha >= 1 ? `rgb(${R},${G},${B})` : `rgba(${R},${G},${B},${alpha})`;
+}
+
+function bgColor(theme, alpha = 1) {
+  const [r, g, b] = theme._bg;
+  return alpha >= 1 ? `rgb(${r},${g},${b})` : `rgba(${r},${g},${b},${alpha})`;
+}
+
+// Modes call this before drawing rather than setting shadowBlur themselves, so
+// a theme with glow: 0 costs nothing.
+function applyGlow(ctx, theme, color, scale = 1) {
+  if (theme.glow <= 0) {
+    ctx.shadowBlur = 0;
+    return;
+  }
+  ctx.shadowBlur = theme.glow * 24 * scale;
+  ctx.shadowColor = color;
+}
+
+
+// AudioEngine — turns any audio source into one normalized AudioFrame per tick.
+//
+// Renderers read the frame and nothing else, which is what makes the three
+// sources interchangeable: a mode built against the tone generator works
+// unchanged against Spotify.
+
+const SOURCE = { DISPLAY: 'display', DEVICE: 'device', TONE: 'tone' };
+
+const FFT_SIZE = 2048;
+const MIN_DB = -90;
+const MAX_DB = -10;
+
+// Log-spaced bars, precomputed once per frame so modes never touch raw bins.
+const BAR_COUNT = 96;
+const BAR_MIN_HZ = 30;
+const BAR_MAX_HZ = 16000;
+
+// Beat detection.
+const HISTORY = 60;             // ~1s at 60fps
+const BEAT_THRESHOLD = 1.35;    // times the local average
+const BEAT_MIN_GAP = 0.25;      // seconds — caps at 240 BPM
+const BEAT_MIN_ENERGY = 0.10;   // don't fire on near-silence
+
+const BANDS = [
+  ['bass', 20, 140],
+  ['lowMid', 140, 400],
+  ['mid', 400, 1600],
+  ['highMid', 1600, 5000],
+  ['treble', 5000, 16000],
+];
+
+class AudioEngine {
+  constructor() {
+    this.ctx = null;
+    this.analyser = null;
+    this.sourceType = null;
+    this.onEnded = null;        // called when a capture stream dies
+
+    this._node = null;          // current MediaStreamSource
+    this._stream = null;
+    this._tone = null;
+
+    this._fftDb = null;
+    this._barLo = null;
+    this._barHi = null;
+
+    // Public frame, mutated in place so we don't allocate 60x/second.
+    this.frame = {
+      fft: null,                // per-bin magnitude, 0..1 (not dB — renderers want this)
+      wave: null,               // time domain, -1..1
+      bars: null,               // log-spaced magnitudes, 0..1
+      bands: { bass: 0, lowMid: 0, mid: 0, highMid: 0, treble: 0 },
+      level: 0,
+      beat: false,
+      beatEnergy: 0,
+      bpm: null,
+      t: 0,
+      dt: 1 / 60,
+    };
+
+    this._peak = 0.15;          // rolling peak for auto-gain
+    this._history = [];
+    this._lastBeat = -Infinity;
+    this._onsets = [];
+    this._lastT = 0;
+  }
+
+  // ---------- graph ----------
+
+  _ensureCtx() {
+    if (this.ctx) return this.ctx;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    this.ctx = new Ctx();
+
+    const a = this.ctx.createAnalyser();
+    a.fftSize = FFT_SIZE;
+    a.smoothingTimeConstant = 0;   // we smooth ourselves, with separate attack/release
+    a.minDecibels = MIN_DB;
+    a.maxDecibels = MAX_DB;
+    this.analyser = a;
+    // Deliberately never connected to ctx.destination. The captured audio is
+    // already coming out of the speakers; connecting would double it.
+
+    const bins = a.frequencyBinCount;
+    this._fftDb = new Float32Array(bins);
+    this.frame.fft = new Float32Array(bins);
+    this.frame.wave = new Float32Array(a.fftSize);
+    this.frame.bars = new Float32Array(BAR_COUNT);
+
+    this._buildBarMap(bins);
+    return this.ctx;
+  }
+
+  // Bins are linear in Hz; hearing is logarithmic. Precompute the bin range
+  // backing each bar once, or the display crushes everything into the left edge.
+  _buildBarMap(bins) {
+    const binHz = this.ctx.sampleRate / FFT_SIZE;
+    const lo = Math.log(BAR_MIN_HZ);
+    const hi = Math.log(BAR_MAX_HZ);
+    this._barLo = new Int32Array(BAR_COUNT);
+    this._barHi = new Int32Array(BAR_COUNT);
+    for (let i = 0; i < BAR_COUNT; i++) {
+      const f0 = Math.exp(lo + (hi - lo) * (i / BAR_COUNT));
+      const f1 = Math.exp(lo + (hi - lo) * ((i + 1) / BAR_COUNT));
+      let a = Math.floor(f0 / binHz);
+      let b = Math.ceil(f1 / binHz);
+      if (b <= a) b = a + 1;
+      this._barLo[i] = Math.min(a, bins - 1);
+      this._barHi[i] = Math.min(b, bins);
+    }
+  }
+
+  _teardown() {
+    if (this._tone) { this._tone.stop(); this._tone = null; }
+    if (this._node) { try { this._node.disconnect(); } catch (e) { /* already gone */ } this._node = null; }
+    if (this._stream) { this._stream.getTracks().forEach((t) => t.stop()); this._stream = null; }
+  }
+
+  // ---------- sources ----------
+
+  // System or tab audio. On Windows, Chrome and Edge offer "Share system audio"
+  // for Entire Screen or a browser tab — never a single app window. That taps
+  // the post-mix OS output, so DRM sources like Spotify come through fine.
+  async useDisplay() {
+    const ctx = this._ensureCtx();
+
+    // Chrome will not hand over system audio unless video is also requested,
+    // even though we throw the video track away immediately.
+    const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+    stream.getVideoTracks().forEach((t) => t.stop());
+
+    const audio = stream.getAudioTracks();
+    if (audio.length === 0) {
+      stream.getTracks().forEach((t) => t.stop());
+      throw new Error(
+        'That share had no audio. Re-share and tick "Share system audio" — Chrome only ' +
+        'offers it for Entire Screen or a browser tab, never a single app window.'
+      );
+    }
+
+    this._teardown();
+    this._stream = stream;
+    this._node = ctx.createMediaStreamSource(new MediaStream(audio));
+    this._node.connect(this.analyser);
+    this.sourceType = SOURCE.DISPLAY;
+
+    audio[0].addEventListener('ended', () => {
+      if (this.sourceType === SOURCE.DISPLAY && this.onEnded) this.onEnded();
+    });
+
+    await ctx.resume();
+    return this;
+  }
+
+  // Labels are blank until audio permission has been granted at least once.
+  async listDevices() {
+    let named = true;
+    try {
+      const probe = await navigator.mediaDevices.getUserMedia({ audio: true });
+      probe.getTracks().forEach((t) => t.stop());
+    } catch (e) {
+      named = false;
+    }
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    return devices
+      .filter((d) => d.kind === 'audioinput')
+      .map((d, i) => ({
+        id: d.deviceId,
+        label: d.label || (named ? `Input ${i + 1}` : `Input ${i + 1} — allow access to see names`),
+      }));
+  }
+
+  // An input device: a loopback driver (BlackHole, VB-CABLE) on macOS, where
+  // Chrome offers tab audio but not system audio.
+  async useDevice(deviceId) {
+    const ctx = this._ensureCtx();
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        deviceId: deviceId ? { exact: deviceId } : undefined,
+        // All three default to on and are tuned for speech. Left on, they
+        // visibly wreck a music spectrum — pumping levels, gutted high end.
+        echoCancellation: false,
+        noiseSuppression: false,
+        autoGainControl: false,
+      },
+    });
+
+    this._teardown();
+    this._stream = stream;
+    this._node = ctx.createMediaStreamSource(stream);
+    this._node.connect(this.analyser);
+    this.sourceType = SOURCE.DEVICE;
+
+    stream.getAudioTracks()[0].addEventListener('ended', () => {
+      if (this.sourceType === SOURCE.DEVICE && this.onEnded) this.onEnded();
+    });
+
+    await ctx.resume();
+    return this;
+  }
+
+  // Synthetic source: a 124 BPM loop with kick, hats, bass and a sustained pad.
+  // No permissions, no share prompt, nothing else playing — this is what theme
+  // and mode work gets built against.
+  useTone() {
+    const ctx = this._ensureCtx();
+    this._teardown();
+
+    const out = ctx.createGain();
+    out.gain.value = 0.85;
+    out.connect(this.analyser);   // analyser only, never ctx.destination
+
+    const noise = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.4), ctx.sampleRate);
+    const nd = noise.getChannelData(0);
+    for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+
+    // Sustained pad, so the mid and treble bands always have something to show
+    // between transients.
+    const padGain = ctx.createGain();
+    padGain.gain.value = 0.10;
+    const padFilter = ctx.createBiquadFilter();
+    padFilter.type = 'lowpass';
+    padFilter.frequency.value = 900;
+    padFilter.Q.value = 6;
+    padGain.connect(padFilter);
+    padFilter.connect(out);
+
+    const padOscs = [110, 164.81, 220, 329.63].map((f, i) => {
+      const o = ctx.createOscillator();
+      o.type = i % 2 ? 'sawtooth' : 'triangle';
+      o.frequency.value = f;
+      o.detune.value = (i - 1.5) * 7;
+      o.connect(padGain);
+      o.start();
+      return o;
+    });
+
+    // Slow sweep so the spectrum moves even during sustained passages.
+    const lfo = ctx.createOscillator();
+    lfo.frequency.value = 0.07;
+    const lfoAmt = ctx.createGain();
+    lfoAmt.gain.value = 700;
+    lfo.connect(lfoAmt);
+    lfoAmt.connect(padFilter.frequency);
+    lfo.start();
+
+    const kick = (t) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.frequency.setValueAtTime(150, t);
+      o.frequency.exponentialRampToValueAtTime(45, t + 0.11);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(1, t + 0.005);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.34);
+      o.connect(g); g.connect(out);
+      o.start(t); o.stop(t + 0.36);
+    };
+
+    const hat = (t, open) => {
+      const s = ctx.createBufferSource();
+      s.buffer = noise;
+      const f = ctx.createBiquadFilter();
+      f.type = 'highpass';
+      f.frequency.value = 7000;
+      const g = ctx.createGain();
+      const d = open ? 0.16 : 0.045;
+      g.gain.setValueAtTime(open ? 0.25 : 0.14, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+      s.connect(f); f.connect(g); g.connect(out);
+      s.start(t); s.stop(t + d + 0.02);
+    };
+
+    const bass = (t, freq) => {
+      const o = ctx.createOscillator();
+      o.type = 'square';
+      o.frequency.value = freq;
+      const f = ctx.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.setValueAtTime(1400, t);
+      f.frequency.exponentialRampToValueAtTime(220, t + 0.2);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.35, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
+      o.connect(f); f.connect(g); g.connect(out);
+      o.start(t); o.stop(t + 0.27);
+    };
+
+    const eighth = 60 / 124 / 2;
+    const roots = [55, 55, 73.42, 65.41];
+    let step = 0;
+    let nextAt = ctx.currentTime + 0.15;
+
+    const timer = setInterval(() => {
+      while (nextAt < ctx.currentTime + 0.2) {
+        const s = step % 8;
+        if (s === 0 || s === 4 || s === 6) kick(nextAt);
+        hat(nextAt, s % 4 === 2);
+        if (s % 2 === 0) bass(nextAt, roots[(step >> 3) % roots.length]);
+        nextAt += eighth;
+        step++;
+      }
+    }, 25);
+
+    this._tone = {
+      stop() {
+        clearInterval(timer);
+        padOscs.forEach((o) => { try { o.stop(); } catch (e) { /* already stopped */ } });
+        try { lfo.stop(); } catch (e) { /* already stopped */ }
+        try { out.disconnect(); } catch (e) { /* already gone */ }
+      },
+    };
+    this.sourceType = SOURCE.TONE;
+    ctx.resume();
+    return this;
+  }
+
+  stop() {
+    this._teardown();
+    this.sourceType = null;
+  }
+
+  // ---------- per-frame read ----------
+
+  read() {
+    const f = this.frame;
+    if (!this.analyser) return f;
+
+    const now = this.ctx.currentTime;
+    f.dt = this._lastT ? Math.min(now - this._lastT, 0.1) : 1 / 60;
+    f.t = now;
+    this._lastT = now;
+
+    this.analyser.getFloatFrequencyData(this._fftDb);
+    this.analyser.getFloatTimeDomainData(f.wave);
+
+    const span = MAX_DB - MIN_DB;
+    const db = this._fftDb;
+    const norm = f.fft;
+    for (let i = 0; i < db.length; i++) {
+      const v = (db[i] - MIN_DB) / span;
+      norm[i] = v < 0 ? 0 : v > 1 ? 1 : v;
+    }
+
+    // Raw bands, pre-gain. Beat detection uses these so auto-gain can't
+    // manufacture onsets during quiet passages.
+    const raw = {};
+    let loudest = 0;
+    const binHz = this.ctx.sampleRate / FFT_SIZE;
+    for (let b = 0; b < BANDS.length; b++) {
+      const [name, loHz, hiHz] = BANDS[b];
+      const lo = Math.max(0, Math.floor(loHz / binHz));
+      const hi = Math.min(norm.length - 1, Math.ceil(hiHz / binHz));
+      let sum = 0;
+      for (let i = lo; i <= hi; i++) sum += norm[i];
+      const v = sum / (hi - lo + 1);
+      raw[name] = v;
+      if (v > loudest) loudest = v;
+    }
+
+    // Auto-gain at the visual layer, since browser AGC is off in the capture
+    // path. Rolling peak with slow decay and a floor, so silence stays silent
+    // instead of being amplified into noise.
+    this._peak = Math.max(loudest, this._peak * (1 - 1.2 * f.dt), 0.08);
+    const gain = 1 / this._peak;
+
+    // Fast attack, slow release — reads as responsive without flickering.
+    const up = 1 - Math.exp(-f.dt / 0.02);
+    const down = 1 - Math.exp(-f.dt / 0.12);
+    for (const name of Object.keys(f.bands)) {
+      const target = Math.min(1, raw[name] * gain);
+      const prev = f.bands[name];
+      f.bands[name] = prev + (target - prev) * (target > prev ? up : down);
+    }
+
+    for (let i = 0; i < BAR_COUNT; i++) {
+      let peak = 0;
+      for (let j = this._barLo[i]; j < this._barHi[i]; j++) {
+        if (norm[j] > peak) peak = norm[j];
+      }
+      const target = Math.min(1, peak * gain);
+      const prev = f.bars[i];
+      f.bars[i] = prev + (target - prev) * (target > prev ? up : down);
+    }
+
+    let sq = 0;
+    for (let i = 0; i < f.wave.length; i++) sq += f.wave[i] * f.wave[i];
+    f.level = Math.min(1, Math.sqrt(sq / f.wave.length) * 3);
+
+    this._detectBeat(raw.bass, now, f);
+    return f;
+  }
+
+  // Energy flux on the bass band against its own local average.
+  _detectBeat(bass, now, f) {
+    this._history.push(bass);
+    if (this._history.length > HISTORY) this._history.shift();
+
+    f.beat = false;
+    if (this._history.length >= 20) {
+      let sum = 0;
+      for (let i = 0; i < this._history.length; i++) sum += this._history[i];
+      const avg = sum / this._history.length;
+      if (bass > avg * BEAT_THRESHOLD && bass > BEAT_MIN_ENERGY && now - this._lastBeat > BEAT_MIN_GAP) {
+        f.beat = true;
+        this._lastBeat = now;
+        this._onsets.push(now);
+        if (this._onsets.length > 24) this._onsets.shift();
+        this._estimateBpm(f);
+      }
+    }
+
+    f.beatEnergy = Math.max(0, 1 - (now - this._lastBeat) / 0.6);
+  }
+
+  // Median inter-onset interval, folded into a musical range.
+  _estimateBpm(f) {
+    if (this._onsets.length < 6) { f.bpm = null; return; }
+    const iv = [];
+    for (let i = 1; i < this._onsets.length; i++) iv.push(this._onsets[i] - this._onsets[i - 1]);
+    iv.sort((a, b) => a - b);
+    const med = iv[Math.floor(iv.length / 2)];
+    if (!med) return;
+    let bpm = 60 / med;
+    while (bpm < 70) bpm *= 2;
+    while (bpm > 180) bpm /= 2;
+    f.bpm = Math.round(bpm);
+  }
+}
+
+
+const bars = (function () {
+// Log-spaced spectrum bars with peak-hold caps — the WinAmp signature.
+// frame.bars is already log-grouped by the engine, so this just draws it.
+
+const name = 'Bars';
+
+// Segment geometry for themes with blocks: true.
+const SEG = 5;
+const GAP = 2;
+const STEP = SEG + GAP;
+
+let peaks = new Float32Array(0);
+let grad = null;
+let gradKey = '';
+
+function reset() {
+  peaks = new Float32Array(0);
+  grad = null;
+  gradKey = '';
+}
+
+// Colour by absolute height, so the top of a tall bar runs hot regardless of
+// what the bar beside it is doing. Cached — rebuilding it per bar per frame is
+// what makes gradients look expensive.
+function heightGradient(ctx, theme, h, usable) {
+  const key = `${theme.id}:${Math.round(h)}`;
+  if (grad && gradKey === key) return grad;
+  const g = ctx.createLinearGradient(0, h, 0, h - usable);
+  for (let i = 0; i < theme.ramp.length; i++) {
+    g.addColorStop(i / (theme.ramp.length - 1), theme.ramp[i]);
+  }
+  grad = g;
+  gradKey = key;
+  return g;
+}
+
+function render(ctx, frame, theme, w, h) {
+  const bars = frame.bars;
+  const n = bars.length;
+  if (peaks.length !== n) peaks = new Float32Array(n);
+
+  const slot = w / n;
+  const gutter = Math.max(1, slot * 0.16);
+  const bw = Math.max(1, slot - gutter);
+  const usable = h * 0.94;
+
+  // Framerate-corrected, so caps fall at the same rate on a 60Hz and a 144Hz
+  // display.
+  const fall = Math.pow(theme.decay, frame.dt * 60);
+
+  if (theme.blocks) {
+    // One gradient rect per bar, then the segment gaps painted as full-width
+    // background lines in a single pass. Drawing every segment individually is
+    // ~9,000 fills a frame at 1080p; this is ~200 for the same picture.
+    let tallest = 0;
+    applyGlow(ctx, theme, theme.ramp[theme.ramp.length - 2], 0.5);
+    ctx.fillStyle = heightGradient(ctx, theme, h, usable);
+    for (let i = 0; i < n; i++) {
+      const v = bars[i];
+      peaks[i] = v > peaks[i] ? v : peaks[i] * fall;
+      const barH = v * usable;
+      if (barH > tallest) tallest = barH;
+      if (barH < 0.5) continue;
+      ctx.fillRect(i * slot, h - barH, bw, barH);
+    }
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = bgColor(theme, 1);
+    for (let y = STEP; y < tallest + STEP; y += STEP) {
+      ctx.fillRect(0, h - y, w, GAP);
+    }
+  } else {
+    for (let i = 0; i < n; i++) {
+      const v = bars[i];
+      peaks[i] = v > peaks[i] ? v : peaks[i] * fall;
+      const barH = v * usable;
+      if (barH < 0.5) continue;
+      const c = rampColor(theme, v);
+      applyGlow(ctx, theme, c);
+      ctx.fillStyle = c;
+      ctx.fillRect(i * slot, h - barH, bw, barH);
+    }
+  }
+
+  // Caps last, so they sit above every bar and above the segment gaps.
+  ctx.shadowBlur = 0;
+  for (let i = 0; i < n; i++) {
+    if (peaks[i] < 0.02) continue;
+    ctx.fillStyle = rampColor(theme, Math.min(1, peaks[i] + 0.25));
+    ctx.fillRect(i * slot, h - peaks[i] * usable - 2, bw, 2);
+  }
+}
+
+return { name: name, render: render, reset: typeof reset === 'function' ? reset : undefined };
+})();
+
+const scope = (function () {
+// Time-domain oscilloscope. Reads frame.wave directly, so it shows the actual
+// waveform rather than an FFT reduction — the mode that most rewards a theme
+// with long trails (Amber CRT, Milkdrop).
+
+const name = 'Scope';
+
+function render(ctx, frame, theme, w, h) {
+  const wave = frame.wave;
+  const n = wave.length;
+  const mid = h / 2;
+
+  // Amplitude tracks overall level so quiet passages still show a line rather
+  // than collapsing flat.
+  const amp = mid * 0.8 * (0.25 + 0.75 * Math.min(1, frame.level * 1.6));
+  const c = rampColor(theme, 0.55 + 0.45 * frame.beatEnergy);
+
+  ctx.lineWidth = theme.lineWidth + frame.beatEnergy * 1.5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = c;
+  applyGlow(ctx, theme, c);
+
+  // One point per horizontal pixel; the buffer is longer than the canvas is
+  // wide, so step through it rather than drawing every sample.
+  const step = n / w;
+  ctx.beginPath();
+  for (let x = 0; x < w; x++) {
+    const y = mid - wave[Math.floor(x * step)] * amp;
+    if (x === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  // A dimmer echo, offset by a quarter of the buffer, gives the trace depth
+  // without needing a second pass over the audio.
+  ctx.globalAlpha = 0.35;
+  ctx.lineWidth = theme.lineWidth * 0.6;
+  ctx.strokeStyle = rampColor(theme, 0.25);
+  ctx.beginPath();
+  const off = Math.floor(n / 4);
+  for (let x = 0; x < w; x++) {
+    const y = mid - wave[(Math.floor(x * step) + off) % n] * amp * 0.6;
+    if (x === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+}
+
+return { name: name, render: render, reset: typeof reset === 'function' ? reset : undefined };
+})();
+
+const radial = (function () {
+// The spectrum wrapped into a circle: bass at the top, sweeping up through
+// treble around both sides so the figure stays symmetrical. Radius pulses on
+// the beat.
+
+const name = 'Radial';
+
+let spin = 0;
+
+function reset() {
+  spin = 0;
+}
+
+function render(ctx, frame, theme, w, h) {
+  const bars = frame.bars;
+  const n = bars.length;
+  const cx = w / 2;
+  const cy = h / 2;
+
+  // Rotation speed rides the mids, so the figure drifts rather than sitting
+  // still during sparse passages.
+  spin += frame.dt * (0.08 + frame.bands.mid * 0.35);
+
+  const base = Math.min(w, h) * (0.17 + frame.bands.bass * 0.05 + frame.beatEnergy * 0.04);
+  const reach = Math.min(w, h) * 0.28;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(spin);
+
+  ctx.lineCap = 'round';
+  ctx.lineWidth = Math.max(1.5, (Math.PI * base) / n) * 1.4;
+
+  // Mirrored: each bin is drawn on both sides of the vertical axis.
+  for (let i = 0; i < n; i++) {
+    const v = bars[i];
+    const len = v * reach;
+    if (len < 1) continue;
+
+    const c = rampColor(theme, v);
+    ctx.strokeStyle = c;
+    applyGlow(ctx, theme, c, 0.7);
+
+    const a = (i / n) * Math.PI;
+    for (const angle of [-Math.PI / 2 + a, -Math.PI / 2 - a]) {
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      ctx.beginPath();
+      ctx.moveTo(cos * base, sin * base);
+      ctx.lineTo(cos * (base + len), sin * (base + len));
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+
+  // Inner ring, sized by overall level — a still centre for the spokes to
+  // radiate from.
+  ctx.shadowBlur = 0;
+  const ring = base * (0.82 + frame.beatEnergy * 0.1);
+  ctx.strokeStyle = rampColor(theme, 0.15 + frame.level * 0.5);
+  ctx.lineWidth = theme.lineWidth;
+  ctx.beginPath();
+  ctx.arc(cx, cy, ring, 0, Math.PI * 2);
+  ctx.stroke();
+}
+
+return { name: name, render: render, reset: typeof reset === 'function' ? reset : undefined };
+})();
+
+const particles = (function () {
+// Beat-spawned particles. Bass drives how many and how fast; treble tints
+// them. The only mode that depends on frame.beat rather than the spectrum, so
+// it doubles as a visual check that onset detection is working.
+
+const name = 'Particles';
+
+const MAX = 420;
+let parts = [];
+
+function reset() {
+  parts = [];
+}
+
+function spawn(cx, cy, frame, reach) {
+  const count = Math.min(60, 12 + Math.floor(frame.bands.bass * 48));
+  for (let i = 0; i < count; i++) {
+    if (parts.length >= MAX) break;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = reach * (0.35 + Math.random() * 0.9) * (0.5 + frame.bands.bass);
+    parts.push({
+      x: cx,
+      y: cy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      life: 1,
+      fade: 0.35 + Math.random() * 0.5,
+      size: 1.5 + Math.random() * 3,
+      tint: Math.min(1, 0.25 + frame.bands.treble * 0.9 + Math.random() * 0.2),
+    });
+  }
+}
+
+function render(ctx, frame, theme, w, h) {
+  const cx = w / 2;
+  const cy = h / 2;
+
+  if (frame.beat) spawn(cx, cy, frame, Math.min(w, h) * 0.5);
+
+  // A slow outward drift keeps the field alive between onsets, and a gentle
+  // drag stops fast particles leaving instantly.
+  const drag = Math.pow(0.86, frame.dt * 60);
+
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const p = parts[i];
+    p.x += p.vx * frame.dt;
+    p.y += p.vy * frame.dt;
+    p.vx *= drag;
+    p.vy *= drag;
+    p.life -= p.fade * frame.dt;
+
+    if (p.life <= 0 || p.x < -50 || p.x > w + 50 || p.y < -50 || p.y > h + 50) {
+      parts.splice(i, 1);
+      continue;
+    }
+
+    const c = rampColor(theme, p.tint, p.life);
+    ctx.fillStyle = c;
+    applyGlow(ctx, theme, c, 0.4);
+    const r = p.size * (0.4 + p.life * 0.6);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Core that flashes on each detected beat — the readout for onset detection.
+  ctx.shadowBlur = 0;
+  const core = Math.min(w, h) * (0.02 + frame.beatEnergy * 0.05 + frame.bands.bass * 0.03);
+  const cc = rampColor(theme, 0.5 + frame.beatEnergy * 0.5);
+  applyGlow(ctx, theme, cc);
+  ctx.fillStyle = cc;
+  ctx.beginPath();
+  ctx.arc(cx, cy, core, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+return { name: name, render: render, reset: typeof reset === 'function' ? reset : undefined };
+})();
+
+
+
+
+
+
+
+const MODES = { bars, scope, radial, particles };
+const MODE_IDS = Object.keys(MODES);
+
+const $ = (id) => document.getElementById(id);
+const canvas = $('stage');
+const ctx = canvas.getContext('2d', { alpha: false });
+const bar = $('bar');
+const toast = $('toast');
+const gate = $('gate');
+
+const engine = new AudioEngine();
+
+let theme = THEMES[0];
+let modeId = theme.defaultMode;
+let needsClear = true;
+let running = false;
+
+// ---------- persistence ----------
+
+function load(key, fallback) {
+  try {
+    return localStorage.getItem(key) ?? fallback;
+  } catch (e) {
+    return fallback;   // private window, blocked site data
+  }
+}
+
+function save(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    /* non-fatal: selections just won't persist */
+  }
+}
+
+// ---------- canvas ----------
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(canvas.clientWidth * dpr);
+  canvas.height = Math.round(canvas.clientHeight * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  needsClear = true;
+}
+
+new ResizeObserver(resize).observe(canvas);
+
+// ---------- theme ----------
+
+function applyTheme(next) {
+  theme = next;
+  needsClear = true;
+  const root = document.documentElement.style;
+  root.setProperty('--fg', theme.chrome.fg);
+  root.setProperty('--dim', theme.chrome.dim);
+  root.setProperty('--accent', theme.chrome.accent);
+  root.setProperty('--bg', theme.bg);
+  save('viz.theme', theme.id);
+}
+
+// Picking a theme — from the dropdown or a number key — also adopts the mode it
+// was designed around. Arrow keys then change mode without touching the theme.
+function selectTheme(next) {
+  applyTheme(next);
+  setMode(next.defaultMode);
+  $('theme').value = next.id;
+}
+
+function setMode(id) {
+  modeId = id;
+  const m = MODES[id];
+  if (m.reset) m.reset();
+  needsClear = true;
+  $('mode').value = id;
+  save('viz.mode', id);
+}
+
+// Scanline overlay is theme-owned rather than mode-owned, so every mode picks
+// it up under Amber CRT without knowing about it.
+function drawScanlines(w, h) {
+  ctx.fillStyle = 'rgba(0,0,0,0.18)';
+  for (let y = 0; y < h; y += 3) ctx.fillRect(0, y, w, 1);
+}
+
+// ---------- loop ----------
+
+function tick() {
+  requestAnimationFrame(tick);
+  if (!running || document.hidden) return;
+
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  const frame = engine.read();
+
+  // Trails instead of clearRect: filling the background at theme.trail alpha is
+  // what produces the smear, and it costs nothing.
+  if (needsClear) {
+    ctx.fillStyle = bgColor(theme, 1);
+    ctx.fillRect(0, 0, w, h);
+    needsClear = false;
+  } else {
+    ctx.fillStyle = bgColor(theme, theme.trail);
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  MODES[modeId].render(ctx, frame, theme, w, h);
+  if (theme.scanlines) drawScanlines(w, h);
+
+  $('level').style.width = `${Math.round(frame.level * 100)}%`;
+  const bpm = frame.bpm ? `${frame.bpm} BPM` : '--';
+  if ($('bpm').textContent !== bpm) $('bpm').textContent = bpm;
+}
+
+// ---------- sources ----------
+
+function say(msg, isError) {
+  toast.textContent = msg;
+  toast.hidden = false;
+  toast.classList.toggle('err', !!isError);
+  clearTimeout(say._t);
+  say._t = setTimeout(() => { toast.hidden = true; }, isError ? 9000 : 3000);
+}
+
+async function useSource(kind) {
+  try {
+    if (kind === SOURCE.TONE) {
+      engine.useTone();
+      $('deviceRow').hidden = true;
+      say('Test tone — 124 BPM. Build themes against this.');
+    } else if (kind === SOURCE.DISPLAY) {
+      await engine.useDisplay();
+      $('deviceRow').hidden = true;
+      say('Capturing shared audio.');
+    } else {
+      $('deviceRow').hidden = false;
+      await populateDevices();
+      await engine.useDevice($('device').value || undefined);
+      say('Capturing input device.');
+    }
+    running = true;
+    $('source').value = engine.sourceType;
+    save('viz.source', engine.sourceType);
+  } catch (err) {
+    // A cancelled share picker is a normal outcome, not a failure worth shouting about.
+    const cancelled = err && (err.name === 'NotAllowedError' || err.name === 'AbortError');
+    say(cancelled ? 'Cancelled — still on the previous source.' : err.message || String(err), !cancelled);
+    $('source').value = engine.sourceType || SOURCE.TONE;
+    if (!engine.sourceType) { engine.useTone(); running = true; }
+  }
+}
+
+async function populateDevices() {
+  const sel = $('device');
+  const devices = await engine.listDevices();
+  const prev = sel.value;
+  sel.innerHTML = '';
+  for (const d of devices) {
+    const o = document.createElement('option');
+    o.value = d.id;
+    o.textContent = d.label;
+    sel.appendChild(o);
+  }
+  const remembered = load('viz.device', '');
+  if (devices.some((d) => d.id === prev)) sel.value = prev;
+  else if (devices.some((d) => d.id === remembered)) sel.value = remembered;
+}
+
+engine.onEnded = () => {
+  say('Share ended — back on the test tone.');
+  engine.useTone();
+  $('source').value = SOURCE.TONE;
+  $('deviceRow').hidden = true;
+};
+
+// ---------- chrome ----------
+
+let idleTimer;
+function wake() {
+  bar.classList.remove('hidden');
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    if (running && !bar.matches(':hover, :focus-within')) bar.classList.add('hidden');
+  }, 3000);
+}
+['mousemove', 'keydown', 'touchstart'].forEach((e) => window.addEventListener(e, wake));
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('select, input')) return;
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= THEMES.length) {
+    selectTheme(THEMES[n - 1]);
+  } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    const i = MODE_IDS.indexOf(modeId);
+    const d = e.key === 'ArrowRight' ? 1 : MODE_IDS.length - 1;
+    setMode(MODE_IDS[(i + d) % MODE_IDS.length]);
+  } else if (e.key.toLowerCase() === 'f') {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(() => {});
+  }
+});
+
+// ---------- init ----------
+
+for (const t of THEMES) {
+  const o = document.createElement('option');
+  o.value = t.id;
+  o.textContent = t.name;
+  $('theme').appendChild(o);
+}
+for (const id of MODE_IDS) {
+  const o = document.createElement('option');
+  o.value = id;
+  o.textContent = MODES[id].name;
+  $('mode').appendChild(o);
+}
+
+applyTheme(THEMES.find((t) => t.id === load('viz.theme', '')) || THEMES[0]);
+$('theme').value = theme.id;
+setMode(MODE_IDS.includes(load('viz.mode', '')) ? load('viz.mode', '') : theme.defaultMode);
+
+$('theme').onchange = (e) => selectTheme(THEMES.find((t) => t.id === e.target.value));
+$('mode').onchange = (e) => setMode(e.target.value);
+$('source').onchange = (e) => useSource(e.target.value);
+$('device').onchange = (e) => { save('viz.device', e.target.value); engine.useDevice(e.target.value); };
+$('full').onclick = () => {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen().catch(() => {});
+};
+
+// AudioContext starts suspended until a user gesture, so the page opens on a
+// start gate rather than silently rendering nothing.
+gate.onclick = async () => {
+  gate.hidden = true;
+  // Always open on the tone generator. A capture source can't be restored from
+  // localStorage anyway — both getDisplayMedia and getUserMedia need their own
+  // gesture, and a share picker appearing unbidden on page load is hostile.
+  await useSource(SOURCE.TONE);
+  wake();
+};
+
+resize();
+requestAnimationFrame(tick);
+
+
+})();
+</script>
+</body>
+</html>
